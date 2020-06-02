@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "998697172173",
+    "firebase_url": "https://bills-app-66b3a.firebaseio.com",
+    "project_id": "bills-app-66b3a",
+    "storage_bucket": "bills-app-66b3a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:998697172173:android:5e6d8cc858d4b390f53d84",
+        "android_client_info": {
+          "package_name": "com.souza.billsapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "998697172173-c3a4umg8bl5gnt0f9cqv986hk10i8so5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.souza.billsapp",
+            "certificate_hash": "9e4561e31a54f325eb884753114589ad29119ada"
+          }
+        },
+        {
+          "client_id": "998697172173-ijrmf4ercat646oqts7qsb99hjqbd1cr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDHsGdmIgXXYhBmugRQSxSQFlH4UQv8upM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "998697172173-ijrmf4ercat646oqts7qsb99hjqbd1cr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
