@@ -39,16 +39,34 @@
         android:label="fragment_bill"
         tools:layout="@layout/fragment_expenses" >
         <action
-            android:id="@+id/action_billFragment_to_receiptFragment"
-            app:destination="@id/receiptFragment"
+            android:id="@+id/action_billFragment_to_insertExpenseFragment"
+            app:destination="@id/insertExpenseFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/billFragment"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"/>
+        <action
+            android:id="@+id/action_billFragment_to_receiptFragment"
+            app:destination="@id/receiptFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/receiptFragment"
         android:name="com.souza.billsapp.ReceiptFragment"
         android:label="fragment_receipt"
-        tools:layout="@layout/fragment_receipt" />
+        tools:layout="@layout/fragment_receipt" >
+        <action
+            android:id="@+id/action_receiptFragment_to_billFragment"
+            app:destination="@id/billFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/insertExpenseFragment"
+        android:name="com.souza.billsapp.presentation.InsertExpenseFragment"
+        android:label="InsertExpenseFragment" >
+        <action
+            android:id="@+id/action_insertExpenseFragment_to_billFragment"
+            app:destination="@id/billFragment" />
+    </fragment>
 
 </navigation>

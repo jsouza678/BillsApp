@@ -8,7 +8,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class ExpenseRepository {
 
-    private var test = 1
+
     private val db : FirebaseFirestore = FirebaseFirestore.getInstance()
     private val query = db.collection("despesas")
 
@@ -21,15 +21,14 @@ class ExpenseRepository {
 
     fun insertData(data : Expense) {
         db.collection("despesas")
-            .document((test++).toString())
+            .document()
             .set(data)
             .addOnSuccessListener {
-
-            }
+                //TODO
+                }
             .addOnFailureListener {
-
-            }
+                //TODO
+                }
     }
-
 }
 

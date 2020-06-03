@@ -20,9 +20,6 @@ import com.souza.billsapp.R
 
 class LoginFragment : Fragment() {
 
-    private val viewModel by viewModels<LoginViewModel>()
-    private lateinit var navController: NavController
-
     companion object {
         const val TAG = "LoginFragment"
         const val SIGN_IN_RESULT_CODE = 1001
@@ -32,10 +29,11 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val binding = DataBindingUtil.inflate<FragmentLoginBinding>(
             inflater,
-            R.layout.fragment_login, container, false
+            R.layout.fragment_login,
+            container,
+            false
         )
 
         launchSignInFlow()
@@ -49,14 +47,10 @@ class LoginFragment : Fragment() {
     }
 
     private fun launchSignInFlow() {
-        // Give users the option to sign in / register with their email or Google account. If users
-        // choose to register with their email, they will need to create a password as well.
         val providers = arrayListOf(
             AuthUI.IdpConfig.EmailBuilder().build(), AuthUI.IdpConfig.GoogleBuilder().build()
         )
 
-        // Create and launch sign-in intent. We listen to the response of this activity with the
-        // SIGN_IN_RESULT_CODE code.
         startActivityForResult(
             AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(
                 providers

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".presentation.InsertExpenseFragment">
+
+        <TextView
+            android:id="@+id/insert_expense_text_view_expense_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Inserir Gasto"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/value_text_input_layout_expense_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/insert_expense_text_view_expense_fragment">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/value_text_input_edit_text_expense_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Valor" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/description_text_input_layout_expense_fragment"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/value_text_input_layout_expense_fragment">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/description_text_input_edit_text_expense_fragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Descrição" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/insert_expense_button"
+            style="@android:style/Widget.Material.Light.Button.Borderless.Colored"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Button"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/date_picker_button_expense_fragment" />
+
+        <CheckBox
+            android:id="@+id/was_paid_checkbox_expense_fragment"
+            style="@android:style/Widget.Material.Light.CompoundButton.CheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:text="Pago"
+            app:layout_constraintBottom_toBottomOf="@+id/date_picker_button_expense_fragment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/date_selected_text_view_expense_fragment"
+            app:layout_constraintTop_toBottomOf="@+id/description_text_input_layout_expense_fragment" />
+
+        <TextView
+            android:id="@+id/date_selected_text_view_expense_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="06/03/2020"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@+id/date_picker_button_expense_fragment"
+            app:layout_constraintStart_toEndOf="@+id/date_picker_button_expense_fragment"
+            app:layout_constraintTop_toTopOf="@+id/date_picker_button_expense_fragment" />
+
+        <Button
+            android:id="@+id/date_picker_button_expense_fragment"
+            style="@android:style/Widget.Material.Light.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:text="Data"
+            android:textSize="12sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/description_text_input_layout_expense_fragment" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

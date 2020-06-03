@@ -18,7 +18,6 @@ import com.souza.billsapp.login.presentation.LoginViewModel
 class SplashFragment : Fragment() {
 
     private lateinit var binding: FragmentSplashBinding
-
     private val viewModel by viewModels<LoginViewModel>()
 
     override fun onCreateView(

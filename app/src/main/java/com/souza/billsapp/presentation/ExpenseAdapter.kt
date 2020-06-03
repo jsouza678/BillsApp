@@ -10,6 +10,9 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.souza.billsapp.R
 import com.souza.billsapp.data.Expense
+import java.text.Format
+import java.text.SimpleDateFormat
+import java.util.*
 
 class ExpenseAdapter(options: FirestoreRecyclerOptions<Expense>) : FirestoreRecyclerAdapter<Expense,
         ExpenseAdapter.ViewHolder>(options) {
@@ -36,8 +39,15 @@ class ExpenseAdapter(options: FirestoreRecyclerOptions<Expense>) : FirestoreRecy
         fun itemBind(expense: Expense) {
             valor.text = expense.value.toString()
             descricao.text = expense.description
-            data.text = expense.date.toString()
+            val timeStampAsDateResult = expense.date?.toDate()
+            data.text = formatDate(timeStampAsDateResult)
             pago.isChecked = expense.wasPaid
         }
+
+        private fun formatDate(date : Date?) : String{
+            val formatter: Format = SimpleDateFormat("dd/MM/yyyy - HH:mm:ss", Locale.getDefault())
+            return formatter.format(date)
+        }
     }
+
 }
