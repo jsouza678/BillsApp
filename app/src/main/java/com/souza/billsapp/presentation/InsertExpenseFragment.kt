@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.text.Editable
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -15,7 +16,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.NavigationUI
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.Timestamp
 import com.souza.billsapp.R
@@ -59,10 +62,15 @@ class InsertExpenseFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back)
-
         navController = findNavController()
+
+        /*NavigationUI.setupActionBarWithNavController(activity as AppCompatActivity, navController)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back)*/
+        (activity as AppCompatActivity).supportActionBar?.show()
+        setHasOptionsMenu(true)
+
+
         insertExpenseButton = binding.insertExpenseButton
         valueInputEditText = binding.valueTextInputEditTextExpenseFragment
         descriptionInputEditText = binding.descriptionTextInputEditTextExpenseFragment
@@ -85,6 +93,13 @@ class InsertExpenseFragment : Fragment() {
 
         setupDatePickerDialogListener()
         setupInsertExpenseButton()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // handle the up button here
+        return NavigationUI.onNavDestinationSelected(item,
+            requireView().findNavController())
+                || super.onOptionsItemSelected(item)
     }
 
     private fun setupInsertExpenseButton() {

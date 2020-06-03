@@ -27,7 +27,6 @@
         <action
             android:id="@+id/action_loginFragment_to_billFragment"
             app:destination="@id/billFragment"
-            app:popUpToInclusive="true"
             app:popUpTo="@id/splashFragment"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"/>
@@ -41,14 +40,12 @@
         <action
             android:id="@+id/action_billFragment_to_insertExpenseFragment"
             app:destination="@id/insertExpenseFragment"
-            app:popUpToInclusive="true"
             app:popUpTo="@id/billFragment"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"/>
         <action
             android:id="@+id/action_billFragment_to_updateExpenseFragment"
             app:destination="@id/insertExpenseFragment"
-            app:popUpToInclusive="true"
             app:popUpTo="@id/billFragment"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out">
@@ -65,7 +62,8 @@
         tools:layout="@layout/fragment_receipt" >
         <action
             android:id="@+id/action_receiptFragment_to_billFragment"
-            app:destination="@id/billFragment" />
+            app:destination="@id/billFragment"
+            app:popUpTo="@id/receiptFragment"/>
     </fragment>
 
     <fragment
@@ -95,7 +93,8 @@
             android:defaultValue="@null"/>
         <action
             android:id="@+id/action_insertExpenseFragment_to_billFragment"
-            app:destination="@id/billFragment" />
+            app:destination="@id/billFragment"
+            app:popUpTo="@id/insertExpenseFragment"/>
     </fragment>
 
 </navigation>

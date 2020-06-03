@@ -45,6 +45,7 @@ class ExpensesFragment : Fragment(){
             container,
             false)
 
+        (activity as AppCompatActivity).supportActionBar?.hide()
         insertButton = binding.insertExpenseButton
         expensesRecyclerView = binding.expensesRecyclerViewExpensesFragment
         initObserver()
