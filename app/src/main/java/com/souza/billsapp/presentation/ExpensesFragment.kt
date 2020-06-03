@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.souza.billsapp.R
@@ -99,7 +100,7 @@ class ExpensesFragment : Fragment(){
                         val valueToUpdate: Int = expense.value!!
                         val descriptionToUpdate: String = expense.description!!
                         val wasPaidToUpdate: Boolean = expense.wasPaid
-                        val dateToUpdate: String = expense?.date.toString()
+                        val dateToUpdate: Timestamp = expense.date!!
                         val actionDetail = ExpensesFragmentDirections
                             .actionBillFragmentToUpdateExpenseFragment(
                                 documentId,

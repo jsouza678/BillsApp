@@ -56,7 +56,7 @@ class ExpenseAdapter(options: FirestoreRecyclerOptions<Expense>) : FirestoreRecy
             return formatter.format(date)
         }
 
-        val onClickListener = itemView.setOnClickListener { view->
+        val onClickListener = itemView.setOnClickListener { view ->
             val position : Int = adapterPosition
             // Avoid a crash while touching a item while it is being removed
             if(position != RecyclerView.NO_POSITION && listener != null) {

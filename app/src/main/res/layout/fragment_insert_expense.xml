@@ -88,7 +88,6 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
             android:text="06/03/2020"
-            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@+id/date_picker_button_expense_fragment"
             app:layout_constraintStart_toEndOf="@+id/date_picker_button_expense_fragment"
             app:layout_constraintTop_toTopOf="@+id/date_picker_button_expense_fragment" />

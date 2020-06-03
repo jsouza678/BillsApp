@@ -3,24 +3,26 @@ package com.souza.billsapp.presentation
 import android.app.DatePickerDialog
 import android.os.Bundle
 import android.text.Editable
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.Timestamp
-
 import com.souza.billsapp.R
 import com.souza.billsapp.data.Expense
 import com.souza.billsapp.databinding.FragmentInsertExpenseBinding
-import java.nio.channels.CancelledKeyException
+import java.text.Format
+import java.text.SimpleDateFormat
 import java.util.*
 
 class InsertExpenseFragment : Fragment() {
@@ -33,12 +35,14 @@ class InsertExpenseFragment : Fragment() {
     private lateinit var wasPaidCheckBox : CheckBox
     private lateinit var insertExpenseButton: Button
     private lateinit var openDatePickerButton: Button
+    private lateinit var dateSelectedOnDatePickerTextView: TextView
     private val calendar = Calendar.getInstance()
     private lateinit var dateSetListener : DatePickerDialog.OnDateSetListener
     private val year = calendar.get(Calendar.YEAR)
     private val month = calendar.get(Calendar.MONTH)
     private val day = calendar.get(Calendar.DAY_OF_MONTH)
     private var date : Date = calendar.time
+    private lateinit var choosenDate : Date
     private var documentId = ""
     private var isUpdate = false
     private lateinit var safeArgs: InsertExpenseFragmentArgs
@@ -64,6 +68,7 @@ class InsertExpenseFragment : Fragment() {
         descriptionInputEditText = binding.descriptionTextInputEditTextExpenseFragment
         wasPaidCheckBox = binding.wasPaidCheckboxExpenseFragment
         openDatePickerButton = binding.datePickerButtonExpenseFragment
+        dateSelectedOnDatePickerTextView = binding.dateSelectedTextViewExpenseFragment
 
         arguments?.let {
             safeArgs = InsertExpenseFragmentArgs.fromBundle(it)
@@ -87,7 +92,7 @@ class InsertExpenseFragment : Fragment() {
             val valueResult = valueInputEditText.text.toString()
             val descriptionResult : String = descriptionInputEditText.text.toString()
             val paidResult = wasPaidCheckBox.isChecked
-            val dateResult = Timestamp(date)
+            val dateResult = Timestamp(choosenDate)
 
             if(valueResult.trim().isEmpty() || descriptionResult.trim().isEmpty()){
                 valueInputEditText.error = "Por favor, preencha o valor"
@@ -123,7 +128,11 @@ class InsertExpenseFragment : Fragment() {
         openDatePickerButton.setOnClickListener {
             DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
                 // Display Selected date in TextView
-                date = Date(dayOfMonth, monthOfYear, year)
+                calendar.set(Calendar.YEAR, year)
+                calendar.set(Calendar.MONTH, monthOfYear)
+                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+                choosenDate = calendar.time
+                dateSelectedOnDatePickerTextView.text = formatDate(choosenDate)
             }, year, month, day).show()
         }
     }
@@ -132,7 +141,20 @@ class InsertExpenseFragment : Fragment() {
         valueInputEditText.text = safeArgs.value.toString().toEditable()
         descriptionInputEditText.text = safeArgs.description.toString().toEditable()
         wasPaidCheckBox.isChecked = safeArgs.wasPaid
+        val date = safeArgs.date?.toDate()
+        dateSelectedOnDatePickerTextView.text = formatDateWithSeconds(date)
     }
 
-    fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
+    private fun formatDateWithSeconds(date : Date?) : String{
+        val formatter: Format = SimpleDateFormat("dd/MM/yyyy - HH:mm:ss", Locale.getDefault())
+        return formatter.format(date)
+    }
+
+    private fun formatDate(date : Date?) : String{
+        val formatter: Format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        return formatter.format(date)
+    }
+
+
+    private fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
 }

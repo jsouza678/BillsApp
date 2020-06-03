@@ -83,15 +83,16 @@
         <argument
             android:name="description"
             app:argType="string"
-            android:defaultValue="null"/>
+            android:defaultValue="0"/>
         <argument
             android:name="wasPaid"
             app:argType="boolean"
             android:defaultValue="false"/>
         <argument
             android:name="date"
-            app:argType="string"
-            android:defaultValue="null"/>
+            app:argType="com.google.firebase.Timestamp"
+            app:nullable="true"
+            android:defaultValue="@null"/>
         <action
             android:id="@+id/action_insertExpenseFragment_to_billFragment"
             app:destination="@id/billFragment" />
