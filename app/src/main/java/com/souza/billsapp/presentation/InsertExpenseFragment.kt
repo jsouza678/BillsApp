@@ -92,6 +92,7 @@ class InsertExpenseFragment : Fragment() {
         }
 
         setupDatePickerDialogListener()
+        choosenDate = calendar.time
         setupInsertExpenseButton()
     }
 
