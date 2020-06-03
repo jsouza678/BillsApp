@@ -46,6 +46,14 @@
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out"/>
         <action
+            android:id="@+id/action_billFragment_to_updateExpenseFragment"
+            app:destination="@id/insertExpenseFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/billFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out">
+        </action>
+        <action
             android:id="@+id/action_billFragment_to_receiptFragment"
             app:destination="@id/receiptFragment" />
     </fragment>
@@ -63,7 +71,27 @@
     <fragment
         android:id="@+id/insertExpenseFragment"
         android:name="com.souza.billsapp.presentation.InsertExpenseFragment"
-        android:label="InsertExpenseFragment" >
+        android:label="InsertExpenseFragment">
+        <argument
+            android:name="documentId"
+            app:argType="string"
+            android:defaultValue="-1"/>
+        <argument
+            android:name="value"
+            app:argType="integer"
+            android:defaultValue="0"/>
+        <argument
+            android:name="description"
+            app:argType="string"
+            android:defaultValue="null"/>
+        <argument
+            android:name="wasPaid"
+            app:argType="boolean"
+            android:defaultValue="false"/>
+        <argument
+            android:name="date"
+            app:argType="string"
+            android:defaultValue="null"/>
         <action
             android:id="@+id/action_insertExpenseFragment_to_billFragment"
             app:destination="@id/billFragment" />

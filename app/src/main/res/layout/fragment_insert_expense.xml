@@ -30,6 +30,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/value_text_input_edit_text_expense_fragment"
                 android:layout_width="match_parent"
+                android:inputType="numberDecimal"
                 android:layout_height="wrap_content"
                 android:hint="Valor" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -49,6 +50,7 @@
                 android:id="@+id/description_text_input_edit_text_expense_fragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textMultiLine"
                 android:hint="Descrição" />
 
         </com.google.android.material.textfield.TextInputLayout>

@@ -14,5 +14,4 @@ class ReceiptFragment : Fragment() {
     ): View? {
         return inflater.inflate(R.layout.fragment_receipt, container, false)
     }
-
 }

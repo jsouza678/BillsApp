@@ -30,5 +30,17 @@ class ExpenseRepository {
                 //TODO
                 }
     }
+
+    fun updateData(data : Expense, document: String) {
+        db.collection("despesas")
+            .document(document)
+            .set(data)
+            .addOnSuccessListener {
+                //TODO
+            }
+            .addOnFailureListener {
+                //TODO
+            }
+    }
 }
 

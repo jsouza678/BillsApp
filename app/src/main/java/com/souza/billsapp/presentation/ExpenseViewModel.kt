@@ -22,4 +22,8 @@ public class ExpenseViewModel : ViewModel() {
         expenseRepository.insertData(data)
     }
 
+    fun updateExpense(data: Expense, document: String) {
+        expenseRepository.updateData(data, document)
+    }
+
 }
