@@ -1,5 +1,6 @@
 package com.souza.billsapp.data
 
+import android.util.Log
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -7,15 +8,15 @@ import java.util.Calendar
 
 class ExpenseRepository {
 
-    private val auth = FirebaseAuth.getInstance().currentUser?.uid
+    private val auth: String? = FirebaseAuth.getInstance().currentUser?.uid
     private val calendar: Calendar = Calendar.getInstance()
     private val mes : Int = calendar.get(java.util.Calendar.MONTH)
     private val ano : Int = calendar.get(java.util.Calendar.YEAR)
     private val db : FirebaseFirestore = FirebaseFirestore.getInstance()
     private val userId = "$auth"
     private val collectionName: String = "despesas_$mes"+"_"+"$ano"
-    private val queryTest = db.document("users/"+userId).collection(collectionName)
-    private val queryFilteredByPaidStatus = db.document("users/"+userId).collection(collectionName).whereEqualTo("wasPaid", true)
+    private val queryTest = db.document("users/$userId").collection(collectionName)
+    private val queryFilteredByPaidStatus = db.document("users/$userId").collection(collectionName).whereEqualTo("wasPaid", true)
 
     fun getData() : FirestoreRecyclerOptions<Expense> {
          return FirestoreRecyclerOptions

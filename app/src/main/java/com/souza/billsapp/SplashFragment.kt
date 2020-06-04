@@ -11,9 +11,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.firestore.FirebaseFirestore
 import com.souza.billsapp.databinding.FragmentSplashBinding
+import com.souza.billsapp.login.presentation.LoginFragmentDirections
 import com.souza.billsapp.login.presentation.LoginViewModel
 
 class SplashFragment : Fragment() {
@@ -42,12 +44,12 @@ class SplashFragment : Fragment() {
             when (authenticationState) {
                 LoginViewModel.AuthenticationState.AUTHENTICATED -> {
                     Handler().postDelayed({
-                        navController.navigate(R.id.billFragment)
+                        navController.navigate(R.id.action_splashFragment_to_billFragment)
                     }, 1000)
                 }
                 LoginViewModel.AuthenticationState.UNAUTHENTICATED -> {
                     Handler().postDelayed({
-                        navController.navigate(R.id.action_splashFragment_to_billFragment)
+                        navController.navigate(R.id.action_splashFragment_to_loginFragment)
                     }, 1000)
                 }
                 else -> Log.e(

@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.firebase.ui.auth.AuthUI
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
@@ -139,11 +140,12 @@ class ExpensesFragment : Fragment(){
             R.id.receipt_icon_menu -> {
                 navController.navigate(R.id.action_billFragment_to_receiptFragment)
             }
-            R.id.delete_db_icon_menu -> {
-                //TODO DIALOG CONFIRMANDO
-            }
             R.id.about_icon_menu -> {
-
+                navController.navigate(R.id.action_billFragment_to_aboutFragment)
+            }
+            R.id.exit_icon_menu -> {
+                AuthUI.getInstance().signOut(requireContext())
+                navController.navigate(R.id.action_billFragment_to_loginFragment)
             }
         }
         return super.onOptionsItemSelected(item)

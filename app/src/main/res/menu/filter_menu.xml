@@ -13,11 +13,11 @@
         android:id="@+id/receipt_icon_menu"
         android:title="Receita" />
 
-    <item android:id="@+id/delete_db_icon_menu"
-        android:title="Excluir tudo" />
-
     <item android:id="@+id/about_icon_menu"
         android:title="Sobre" />
+
+    <item android:id="@+id/delete_db_icon_menu"
+        android:title="Excluir gastos do mês" />
 
     <item android:id="@+id/exit_icon_menu"
         android:title="Sair" />

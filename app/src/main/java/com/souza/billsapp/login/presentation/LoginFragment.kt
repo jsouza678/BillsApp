@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.souza.billsapp.databinding.FragmentLoginBinding
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
@@ -43,7 +44,6 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Toast.makeText(context, "Login Fragment", Toast.LENGTH_SHORT).show()
     }
 
     private fun launchSignInFlow() {
@@ -52,9 +52,11 @@ class LoginFragment : Fragment() {
         )
 
         startActivityForResult(
-            AuthUI.getInstance().createSignInIntentBuilder().setAvailableProviders(
-                providers
-            ).build(),
+            AuthUI.getInstance()
+                .createSignInIntentBuilder()
+                .setAvailableProviders(providers)
+                .setIsSmartLockEnabled(false)
+                .build(),
             SIGN_IN_RESULT_CODE
         )
     }
@@ -70,13 +72,14 @@ class LoginFragment : Fragment() {
                     "Successfully signed in user " +
                             "${FirebaseAuth.getInstance().currentUser?.displayName}!"
                 )
+                val navController = findNavController().navigate(R.id.action_loginFragment_to_billFragment)
             } else {
                 // Sign in failed. If response is null the user canceled the sign-in flow using
                 // the back button. Otherwise check response.getError().getErrorCode() and handle
                 // the error.
                 Log.i(TAG, "Sign in unsuccessful ${response?.error?.errorCode}")
+                //navController.navigate(R.id.action_loginFragment_to_splashFragment)
             }
         }
     }
-
 }

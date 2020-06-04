@@ -75,22 +75,4 @@ class ExpenseAdapter(options: FirestoreRecyclerOptions<Expense>) : FirestoreRecy
     fun setOnItemClickListener(onItemClickListener: OnItemClickListener) {
         this.listener = onItemClickListener
     }
-
-    override fun onDataChanged() {
-        super.onDataChanged()
-
-        // Called each time there is a new query snapshot. You may want to use this method
-        // to hide a loading spinner or check for the "no documents" state and update your UI.
-        // ...
-
-    }
-
-    override fun onError(e: FirebaseFirestoreException) {
-        super.onError(e)
-
-        // Called when there is an error getting a query snapshot. You may want to update
-        // your UI to display an error message to the user.
-        // ...
-    }
-
 }
