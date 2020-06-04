@@ -123,56 +123,29 @@ class ExpensesFragment : Fragment(){
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val itemId = item.itemId
-        val menu: Menu = filterMenu
 
         when(itemId) {
             R.id.filter_icon_menu -> {
                 if(item.isChecked){
-                    Toast.makeText(requireContext(), "Enable", Toast.LENGTH_SHORT).show()
                     viewModel.unfilteredListOnMLiveData()
                     item.setIcon(R.drawable.ic_filter_list)
                     item.isChecked = false
                 }else{
                     item.isChecked = true
-                    Toast.makeText(requireContext(), "Disabled", Toast.LENGTH_SHORT).show()
                     viewModel.filteredListOnMLiveData()
                     item.setIcon(R.drawable.ic_filter_list_black)
-                    //recyclerAdapter.updateOptions(viewModel.filterByMonth())
                 }
             }
+            R.id.receipt_icon_menu -> {
+                navController.navigate(R.id.action_billFragment_to_receiptFragment)
+            }
+            R.id.delete_db_icon_menu -> {
+                //TODO DIALOG CONFIRMANDO
+            }
+            R.id.about_icon_menu -> {
 
+            }
         }
         return super.onOptionsItemSelected(item)
     }
-
-    override fun onStart() {
-        Log.i("LC", "On Start Called")
-        super.onStart()
-    }
-
-    override fun onResume() {
-        Log.i("LC", "On Resume Called")
-        super.onResume()
-    }
-
-    override fun onPause() {
-        Log.i("LC", "On Pause Called")
-        super.onPause()
-    }
-
-    override fun onStop() {
-        Log.i("LC", "On Stop Called")
-        super.onStop()
-    }
-
-    override fun onAttach(context: Context) {
-        Log.i("LC", "On Attach Called")
-        super.onAttach(context)
-    }
-
-    override fun onDetach() {
-        Log.i("LC", "On Detach Called")
-        super.onDetach()
-    }
-
 }

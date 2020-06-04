@@ -4,8 +4,6 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.text.Editable
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
@@ -82,7 +80,7 @@ class InsertExpenseFragment : Fragment() {
         arguments?.let {
             safeArgs = InsertExpenseFragmentArgs.fromBundle(it)
             documentId = safeArgs.documentId
-            if(!safeArgs.documentId.equals("-1")){ isUpdate = true }
+            if(safeArgs.documentId != "-1"){ isUpdate = true }
         }
 
         if(isUpdate){

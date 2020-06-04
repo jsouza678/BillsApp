@@ -30,11 +30,11 @@ public class ExpenseViewModel : ViewModel() {
 
     fun unfilteredListOnMLiveData() = _dataList.postValue(noFilterExpense())
 
-    fun filterByMonth() : FirestoreRecyclerOptions<Expense> {
+    private fun filterByMonth() : FirestoreRecyclerOptions<Expense> {
         return expenseRepository.getMonthlyData()
     }
 
-    fun noFilterExpense() : FirestoreRecyclerOptions<Expense> {
+    private fun noFilterExpense() : FirestoreRecyclerOptions<Expense> {
         return expenseRepository.getData()
     }
 }

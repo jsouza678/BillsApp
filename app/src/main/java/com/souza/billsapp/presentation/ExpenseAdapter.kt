@@ -36,7 +36,7 @@ class ExpenseAdapter(options: FirestoreRecyclerOptions<Expense>) : FirestoreRecy
         return ExpenseViewHolder(view)
     }
 
-    public fun deleteItem(position: Int) {
+    fun deleteItem(position: Int) {
         snapshots.getSnapshot(position).reference.delete()
     }
 

@@ -1,36 +1,38 @@
 package com.souza.billsapp.data
 
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Calendar
 
 class ExpenseRepository {
 
-    private val calendar = Calendar.getInstance()
-    private val year = calendar.get(Calendar.YEAR)
-    private val month = calendar.get(Calendar.MONTH)
-    private val day = calendar.get(Calendar.DAY_OF_MONTH)
-    private val today = calendar.time
+    private val auth = FirebaseAuth.getInstance().currentUser?.uid
+    private val calendar: Calendar = Calendar.getInstance()
+    private val mes : Int = calendar.get(java.util.Calendar.MONTH)
+    private val ano : Int = calendar.get(java.util.Calendar.YEAR)
     private val db : FirebaseFirestore = FirebaseFirestore.getInstance()
-    private val query = db.collection("despesas")
-    private val queryFilteredByMonth = db.collection("despesas").whereGreaterThanOrEqualTo("date", today)
+    private val userId = "$auth"
+    private val collectionName: String = "despesas_$mes"+"_"+"$ano"
+    private val queryTest = db.document("users/"+userId).collection(collectionName)
+    private val queryFilteredByPaidStatus = db.document("users/"+userId).collection(collectionName).whereEqualTo("wasPaid", true)
 
     fun getData() : FirestoreRecyclerOptions<Expense> {
          return FirestoreRecyclerOptions
             .Builder<Expense>()
-            .setQuery(query, Expense::class.java)
+            .setQuery(queryTest, Expense::class.java)
             .build()
     }
 
     fun getMonthlyData() : FirestoreRecyclerOptions<Expense> {
         return FirestoreRecyclerOptions
                 .Builder<Expense>()
-                .setQuery(queryFilteredByMonth, Expense::class.java)
+                .setQuery(queryFilteredByPaidStatus, Expense::class.java)
                 .build()
     }
 
     fun insertData(data : Expense) {
-        db.collection("despesas")
+        db.collection("users").document(userId).collection(collectionName)
             .document()
             .set(data)
             .addOnSuccessListener {
@@ -42,7 +44,7 @@ class ExpenseRepository {
     }
 
     fun updateData(data : Expense, document: String) {
-        db.collection("despesas")
+        db.collection("users").document(userId).collection(collectionName)
             .document(document)
             .set(data)
             .addOnSuccessListener {

@@ -7,6 +7,19 @@
         android:clickable="true"
         android:icon="@drawable/ic_filter_list"
         android:title="Filtrar"
-        app:showAsAction="always" />
+        app:showAsAction="always|withText"/>
+
+    <item
+        android:id="@+id/receipt_icon_menu"
+        android:title="Receita" />
+
+    <item android:id="@+id/delete_db_icon_menu"
+        android:title="Excluir tudo" />
+
+    <item android:id="@+id/about_icon_menu"
+        android:title="Sobre" />
+
+    <item android:id="@+id/exit_icon_menu"
+        android:title="Sair" />
 
 </menu>

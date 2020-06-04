@@ -47,7 +47,7 @@ class SplashFragment : Fragment() {
                 }
                 LoginViewModel.AuthenticationState.UNAUTHENTICATED -> {
                     Handler().postDelayed({
-                        navController.navigate(R.id.loginFragment)
+                        navController.navigate(R.id.action_splashFragment_to_billFragment)
                     }, 1000)
                 }
                 else -> Log.e(
