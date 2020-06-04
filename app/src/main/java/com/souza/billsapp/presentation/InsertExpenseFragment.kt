@@ -4,13 +4,14 @@ import android.app.DatePickerDialog
 import android.os.Bundle
 import android.text.Editable
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -26,7 +27,9 @@ import com.souza.billsapp.data.Expense
 import com.souza.billsapp.databinding.FragmentInsertExpenseBinding
 import java.text.Format
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 class InsertExpenseFragment : Fragment() {
 
@@ -55,7 +58,7 @@ class InsertExpenseFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate<FragmentInsertExpenseBinding>(inflater, R.layout.fragment_insert_expense, container, false)
-
+        setHasOptionsMenu(true)
         return binding.root
     }
 
@@ -68,8 +71,6 @@ class InsertExpenseFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back)*/
         (activity as AppCompatActivity).supportActionBar?.show()
-        setHasOptionsMenu(true)
-
 
         insertExpenseButton = binding.insertExpenseButton
         valueInputEditText = binding.valueTextInputEditTextExpenseFragment
@@ -171,6 +172,6 @@ class InsertExpenseFragment : Fragment() {
         return formatter.format(date)
     }
 
-
     private fun String.toEditable(): Editable =  Editable.Factory.getInstance().newEditable(this)
+
 }

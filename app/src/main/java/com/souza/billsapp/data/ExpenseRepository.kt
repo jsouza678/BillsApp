@@ -1,22 +1,32 @@
 package com.souza.billsapp.data
 
-import android.util.Log
-import android.widget.Toast
-import androidx.lifecycle.LiveData
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.Calendar
 
 class ExpenseRepository {
 
-
+    private val calendar = Calendar.getInstance()
+    private val year = calendar.get(Calendar.YEAR)
+    private val month = calendar.get(Calendar.MONTH)
+    private val day = calendar.get(Calendar.DAY_OF_MONTH)
+    private val today = calendar.time
     private val db : FirebaseFirestore = FirebaseFirestore.getInstance()
     private val query = db.collection("despesas")
+    private val queryFilteredByMonth = db.collection("despesas").whereGreaterThanOrEqualTo("date", today)
 
     fun getData() : FirestoreRecyclerOptions<Expense> {
          return FirestoreRecyclerOptions
             .Builder<Expense>()
             .setQuery(query, Expense::class.java)
             .build()
+    }
+
+    fun getMonthlyData() : FirestoreRecyclerOptions<Expense> {
+        return FirestoreRecyclerOptions
+                .Builder<Expense>()
+                .setQuery(queryFilteredByMonth, Expense::class.java)
+                .build()
     }
 
     fun insertData(data : Expense) {

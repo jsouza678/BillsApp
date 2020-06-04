@@ -15,7 +15,7 @@ public class ExpenseViewModel : ViewModel() {
     get() = _dataList
 
     init{
-        _dataList.postValue(expenseRepository.getData())
+        _dataList.postValue(noFilterExpense())
     }
 
     fun insertExpense(data: Expense) {
@@ -26,4 +26,15 @@ public class ExpenseViewModel : ViewModel() {
         expenseRepository.updateData(data, document)
     }
 
+    fun filteredListOnMLiveData() = _dataList.postValue(filterByMonth())
+
+    fun unfilteredListOnMLiveData() = _dataList.postValue(noFilterExpense())
+
+    fun filterByMonth() : FirestoreRecyclerOptions<Expense> {
+        return expenseRepository.getMonthlyData()
+    }
+
+    fun noFilterExpense() : FirestoreRecyclerOptions<Expense> {
+        return expenseRepository.getData()
+    }
 }

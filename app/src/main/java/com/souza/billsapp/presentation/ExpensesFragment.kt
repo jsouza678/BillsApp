@@ -1,10 +1,9 @@
 package com.souza.billsapp.presentation
 
-import android.media.MediaRouter
+import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -15,16 +14,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FirebaseFirestore
 import com.souza.billsapp.R
 import com.souza.billsapp.data.Expense
 import com.souza.billsapp.databinding.FragmentExpensesBinding
-import java.util.*
-import kotlin.math.exp
 
 class ExpensesFragment : Fragment(){
 
@@ -34,6 +29,8 @@ class ExpensesFragment : Fragment(){
     private lateinit var expensesRecyclerView : RecyclerView
     private val viewModel by viewModels<ExpenseViewModel>()
     private lateinit var navController: NavController
+    private var filtered : Boolean = false
+    private lateinit var filterMenu : Menu
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,10 +42,12 @@ class ExpensesFragment : Fragment(){
             container,
             false)
 
-        (activity as AppCompatActivity).supportActionBar?.hide()
+        (activity as AppCompatActivity).supportActionBar?.show()
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         insertButton = binding.insertExpenseButton
         expensesRecyclerView = binding.expensesRecyclerViewExpensesFragment
         initObserver()
+        setHasOptionsMenu(true)
         return binding.root
     }
 
@@ -59,7 +58,6 @@ class ExpensesFragment : Fragment(){
         insertButton.setOnClickListener {
             navController.navigate(R.id.action_billFragment_to_insertExpenseFragment)
         }
-        initObserver()
     }
 
     private fun initObserver() {
@@ -117,5 +115,64 @@ class ExpensesFragment : Fragment(){
         )
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.filter_menu, menu)
+        filterMenu = menu
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val itemId = item.itemId
+        val menu: Menu = filterMenu
+
+        when(itemId) {
+            R.id.filter_icon_menu -> {
+                if(item.isChecked){
+                    Toast.makeText(requireContext(), "Enable", Toast.LENGTH_SHORT).show()
+                    viewModel.unfilteredListOnMLiveData()
+                    item.setIcon(R.drawable.ic_filter_list)
+                    item.isChecked = false
+                }else{
+                    item.isChecked = true
+                    Toast.makeText(requireContext(), "Disabled", Toast.LENGTH_SHORT).show()
+                    viewModel.filteredListOnMLiveData()
+                    item.setIcon(R.drawable.ic_filter_list_black)
+                    //recyclerAdapter.updateOptions(viewModel.filterByMonth())
+                }
+            }
+
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    override fun onStart() {
+        Log.i("LC", "On Start Called")
+        super.onStart()
+    }
+
+    override fun onResume() {
+        Log.i("LC", "On Resume Called")
+        super.onResume()
+    }
+
+    override fun onPause() {
+        Log.i("LC", "On Pause Called")
+        super.onPause()
+    }
+
+    override fun onStop() {
+        Log.i("LC", "On Stop Called")
+        super.onStop()
+    }
+
+    override fun onAttach(context: Context) {
+        Log.i("LC", "On Attach Called")
+        super.onAttach(context)
+    }
+
+    override fun onDetach() {
+        Log.i("LC", "On Detach Called")
+        super.onDetach()
+    }
 
 }
