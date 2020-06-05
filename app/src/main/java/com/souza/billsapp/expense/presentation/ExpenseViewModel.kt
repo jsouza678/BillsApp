@@ -1,4 +1,4 @@
-package com.souza.billsapp.presentation
+package com.souza.billsapp.expense.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

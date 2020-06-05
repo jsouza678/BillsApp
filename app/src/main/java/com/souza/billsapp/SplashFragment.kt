@@ -11,29 +11,32 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.souza.billsapp.databinding.FragmentSplashBinding
-import com.souza.billsapp.login.presentation.LoginFragmentDirections
+import com.souza.billsapp.extensions.visible
 import com.souza.billsapp.login.presentation.LoginViewModel
 
 class SplashFragment : Fragment() {
 
     private lateinit var binding: FragmentSplashBinding
     private val viewModel by viewModels<LoginViewModel>()
+    private lateinit var bottomNavigationView: BottomNavigationView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_splash, container, false)
-        val db : FirebaseFirestore = FirebaseFirestore.getInstance()
 
+        bottomNavigationView = activity?.findViewById(R.id.bottom_nav_menu)!!
         (activity as AppCompatActivity).supportActionBar?.hide()
 
         return binding.root
+    }
+
+    private fun turnOnBottomNavigation() {
+        bottomNavigationView.visible()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,6 +48,7 @@ class SplashFragment : Fragment() {
                 LoginViewModel.AuthenticationState.AUTHENTICATED -> {
                     Handler().postDelayed({
                         navController.navigate(R.id.action_splashFragment_to_billFragment)
+                        turnOnBottomNavigation()
                     }, 1000)
                 }
                 LoginViewModel.AuthenticationState.UNAUTHENTICATED -> {

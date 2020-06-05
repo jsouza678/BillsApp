@@ -1,10 +1,7 @@
-package com.souza.billsapp.presentation
+package com.souza.billsapp.income.presentation
 
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -19,16 +16,16 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
 import com.souza.billsapp.R
-import com.souza.billsapp.data.Expense
-import com.souza.billsapp.databinding.FragmentExpensesBinding
+import com.souza.billsapp.data.Income
+import com.souza.billsapp.databinding.FragmentIncomesBinding
 
-class ExpensesFragment : Fragment(){
+class IncomeFragment : Fragment(){
 
-    private lateinit var binding : FragmentExpensesBinding
+    private lateinit var binding : FragmentIncomesBinding
     private lateinit var insertButton : FloatingActionButton
-    private lateinit var recyclerAdapter : ExpenseAdapter
-    private lateinit var expensesRecyclerView : RecyclerView
-    private val viewModel by viewModels<ExpenseViewModel>()
+    private lateinit var recyclerAdapter : IncomeAdapter
+    private lateinit var incomesRecyclerView : RecyclerView
+    private val viewModel by viewModels<IncomeViewModel>()
     private lateinit var navController: NavController
     private var filtered : Boolean = false
     private lateinit var filterMenu : Menu
@@ -37,18 +34,19 @@ class ExpensesFragment : Fragment(){
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        (activity as AppCompatActivity).supportActionBar?.title = "Gastos"
-        binding = DataBindingUtil.inflate<FragmentExpensesBinding>(inflater,
-            R.layout.fragment_expenses,
+        (activity as AppCompatActivity).supportActionBar?.title = "Entradas"
+        binding = DataBindingUtil.inflate<FragmentIncomesBinding>(inflater,
+            R.layout.fragment_incomes,
             container,
             false)
 
         (activity as AppCompatActivity).supportActionBar?.show()
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
-        insertButton = binding.insertExpenseButton
-        expensesRecyclerView = binding.expensesRecyclerViewExpensesFragment
+        insertButton = binding.insertIncomeButton
+        incomesRecyclerView = binding.incomesRecyclerViewIncomesFragment
         initObserver()
         setHasOptionsMenu(true)
+
         return binding.root
     }
 
@@ -57,14 +55,14 @@ class ExpensesFragment : Fragment(){
         navController = findNavController()
         //INSERT
         insertButton.setOnClickListener {
-            navController.navigate(R.id.action_billFragment_to_insertExpenseFragment)
+            navController.navigate(R.id.action_incomeFragment_to_insertIncomeFragment)
         }
     }
 
     private fun initObserver() {
         viewModel.apply {
             this.dataList.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-                recyclerAdapter= ExpenseAdapter(it)
+                recyclerAdapter= IncomeAdapter(it)
                 initRecyclerView()
                 recyclerAdapter.startListening()
             })
@@ -72,9 +70,9 @@ class ExpensesFragment : Fragment(){
     }
 
     private fun initRecyclerView() {
-        expensesRecyclerView.setHasFixedSize(true)
-        expensesRecyclerView.layoutManager = LinearLayoutManager(context)
-        expensesRecyclerView.adapter = recyclerAdapter
+        incomesRecyclerView.setHasFixedSize(true)
+        incomesRecyclerView.layoutManager = LinearLayoutManager(context)
+        incomesRecyclerView.adapter = recyclerAdapter
 
         val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0,
         ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
@@ -90,23 +88,23 @@ class ExpensesFragment : Fragment(){
             }
         }
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
-        itemTouchHelper.attachToRecyclerView(expensesRecyclerView)
+        itemTouchHelper.attachToRecyclerView(incomesRecyclerView)
 
-        recyclerAdapter.setOnItemClickListener(object: ExpenseAdapter.OnItemClickListener{
+        recyclerAdapter.setOnItemClickListener(object: IncomeAdapter.OnItemClickListener{
             override fun onItemClick(documentSnapshot: DocumentSnapshot, position: Int) {
-                    val expense = documentSnapshot.toObject(Expense::class.java)
-                    if(expense!= null){
+                    val income = documentSnapshot.toObject(Income::class.java)
+                    if(income!= null){
                         val documentId = documentSnapshot.id
-                        val valueToUpdate: Int = expense.value!!
-                        val descriptionToUpdate: String = expense.description!!
-                        val wasPaidToUpdate: Boolean = expense.wasPaid
-                        val dateToUpdate: Timestamp = expense.date!!
-                        val actionDetail = ExpensesFragmentDirections
-                            .actionBillFragmentToUpdateExpenseFragment(
+                        val valueToUpdate: Int = income.value!!
+                        val descriptionToUpdate: String = income.description!!
+                        val wasReceivedToUpdate: Boolean = income.wasReceived
+                        val dateToUpdate: Timestamp = income.date!!
+                        val actionDetail = IncomeFragmentDirections
+                            .actionIncomeFragmentToUpdateIncomeFragment(
                                 documentId,
                                 valueToUpdate,
                                 descriptionToUpdate,
-                                wasPaidToUpdate,
+                                wasReceivedToUpdate,
                                 dateToUpdate
                             )
                         navController.navigate(actionDetail)
@@ -136,9 +134,6 @@ class ExpensesFragment : Fragment(){
                     viewModel.filteredListOnMLiveData()
                     item.setIcon(R.drawable.ic_filter_list_black)
                 }
-            }
-            R.id.receipt_icon_menu -> {
-                navController.navigate(R.id.action_billFragment_to_receiptFragment)
             }
             R.id.about_icon_menu -> {
                 navController.navigate(R.id.action_billFragment_to_aboutFragment)

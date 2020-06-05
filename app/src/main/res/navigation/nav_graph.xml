@@ -12,15 +12,19 @@
         tools:layout="@layout/fragment_splash" >
         <action
             android:id="@+id/action_splashFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/splashFragment"
+            app:popUpToInclusive="true"/>
         <action
             android:id="@+id/action_splashFragment_to_billFragment"
-            app:destination="@id/billFragment" />
+            app:popUpTo="@id/splashFragment"
+            app:destination="@id/billFragment"
+            app:popUpToInclusive="true"/>
     </fragment>
 
     <fragment
         android:id="@+id/billFragment"
-        android:name="com.souza.billsapp.presentation.ExpensesFragment"
+        android:name="com.souza.billsapp.expense.presentation.ExpensesFragment"
         android:label="fragment_bill"
         tools:layout="@layout/fragment_expenses" >
         <action
@@ -37,9 +41,6 @@
             app:exitAnim="@anim/fade_out">
         </action>
         <action
-            android:id="@+id/action_billFragment_to_receiptFragment"
-            app:destination="@id/receiptFragment" />
-        <action
             android:id="@+id/action_billFragment_to_aboutFragment"
             app:destination="@id/aboutFragment" />
         <action
@@ -47,23 +48,14 @@
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true"
             app:destination="@id/loginFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/receiptFragment"
-        android:name="com.souza.billsapp.ReceiptFragment"
-        android:label="fragment_receipt"
-        tools:layout="@layout/fragment_receipt" >
         <action
-            android:id="@+id/action_receiptFragment_to_billFragment"
-            app:destination="@id/billFragment"
-            app:popUpToInclusive="true"
-            app:popUpTo="@id/receiptFragment"/>
+            android:id="@+id/action_billFragment_to_incomeFragment"
+            app:destination="@id/incomeFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/insertExpenseFragment"
-        android:name="com.souza.billsapp.presentation.InsertExpenseFragment"
+        android:name="com.souza.billsapp.expense.presentation.InsertExpenseFragment"
         android:label="InsertExpenseFragment">
         <argument
             android:name="documentId"
@@ -114,5 +106,56 @@
             android:id="@+id/action_loginFragment_to_splashFragment"
             app:destination="@id/splashFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/incomeFragment"
+        android:name="com.souza.billsapp.income.presentation.IncomeFragment"
+        android:label="IncomeFragment" >
+        <action
+            android:id="@+id/action_incomeFragment_to_updateIncomeFragment"
+            app:destination="@id/insertIncomeFragment"
+            app:popUpTo="@id/incomeFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out">
+        </action>
+        <action
+            android:id="@+id/action_incomeFragment_to_insertIncomeFragment"
+            app:destination="@id/insertIncomeFragment" />
+        <action
+            android:id="@+id/action_incomeFragment_to_billFragment"
+            app:destination="@id/billFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/insertIncomeFragment"
+        android:name="com.souza.billsapp.income.presentation.InsertIncomeFragment"
+        android:label="InsertIncomeFragment" >
+        <argument
+            android:name="documentId"
+            app:argType="string"
+            android:defaultValue="-1"/>
+        <argument
+            android:name="value"
+            app:argType="integer"
+            android:defaultValue="0"/>
+        <argument
+            android:name="description"
+            app:argType="string"
+            android:defaultValue="0"/>
+        <argument
+            android:name="wasReceived"
+            app:argType="boolean"
+            android:defaultValue="false"/>
+        <argument
+            android:name="date"
+            app:argType="com.google.firebase.Timestamp"
+            app:nullable="true"
+            android:defaultValue="@null"/>
+        <action
+            android:id="@+id/action_insertIncomeFragment_to_incomeFragment"
+            app:destination="@id/incomeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/resultFragment"
+        android:name="com.souza.billsapp.result.presentation.ResultFragment"
+        android:label="ResultFragment" />
 
 </navigation>

@@ -7,10 +7,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorSecondary"
-        tools:context=".expense.presentation.ExpensesFragment">
+        tools:context=".income.presentation.IncomesFragment">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/expenses_recycler_view_expenses_fragment"
+            android:id="@+id/incomes_recycler_view_incomes_fragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
@@ -22,11 +22,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/insertExpenseButton"
-            tools:listitem="@layout/expense_item" />
+            app:layout_constraintTop_toBottomOf="@+id/insertIncomeButton"
+            tools:listitem="@layout/income_item" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/insertExpenseButton"
+            android:id="@+id/insertIncomeButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

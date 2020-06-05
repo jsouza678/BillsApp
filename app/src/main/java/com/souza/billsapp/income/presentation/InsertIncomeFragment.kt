@@ -1,4 +1,4 @@
-package com.souza.billsapp.presentation
+package com.souza.billsapp.income.presentation
 
 import android.app.DatePickerDialog
 import android.os.Bundle
@@ -21,23 +21,24 @@ import androidx.navigation.ui.NavigationUI
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.Timestamp
 import com.souza.billsapp.R
-import com.souza.billsapp.data.Expense
-import com.souza.billsapp.databinding.FragmentInsertExpenseBinding
+import com.souza.billsapp.data.Income
+import com.souza.billsapp.databinding.FragmentInsertIncomesBinding
+import com.souza.billsapp.result.presentation.ResultViewModel
 import java.text.Format
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
-class InsertExpenseFragment : Fragment() {
+class InsertIncomeFragment : Fragment() {
 
     private lateinit var navController : NavController
-    private lateinit var binding : FragmentInsertExpenseBinding
-    private val viewModel by viewModels<ExpenseViewModel>()
+    private lateinit var binding : FragmentInsertIncomesBinding
+    private val viewModel by viewModels<IncomeViewModel>()
     private lateinit var valueInputEditText: TextInputEditText
     private lateinit var descriptionInputEditText : TextInputEditText
     private lateinit var wasPaidCheckBox : CheckBox
-    private lateinit var insertExpenseButton: Button
+    private lateinit var insertIncomeButton: Button
     private lateinit var openDatePickerButton: Button
     private lateinit var dateSelectedOnDatePickerTextView: TextView
     private val calendar = Calendar.getInstance()
@@ -49,13 +50,13 @@ class InsertExpenseFragment : Fragment() {
     private lateinit var choosenDate : Date
     private var documentId = ""
     private var isUpdate = false
-    private lateinit var safeArgs: InsertExpenseFragmentArgs
+    private lateinit var safeArgs: InsertIncomeFragmentArgs
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate<FragmentInsertExpenseBinding>(inflater, R.layout.fragment_insert_expense, container, false)
+        binding = DataBindingUtil.inflate<FragmentInsertIncomesBinding>(inflater, R.layout.fragment_insert_incomes, container, false)
         setHasOptionsMenu(true)
         return binding.root
     }
@@ -70,29 +71,29 @@ class InsertExpenseFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back)*/
         (activity as AppCompatActivity).supportActionBar?.show()
 
-        insertExpenseButton = binding.insertExpenseButton
-        valueInputEditText = binding.valueTextInputEditTextExpenseFragment
-        descriptionInputEditText = binding.descriptionTextInputEditTextExpenseFragment
-        wasPaidCheckBox = binding.wasPaidCheckboxExpenseFragment
-        openDatePickerButton = binding.datePickerButtonExpenseFragment
-        dateSelectedOnDatePickerTextView = binding.dateSelectedTextViewExpenseFragment
+        insertIncomeButton = binding.insertIncomeButton
+        valueInputEditText = binding.valueTextInputEditTextIncomeFragment
+        descriptionInputEditText = binding.descriptionTextInputEditTextIncomeFragment
+        wasPaidCheckBox = binding.wasPaidCheckboxIncomeFragment
+        openDatePickerButton = binding.datePickerButtonIncomeFragment
+        dateSelectedOnDatePickerTextView = binding.dateSelectedTextViewIncomeFragment
 
         arguments?.let {
-            safeArgs = InsertExpenseFragmentArgs.fromBundle(it)
+            safeArgs = InsertIncomeFragmentArgs.fromBundle(it)
             documentId = safeArgs.documentId
             if(safeArgs.documentId != "-1"){ isUpdate = true }
         }
 
         if(isUpdate){
-            (activity as AppCompatActivity).supportActionBar?.title = "Editar gasto"
-            setupUpdateExpense(safeArgs)
+            (activity as AppCompatActivity).supportActionBar?.title = "Editar entrada"
+            setupUpdateIncome(safeArgs)
         }else {
-            (activity as AppCompatActivity).supportActionBar?.title = "Inserir gasto"
+            (activity as AppCompatActivity).supportActionBar?.title = "Inserir entrada"
         }
 
         setupDatePickerDialogListener()
         choosenDate = calendar.time
-        setupInsertExpenseButton()
+        setupInsertIncomeButton()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -102,8 +103,8 @@ class InsertExpenseFragment : Fragment() {
                 || super.onOptionsItemSelected(item)
     }
 
-    private fun setupInsertExpenseButton() {
-        insertExpenseButton.setOnClickListener{
+    private fun setupInsertIncomeButton() {
+        insertIncomeButton.setOnClickListener{
             val valueResult = valueInputEditText.text.toString()
             val descriptionResult : String = descriptionInputEditText.text.toString()
             val paidResult = wasPaidCheckBox.isChecked
@@ -113,18 +114,18 @@ class InsertExpenseFragment : Fragment() {
                 valueInputEditText.error = "Por favor, preencha o valor"
                 descriptionInputEditText.error = "Por favor, preencha a descrição"
             } else {
-                val data = Expense(
+                val data = Income(
                     Integer.parseInt(valueResult),
                     descriptionResult,
                     dateResult,
                     paidResult
                 )
                 if(isUpdate){
-                    viewModel.updateExpense(data, documentId)
+                    viewModel.updateIncome(data, documentId)
                 }else{
-                    viewModel.insertExpense(data)
+                    viewModel.insertIncome(data)
                 }
-                navController.navigate(R.id.action_insertExpenseFragment_to_billFragment)
+                navController.navigate(R.id.action_insertIncomeFragment_to_incomeFragment)
             }
         }
     }
@@ -152,10 +153,10 @@ class InsertExpenseFragment : Fragment() {
         }
     }
 
-    private fun setupUpdateExpense(safeArgs: InsertExpenseFragmentArgs ) {
+    private fun setupUpdateIncome(safeArgs: InsertIncomeFragmentArgs ) {
         valueInputEditText.text = safeArgs.value.toString().toEditable()
         descriptionInputEditText.text = safeArgs.description.toString().toEditable()
-        wasPaidCheckBox.isChecked = safeArgs.wasPaid
+        wasPaidCheckBox.isChecked = safeArgs.wasReceived
         val date = safeArgs.date?.toDate()
         dateSelectedOnDatePickerTextView.text = formatDateWithSeconds(date)
     }
