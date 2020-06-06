@@ -53,15 +53,8 @@ class InsertExpenseFragment : Fragment() {
     private var documentId = ""
     private var isUpdate = false
     private lateinit var safeArgs: InsertExpenseFragmentArgs
-    private val databaseReference: FirebaseStorage = FirebaseStorage.getInstance()
-    private val auth: String? = com.google.firebase.auth.FirebaseAuth.getInstance().currentUser?.uid
-    private var imageUrl = ""
-
-    val path: String = "users/$auth/${java.util.UUID.randomUUID()}.png"
-    val reference = databaseReference.getReference(path)
-
-    //
     private lateinit var imageUri: Uri
+    private var imageUrl = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -176,22 +169,19 @@ class InsertExpenseFragment : Fragment() {
             imageUri = data.data!!
 
             Picasso.get().load(imageUri).into(insertedImage)
+            viewModel.insertAttach(imageUri)
+            initAttachObserver()
+        }
+    }
 
-            val uploadTask = reference
-                .putFile(imageUri)
-                .addOnSuccessListener {
-
+    private fun initAttachObserver () {
+        viewModel.apply {
+            this.updateValueOnLiveData().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+                if (it != null) {
+                    imageUrl = it
                     Toast.makeText(requireContext(), "ok", Toast.LENGTH_SHORT).show()
-                    reference.downloadUrl
-                        .addOnSuccessListener {
-                            imageUrl = it.toString()
-                            val download_url = it.toString()
-                            Toast.makeText(requireContext(), "$download_url", Toast.LENGTH_SHORT)
-                                .show()
-                        }
-                }.addOnFailureListener {
-
                 }
+            })
         }
     }
 

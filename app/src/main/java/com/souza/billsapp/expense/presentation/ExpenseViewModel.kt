@@ -1,5 +1,6 @@
 package com.souza.billsapp.expense.presentation
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,6 +14,9 @@ public class ExpenseViewModel : ViewModel() {
     private val _dataList = MutableLiveData<FirestoreRecyclerOptions<Expense>>()
     val dataList : LiveData<FirestoreRecyclerOptions<Expense>>
     get() = _dataList
+    private val _dataA= MutableLiveData<String>()
+    val dataA: LiveData<String>
+        get() = _dataA
 
     init{
         _dataList.postValue(noFilterExpense())
@@ -37,4 +41,10 @@ public class ExpenseViewModel : ViewModel() {
     private fun noFilterExpense() : FirestoreRecyclerOptions<Expense> {
         return expenseRepository.getData()
     }
+
+    fun insertAttach (imageUri : Uri) {
+        expenseRepository.insertAttach(imageUri)
+    }
+
+    fun updateValueOnLiveData() : LiveData<String?> = expenseRepository.returnValue
 }
