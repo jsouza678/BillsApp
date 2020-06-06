@@ -1,8 +1,12 @@
 package com.souza.billsapp.expense.presentation
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ImageView
 import android.widget.Switch
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -11,10 +15,11 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.DocumentSnapshot
 import com.souza.billsapp.R
 import com.souza.billsapp.data.Expense
+import com.souza.billsapp.extensions.invisible
+import com.souza.billsapp.extensions.visible
 import java.text.Format
 import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import java.util.*
 
 
 class ExpenseAdapter(options: FirestoreRecyclerOptions<Expense>) : FirestoreRecyclerAdapter<Expense,
@@ -40,10 +45,11 @@ class ExpenseAdapter(options: FirestoreRecyclerOptions<Expense>) : FirestoreRecy
     }
 
     inner class ExpenseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val valor : TextView = itemView.findViewById(R.id.valor_valor)
-        val descricao : TextView = itemView.findViewById(R.id.desc_valor)
-        val data : TextView = itemView.findViewById(R.id.data_valor)
-        val pago : Switch = itemView.findViewById(R.id.pago_switch)
+        private val valor : TextView = itemView.findViewById(R.id.valor_valor)
+        private val descricao : TextView = itemView.findViewById(R.id.desc_valor)
+        private val data : TextView = itemView.findViewById(R.id.data_valor)
+        private val pago : Switch = itemView.findViewById(R.id.pago_switch)
+        private val attach : ImageView = itemView.findViewById(R.id.icone_image_view)
 
         fun itemBind(expense: Expense) {
             valor.text = expense.value.toString()
@@ -51,6 +57,11 @@ class ExpenseAdapter(options: FirestoreRecyclerOptions<Expense>) : FirestoreRecy
             val timeStampAsDateResult = expense.date?.toDate()
             data.text = formatDate(timeStampAsDateResult)
             pago.isChecked = expense.wasPaid
+            if(expense.imageUri.isEmpty()) {
+                attach.invisible()
+            }else{
+                attach.visible()
+            }
         }
 
         private fun formatDate(date : Date?) : String{

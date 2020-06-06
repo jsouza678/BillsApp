@@ -61,11 +61,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Button"
+            android:text="Inserir"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/date_picker_button_expense_fragment" />
+            app:layout_constraintTop_toBottomOf="@+id/image_view_attach_expense_fragment" />
 
         <CheckBox
             android:id="@+id/was_paid_checkbox_expense_fragment"
@@ -106,21 +106,28 @@
 
         <Button
             android:id="@+id/image_attach_button_insert_expense_fragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Button"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/ic_add_image"
+            app:layout_constraintEnd_toEndOf="@+id/date_picker_button_expense_fragment"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/date_picker_button_expense_fragment" />
 
         <ImageView
             android:id="@+id/image_view_attach_expense_fragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/image_attach_button_insert_expense_fragment"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@+id/insert_expense_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/insert_expense_button"
+            app:layout_constraintTop_toBottomOf="@+id/image_attach_button_insert_expense_fragment"
             app:srcCompat="@drawable/common_google_signin_btn_icon_light" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,5 +9,5 @@ data class Expense(
     @ServerTimestamp
     val date : Timestamp? = null,
     val wasPaid: Boolean = false,
-    val imageUri: String? = null
+    val imageUri: String = ""
 )

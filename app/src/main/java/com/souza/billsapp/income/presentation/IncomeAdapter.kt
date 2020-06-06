@@ -3,6 +3,7 @@ package com.souza.billsapp.income.presentation
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Switch
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +13,8 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.souza.billsapp.R
 import com.souza.billsapp.data.Expense
 import com.souza.billsapp.data.Income
+import com.souza.billsapp.extensions.invisible
+import com.souza.billsapp.extensions.visible
 import java.text.Format
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -29,7 +32,7 @@ class IncomeAdapter(options: FirestoreRecyclerOptions<Income>) : FirestoreRecycl
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IncomeViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(
-            R.layout.expense_item,
+            R.layout.income_item,
             parent,
             false
         )
@@ -46,6 +49,7 @@ class IncomeAdapter(options: FirestoreRecyclerOptions<Income>) : FirestoreRecycl
         val descricao : TextView = itemView.findViewById(R.id.desc_valor)
         val data : TextView = itemView.findViewById(R.id.data_valor)
         val pago : Switch = itemView.findViewById(R.id.pago_switch)
+        private val attach : ImageView = itemView.findViewById(R.id.icone_imagess_view)
 
         fun itemBind(income: Income) {
             valor.text = income.value.toString()
@@ -53,6 +57,15 @@ class IncomeAdapter(options: FirestoreRecyclerOptions<Income>) : FirestoreRecycl
             val timeStampAsDateResult = income.date?.toDate()
             data.text = formatDate(timeStampAsDateResult)
             pago.isChecked = income.wasReceived
+            if(income.imageUri.isEmpty()) {
+                attach.invisible()
+            }else{
+                attach.visible()
+                /*attach.isClickable = true
+                attach.setOnClickListener {
+
+                }*/
+            }
         }
 
         private fun formatDate(date : Date?) : String{
