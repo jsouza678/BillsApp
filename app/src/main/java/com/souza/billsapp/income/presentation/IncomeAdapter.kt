@@ -11,7 +11,6 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.DocumentSnapshot
 import com.souza.billsapp.R
-import com.souza.billsapp.data.Expense
 import com.souza.billsapp.data.Income
 import com.souza.billsapp.extensions.invisible
 import com.souza.billsapp.extensions.visible
@@ -25,6 +24,7 @@ class IncomeAdapter(options: FirestoreRecyclerOptions<Income>) : FirestoreRecycl
         IncomeAdapter.IncomeViewHolder>(options) {
 
     private var listener : OnItemClickListener? = null
+    private var listenerLong : IncomeAdapter.OnItemLongClickListener? = null
 
     override fun onBindViewHolder(holder: IncomeViewHolder, position: Int, model: Income) {
         holder.itemBind(model)
@@ -80,6 +80,15 @@ class IncomeAdapter(options: FirestoreRecyclerOptions<Income>) : FirestoreRecycl
               listener!!.onItemClick(snapshots.getSnapshot(position), position)
             }
         }
+
+        val onLongClickListener = itemView.setOnLongClickListener { view ->
+            val position : Int = adapterPosition
+            // Avoid a crash while touching a item while it is being removed
+            if(position != RecyclerView.NO_POSITION && listenerLong != null) {
+                listenerLong!!.onItemClick(snapshots.getSnapshot(position), position)
+            }
+            false
+        }
     }
 
     interface OnItemClickListener {
@@ -88,5 +97,13 @@ class IncomeAdapter(options: FirestoreRecyclerOptions<Income>) : FirestoreRecycl
 
     fun setOnItemClickListener(onItemClickListener: OnItemClickListener) {
         this.listener = onItemClickListener
+    }
+
+    interface OnItemLongClickListener {
+        fun onItemClick(documentSnapshot: DocumentSnapshot, position: Int)
+    }
+
+    fun setOnItemLongClickListener(onItemLongClickListener: OnItemLongClickListener) {
+        this.listenerLong = onItemLongClickListener
     }
 }

@@ -15,6 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
 import com.souza.billsapp.R
@@ -101,10 +103,13 @@ class ExpensesFragment : Fragment(){
 
                 val expense = documentSnapshot.toObject(Expense::class.java)
                 if(expense!= null){
-                    val ff =
-                        dialog.findViewById(R.id.image_attached_image_view_dialog) as ImageView
-                    val image = (Picasso.get().load(expense.imageUri).into(ff))
+                if(!expense.imageUri.isNullOrBlank()){
+                    val ff = dialog.findViewById(R.id.image_attached_image_view_dialog) as ImageView
+                    Picasso.get().load(expense.imageUri).into(ff)
                     dialog.show()
+                }else{
+                    Snackbar.make(requireView(), "No attachs", BaseTransientBottomBar.LENGTH_SHORT).show()
+                }
                 }
             }
         }

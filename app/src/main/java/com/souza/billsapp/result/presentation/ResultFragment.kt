@@ -32,7 +32,6 @@ class ResultFragment : Fragment(){
     private lateinit var binding: FragmentResultBinding
     private val viewModel by viewModels<ResultViewModel>()
     private lateinit var tvResult: TextView
-    private var sum : Int? = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,13 +48,21 @@ class ResultFragment : Fragment(){
 
     private fun initObserver() {
         viewModel.apply {
-            this.updateValueOnLiveData().observe(viewLifecycleOwner, Observer {
+            this.updateSumResultOfExpenseOnLiveData().observe(viewLifecycleOwner, Observer {
                 val obj = it
 
                // Handler().postDelayed({
                     tvResult.text = "${obj.toString()}"
                 //}, 1000)
                 }
+            )
+            this.updateSumResultOfIncomeOnLiveData().observe(viewLifecycleOwner, Observer {
+                val obj = it
+
+                // Handler().postDelayed({
+                //tvResult.text = "${obj.toString()}"
+                //}, 1000)
+            }
             )
         }
     }

@@ -45,7 +45,7 @@ class IncomeRepository {
             .build()
     }
 
-    fun getIncomesValueSum() {
+    fun getIncomeValueSum() {
         val t = db.collection("users").document(userId).collection(collectionName)
             .get().addOnSuccessListener {
                 val number: MutableList<Income>? = it.toObjects(Income::class.java)

@@ -1,7 +1,9 @@
 package com.souza.billsapp.income.presentation
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.*
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -13,11 +15,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.auth.AuthUI
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
 import com.souza.billsapp.R
 import com.souza.billsapp.data.Income
 import com.souza.billsapp.databinding.FragmentIncomesBinding
+import com.squareup.picasso.Picasso
 
 class IncomeFragment : Fragment(){
 
@@ -29,7 +34,8 @@ class IncomeFragment : Fragment(){
     private lateinit var navController: NavController
     private var filtered : Boolean = false
     private lateinit var filterMenu : Menu
-
+    private lateinit var dialog : Dialog
+    
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,6 +50,8 @@ class IncomeFragment : Fragment(){
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         insertButton = binding.insertIncomeButton
         incomesRecyclerView = binding.incomesRecyclerViewIncomesFragment
+
+        setupDialog()
         initObserver()
         setHasOptionsMenu(true)
 
@@ -92,27 +100,51 @@ class IncomeFragment : Fragment(){
 
         recyclerAdapter.setOnItemClickListener(object: IncomeAdapter.OnItemClickListener{
             override fun onItemClick(documentSnapshot: DocumentSnapshot, position: Int) {
-                    val income = documentSnapshot.toObject(Income::class.java)
-                    if(income!= null){
-                        val documentId = documentSnapshot.id
-                        val valueToUpdate: Int = income.value!!
-                        val descriptionToUpdate: String = income.description!!
-                        val wasReceivedToUpdate: Boolean = income.wasReceived
-                        val dateToUpdate: Timestamp = income.date!!
-                        val actionDetail = IncomeFragmentDirections
-                            .actionIncomeFragmentToUpdateIncomeFragment(
-                                documentId,
-                                valueToUpdate,
-                                descriptionToUpdate,
-                                wasReceivedToUpdate,
-                                dateToUpdate
-                            )
-                        navController.navigate(actionDetail)
+
+                val income = documentSnapshot.toObject(Income::class.java)
+                if(income!= null){
+                    if(!income.imageUri.isNullOrBlank()){
+                        val ff = dialog.findViewById(R.id.image_attached_image_view_dialog) as ImageView
+                        Picasso.get().load(income.imageUri).into(ff)
+                        dialog.show()
+                    }else{
+                        Snackbar.make(requireView(), "No attachs", BaseTransientBottomBar.LENGTH_SHORT).show()
                     }
                 }
             }
+        }
+        )
+
+        recyclerAdapter.setOnItemLongClickListener(object: IncomeAdapter.OnItemLongClickListener{
+            override fun onItemClick(documentSnapshot: DocumentSnapshot, position: Int) {
+                val expense = documentSnapshot.toObject(Income::class.java)
+                if(expense!= null){
+                    val documentId = documentSnapshot.id
+                    val valueToUpdate: Int = expense.value!!
+                    val descriptionToUpdate: String = expense.description!!
+                    val wasReceivedToUpdate: Boolean = expense.wasReceived
+                    val dateToUpdate: Timestamp = expense.date!!
+                    val actionDetail = IncomeFragmentDirections
+                        .actionIncomeFragmentToUpdateIncomeFragment(
+                            documentId,
+                            valueToUpdate,
+                            descriptionToUpdate,
+                            wasReceivedToUpdate,
+                            dateToUpdate
+                        )
+                    navController.navigate(actionDetail)
+                }
+            }
+        }
         )
     }
+
+    private fun setupDialog() {
+        dialog = Dialog(requireContext())
+        dialog.setContentView(R.layout.dialog)
+        dialog.setCancelable(true)
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.filter_menu, menu)
