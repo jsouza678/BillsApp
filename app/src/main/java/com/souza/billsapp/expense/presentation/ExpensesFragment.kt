@@ -1,7 +1,9 @@
 package com.souza.billsapp.expense.presentation
 
+import android.app.Dialog
 import android.os.Bundle
 import android.view.*
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -18,6 +20,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 import com.souza.billsapp.R
 import com.souza.billsapp.data.Expense
 import com.souza.billsapp.databinding.FragmentExpensesBinding
+import com.squareup.picasso.Picasso
 
 class ExpensesFragment : Fragment(){
 
@@ -25,10 +28,12 @@ class ExpensesFragment : Fragment(){
     private lateinit var insertButton : FloatingActionButton
     private lateinit var recyclerAdapter : ExpenseAdapter
     private lateinit var expensesRecyclerView : RecyclerView
+    private lateinit var imageView: ImageView
     private val viewModel by viewModels<ExpenseViewModel>()
     private lateinit var navController: NavController
     private var filtered : Boolean = false
     private lateinit var filterMenu : Menu
+    private lateinit var dialog : Dialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +49,8 @@ class ExpensesFragment : Fragment(){
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         insertButton = binding.insertExpenseButton
         expensesRecyclerView = binding.expensesRecyclerViewExpensesFragment
+
+        setupDialog()
         initObserver()
         setHasOptionsMenu(true)
         return binding.root
@@ -74,7 +81,7 @@ class ExpensesFragment : Fragment(){
         expensesRecyclerView.adapter = recyclerAdapter
 
         val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0,
-        ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -91,26 +98,46 @@ class ExpensesFragment : Fragment(){
 
         recyclerAdapter.setOnItemClickListener(object: ExpenseAdapter.OnItemClickListener{
             override fun onItemClick(documentSnapshot: DocumentSnapshot, position: Int) {
-                    val expense = documentSnapshot.toObject(Expense::class.java)
-                    if(expense!= null){
-                        val documentId = documentSnapshot.id
-                        val valueToUpdate: Int = expense.value!!
-                        val descriptionToUpdate: String = expense.description!!
-                        val wasPaidToUpdate: Boolean = expense.wasPaid
-                        val dateToUpdate: Timestamp = expense.date!!
-                        val actionDetail = ExpensesFragmentDirections
-                            .actionBillFragmentToUpdateExpenseFragment(
-                                documentId,
-                                valueToUpdate,
-                                descriptionToUpdate,
-                                wasPaidToUpdate,
-                                dateToUpdate
-                            )
-                        navController.navigate(actionDetail)
-                    }
+
+                val expense = documentSnapshot.toObject(Expense::class.java)
+                if(expense!= null){
+                    val ff =
+                        dialog.findViewById(R.id.image_attached_image_view_dialog) as ImageView
+                    val image = (Picasso.get().load(expense.imageUri).into(ff))
+                    dialog.show()
                 }
             }
+        }
         )
+
+        recyclerAdapter.setOnItemLongClickListener(object: ExpenseAdapter.OnItemLongClickListener{
+            override fun onItemClick(documentSnapshot: DocumentSnapshot, position: Int) {
+                val expense = documentSnapshot.toObject(Expense::class.java)
+                if(expense!= null){
+                    val documentId = documentSnapshot.id
+                    val valueToUpdate: Int = expense.value!!
+                    val descriptionToUpdate: String = expense.description!!
+                    val wasPaidToUpdate: Boolean = expense.wasPaid
+                    val dateToUpdate: Timestamp = expense.date!!
+                    val actionDetail = ExpensesFragmentDirections
+                        .actionBillFragmentToUpdateExpenseFragment(
+                            documentId,
+                            valueToUpdate,
+                            descriptionToUpdate,
+                            wasPaidToUpdate,
+                            dateToUpdate
+                        )
+                    navController.navigate(actionDetail)
+                }
+            }
+        }
+        )
+    }
+
+    private fun setupDialog() {
+        dialog = Dialog(requireContext())
+        dialog.setContentView(R.layout.dialog)
+        dialog.setCancelable(true)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

@@ -26,6 +26,7 @@ class ExpenseAdapter(options: FirestoreRecyclerOptions<Expense>) : FirestoreRecy
         ExpenseAdapter.ExpenseViewHolder>(options) {
 
     private var listener : OnItemClickListener? = null
+    private var listenerLong : OnItemLongClickListener? = null
 
     override fun onBindViewHolder(holder: ExpenseViewHolder, position: Int, model: Expense) {
         holder.itemBind(model)
@@ -76,6 +77,15 @@ class ExpenseAdapter(options: FirestoreRecyclerOptions<Expense>) : FirestoreRecy
               listener!!.onItemClick(snapshots.getSnapshot(position), position)
             }
         }
+
+        val onLongClickListener = itemView.setOnLongClickListener { view ->
+            val position : Int = adapterPosition
+            // Avoid a crash while touching a item while it is being removed
+            if(position != RecyclerView.NO_POSITION && listenerLong != null) {
+                listenerLong!!.onItemClick(snapshots.getSnapshot(position), position)
+            }
+            false
+        }
     }
 
     interface OnItemClickListener {
@@ -84,5 +94,13 @@ class ExpenseAdapter(options: FirestoreRecyclerOptions<Expense>) : FirestoreRecy
 
     fun setOnItemClickListener(onItemClickListener: OnItemClickListener) {
         this.listener = onItemClickListener
+    }
+
+    interface OnItemLongClickListener {
+        fun onItemClick(documentSnapshot: DocumentSnapshot, position: Int)
+    }
+
+    fun setOnItemLongClickListener(onItemLongClickListener: OnItemLongClickListener) {
+        this.listenerLong = onItemLongClickListener
     }
 }
