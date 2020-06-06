@@ -136,11 +136,11 @@ class IncomeFragment : Fragment(){
                 }
             }
             R.id.about_icon_menu -> {
-                navController.navigate(R.id.action_billFragment_to_aboutFragment)
+                navController.navigate(R.id.action_incomeFragment_to_aboutFragment)
             }
             R.id.exit_icon_menu -> {
                 AuthUI.getInstance().signOut(requireContext())
-                navController.navigate(R.id.action_billFragment_to_loginFragment)
+                navController.navigate(R.id.action_incomeFragment_to_loginFragment)
             }
         }
         return super.onOptionsItemSelected(item)

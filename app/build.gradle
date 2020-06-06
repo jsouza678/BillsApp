@@ -55,6 +55,11 @@ dependencies {
     implementation 'androidx.navigation:navigation-fragment-ktx:2.2.2'
     implementation "androidx.navigation:navigation-ui-ktx:2.2.2"
     implementation 'com.firebaseui:firebase-ui-auth:5.0.0'
+
+    implementation "com.google.firebase:firebase-storage:19.1.1"
+
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
 }
 
 apply plugin: 'com.google.gms.google-services'

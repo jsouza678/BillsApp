@@ -57,13 +57,13 @@ class InsertIncomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate<FragmentInsertIncomesBinding>(inflater, R.layout.fragment_insert_incomes, container, false)
+        (activity as AppCompatActivity).supportActionBar?.title = ""
         setHasOptionsMenu(true)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         navController = findNavController()
 
         /*NavigationUI.setupActionBarWithNavController(activity as AppCompatActivity, navController)

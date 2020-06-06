@@ -8,5 +8,6 @@ data class Expense(
     val description: String? = null,
     @ServerTimestamp
     val date : Timestamp? = null,
-    val wasPaid: Boolean = false
+    val wasPaid: Boolean = false,
+    val imageUri: String? = null
 )
