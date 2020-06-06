@@ -105,7 +105,7 @@
             app:layout_constraintTop_toBottomOf="@+id/description_text_input_layout_expense_fragment" />
 
         <Button
-            android:id="@+id/img_button"
+            android:id="@+id/image_attach_button_insert_expense_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Button"
@@ -114,10 +114,10 @@
             app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/image_view_attach_expense_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/img_button"
+            app:layout_constraintBottom_toTopOf="@+id/image_attach_button_insert_expense_fragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/insert_expense_button"

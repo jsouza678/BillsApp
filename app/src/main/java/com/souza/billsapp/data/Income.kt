@@ -8,5 +8,6 @@ data class Income(
     val description: String? = null,
     @ServerTimestamp
     val date : Timestamp? = null,
-    val wasReceived: Boolean = false
+    val wasReceived: Boolean = false,
+    val imageUri: String? = null
 )

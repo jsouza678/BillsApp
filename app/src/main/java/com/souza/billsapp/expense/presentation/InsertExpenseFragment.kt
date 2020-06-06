@@ -21,7 +21,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.Timestamp
-import com.google.firebase.storage.FirebaseStorage
 import com.souza.billsapp.R
 import com.souza.billsapp.data.Expense
 import com.souza.billsapp.databinding.FragmentInsertExpenseBinding
@@ -75,15 +74,11 @@ class InsertExpenseFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         navController = findNavController()
-
-        /*NavigationUI.setupActionBarWithNavController(activity as AppCompatActivity, navController)
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        (activity as AppCompatActivity).supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_arrow_back)*/
         (activity as AppCompatActivity).supportActionBar?.show()
 
-        insertedImage = binding.imageView
+        insertedImage = binding.imageViewAttachExpenseFragment
         insertExpenseButton = binding.insertExpenseButton
-        insertImageButton = binding.imgButton
+        insertImageButton = binding.imageAttachButtonInsertExpenseFragment
         valueInputEditText = binding.valueTextInputEditTextExpenseFragment
         descriptionInputEditText = binding.descriptionTextInputEditTextExpenseFragment
         wasPaidCheckBox = binding.wasPaidCheckboxExpenseFragment
@@ -112,14 +107,10 @@ class InsertExpenseFragment : Fragment() {
             openFileChooser()
         }
 
-        //val meta = StorageMetadata.Builder().setCustomMetadata("text", "image").build()
-
-
         setupInsertExpenseButton()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // handle the up button here
         return NavigationUI.onNavDestinationSelected(
             item,
             requireView().findNavController()
@@ -163,20 +154,18 @@ class InsertExpenseFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        //super.onActivityResult(requestCode, resultCode, data)
-
         if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.data != null) {
             imageUri = data.data!!
 
             Picasso.get().load(imageUri).into(insertedImage)
-            viewModel.insertAttach(imageUri)
+            viewModel.insertExpenseImageAttach(imageUri)
             initAttachObserver()
         }
     }
 
     private fun initAttachObserver () {
         viewModel.apply {
-            this.updateValueOnLiveData().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+            this.updateExpenseImageURLOnLiveData().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 if (it != null) {
                     imageUrl = it
                     Toast.makeText(requireContext(), "ok", Toast.LENGTH_SHORT).show()
@@ -200,7 +189,6 @@ class InsertExpenseFragment : Fragment() {
             DatePickerDialog(
                 requireContext(),
                 DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                    // Display Selected date in TextView
                     calendar.set(Calendar.YEAR, year)
                     calendar.set(Calendar.MONTH, monthOfYear)
                     calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
@@ -233,5 +221,4 @@ class InsertExpenseFragment : Fragment() {
     }
 
     private fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)
-
 }

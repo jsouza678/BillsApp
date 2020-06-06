@@ -1,5 +1,6 @@
 package com.souza.billsapp.income.presentation
 
+import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -30,11 +31,11 @@ public class IncomeViewModel : ViewModel() {
 
     fun unfilteredListOnMLiveData() = _dataList.postValue(noFilterIncome())
 
-    private fun filterByMonth() : FirestoreRecyclerOptions<Income> {
-        return incomeRepository.getMonthlyData()
-    }
+    private fun filterByMonth() : FirestoreRecyclerOptions<Income> = incomeRepository.getMonthlyData()
 
-    private fun noFilterIncome() : FirestoreRecyclerOptions<Income> {
-        return incomeRepository.getData()
-    }
+    private fun noFilterIncome() : FirestoreRecyclerOptions<Income> = incomeRepository.getData()
+
+    fun insertIncomeImageAttach (imageUri : Uri) = incomeRepository.insertIncomeImageAttachOnStorage(imageUri)
+
+    fun updateIncomeImageURLOnLiveData() : LiveData<String?> = incomeRepository.attachURLResult
 }

@@ -13,48 +13,66 @@ class ExpenseRepository {
 
     private val auth: String? = FirebaseAuth.getInstance().currentUser?.uid
     private val calendar: Calendar = Calendar.getInstance()
-    private val mes : Int = calendar.get(java.util.Calendar.MONTH)
-    private val ano : Int = calendar.get(java.util.Calendar.YEAR)
-    private val db : FirebaseFirestore = FirebaseFirestore.getInstance()
+    private val mes: Int = calendar.get(java.util.Calendar.MONTH)
+    private val ano: Int = calendar.get(java.util.Calendar.YEAR)
+    private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private val userId = "$auth"
-    private val collectionName: String = "despesas_$mes"+"_"+"$ano"
+    private var expenseValueSum = 0
+    private val collectionName: String = "despesas_$mes" + "_" + "$ano"
     private val queryTest = db.document("users/$userId").collection(collectionName)
-    private val queryFilteredByPaidStatus = db.document("users/$userId").collection(collectionName).whereEqualTo("wasPaid", true)
-    //Image
+    private val queryFilteredByPaidStatus =
+        db.document("users/$userId").collection(collectionName).whereEqualTo("wasPaid", true)
+    private val _expenseQueryResult = MutableLiveData<Int?>()
+    val expenseQueryResult: LiveData<Int?> get() = _expenseQueryResult
     private var imageUrl = ""
     private val databaseReference: FirebaseStorage = FirebaseStorage.getInstance()
-    val path: String = "users/$auth/${java.util.UUID.randomUUID()}.png"
-    val reference = databaseReference.getReference(path)
-    private val mdata = MutableLiveData<String?>()
-    val returnValue: LiveData<String?> get() = mdata
+    private val path: String = "users/$auth/$collectionName/${java.util.UUID.randomUUID()}.png"
+    private val reference = databaseReference.getReference(path)
+    private val _attachURLResult = MutableLiveData<String?>()
+    val attachURLResult: LiveData<String?> get() = _attachURLResult
 
-    fun getData() : FirestoreRecyclerOptions<Expense> {
-         return FirestoreRecyclerOptions
+    fun getData(): FirestoreRecyclerOptions<Expense> {
+        return FirestoreRecyclerOptions
             .Builder<Expense>()
             .setQuery(queryTest, Expense::class.java)
             .build()
     }
 
-    fun getMonthlyData() : FirestoreRecyclerOptions<Expense> {
+    fun getMonthlyData(): FirestoreRecyclerOptions<Expense> {
         return FirestoreRecyclerOptions
-                .Builder<Expense>()
-                .setQuery(queryFilteredByPaidStatus, Expense::class.java)
-                .build()
+            .Builder<Expense>()
+            .setQuery(queryFilteredByPaidStatus, Expense::class.java)
+            .build()
     }
 
-    fun insertData(data : Expense) {
+    fun getExpenseValueSum() {
+        val t = db.collection("users").document(userId).collection(collectionName)
+            .get().addOnSuccessListener {
+                val number: MutableList<Expense>? = it.toObjects(Expense::class.java)
+                if (number != null) {
+                    for (i in 0 until number.size) {
+                        expenseValueSum += number[i].value!!
+                    }
+                    _expenseQueryResult.postValue(expenseValueSum)
+                }
+            }
+            .addOnFailureListener {
+            }
+    }
+
+    fun insertData(data: Expense) {
         db.collection("users").document(userId).collection(collectionName)
             .document()
             .set(data)
             .addOnSuccessListener {
                 //TODO
-                }
+            }
             .addOnFailureListener {
                 //TODO
-                }
+            }
     }
 
-    fun updateData(data : Expense, document: String) {
+    fun updateData(data: Expense, document: String) {
         db.collection("users").document(userId).collection(collectionName)
             .document(document)
             .set(data)
@@ -66,7 +84,7 @@ class ExpenseRepository {
             }
     }
 
-    fun insertAttach(imageUri : Uri) {
+    fun insertExpenseImageAttachOnStorage(imageUri: Uri) {
         val uploadTask = reference
             .putFile(imageUri)
             .addOnSuccessListener {
@@ -75,13 +93,12 @@ class ExpenseRepository {
                 reference.downloadUrl
                     .addOnSuccessListener {
                         imageUrl = it.toString()
-                        mdata.postValue(it.toString())
+                        _attachURLResult.postValue(it.toString())
                         //Toast.makeText(requireContext(), "$download_url", Toast.LENGTH_SHORT)
-                            //.show()
+                        //.show()
                     }
             }.addOnFailureListener {
 
             }
     }
 }
-

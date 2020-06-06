@@ -14,9 +14,6 @@ public class ExpenseViewModel : ViewModel() {
     private val _dataList = MutableLiveData<FirestoreRecyclerOptions<Expense>>()
     val dataList : LiveData<FirestoreRecyclerOptions<Expense>>
     get() = _dataList
-    private val _dataA= MutableLiveData<String>()
-    val dataA: LiveData<String>
-        get() = _dataA
 
     init{
         _dataList.postValue(noFilterExpense())
@@ -34,17 +31,11 @@ public class ExpenseViewModel : ViewModel() {
 
     fun unfilteredListOnMLiveData() = _dataList.postValue(noFilterExpense())
 
-    private fun filterByMonth() : FirestoreRecyclerOptions<Expense> {
-        return expenseRepository.getMonthlyData()
-    }
+    private fun filterByMonth() : FirestoreRecyclerOptions<Expense> = expenseRepository.getMonthlyData()
 
-    private fun noFilterExpense() : FirestoreRecyclerOptions<Expense> {
-        return expenseRepository.getData()
-    }
+    private fun noFilterExpense() : FirestoreRecyclerOptions<Expense> = expenseRepository.getData()
 
-    fun insertAttach (imageUri : Uri) {
-        expenseRepository.insertAttach(imageUri)
-    }
+    fun insertExpenseImageAttach (imageUri : Uri) = expenseRepository.insertExpenseImageAttachOnStorage(imageUri)
 
-    fun updateValueOnLiveData() : LiveData<String?> = expenseRepository.returnValue
+    fun updateExpenseImageURLOnLiveData() : LiveData<String?> = expenseRepository.attachURLResult
 }

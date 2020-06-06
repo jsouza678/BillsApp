@@ -3,8 +3,6 @@ package com.souza.billsapp.result.presentation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.firebase.ui.firestore.FirestoreRecyclerOptions
-import com.souza.billsapp.data.Income
 import com.souza.billsapp.data.IncomeRepository
 
 public class ResultViewModel : ViewModel() {
@@ -15,9 +13,9 @@ public class ResultViewModel : ViewModel() {
     get() = _data
 
     init{
-        incomeRepository.getDataS()
+        incomeRepository.getIncomesValueSum()
         //_data.postValue()
     }
 
-    fun updateValueOnLiveData() : LiveData<Int?> = incomeRepository.returnValue
+    fun updateValueOnLiveData() : LiveData<Int?> = incomeRepository.incomeQueryResult
 }

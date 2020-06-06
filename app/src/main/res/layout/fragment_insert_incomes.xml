@@ -104,5 +104,24 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/description_text_input_layout_income_fragment" />
 
+        <Button
+            android:id="@+id/image_attach_button_insert_income_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/image_view_attach_income_fragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/image_attach_button_insert_income_fragment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/insert_income_button"
+            app:srcCompat="@drawable/common_google_signin_btn_icon_light" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
