@@ -94,7 +94,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun showConnectivityOffSnackbar() {
-        connectivitySnackbar.duration = BaseTransientBottomBar.LENGTH_INDEFINITE
+        connectivitySnackbar.duration = BaseTransientBottomBar.LENGTH_SHORT
         connectivitySnackbar.view.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
         connectivitySnackbar.setText("internet off")//(getString(R.string.snackbar_internet_off))
         connectivitySnackbar.show()

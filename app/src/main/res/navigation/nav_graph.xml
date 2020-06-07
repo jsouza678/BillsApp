@@ -55,6 +55,11 @@
             app:destination="@id/incomeFragment"
             app:popUpTo="@id/billFragment"
             app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_billFragment_to_resultFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/billFragment"
+            app:destination="@id/resultFragment" />
     </fragment>
 
     <fragment
@@ -143,6 +148,11 @@
             app:destination="@id/loginFragment"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true"/>
+        <action
+            android:id="@+id/action_incomeFragment_to_resultFragment"
+            app:popUpTo="@id/incomeFragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/resultFragment" />
     </fragment>
     <fragment
         android:id="@+id/insertIncomeFragment"
@@ -176,6 +186,15 @@
     <fragment
         android:id="@+id/resultFragment"
         android:name="com.souza.billsapp.result.presentation.ResultFragment"
-        android:label="ResultFragment" />
+        android:label="ResultFragment" >
+        <action
+            android:id="@+id/action_resultFragment_to_billFragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/billFragment" />
+        <action
+            android:id="@+id/action_resultFragment_to_incomeFragment"
+            app:popUpToInclusive="true"
+            app:destination="@id/incomeFragment" />
+    </fragment>
 
 </navigation>

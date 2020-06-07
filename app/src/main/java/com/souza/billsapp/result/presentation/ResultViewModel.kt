@@ -1,21 +1,21 @@
 package com.souza.billsapp.result.presentation
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.souza.billsapp.data.ExpenseRepository
-import com.souza.billsapp.data.IncomeRepository
+import com.souza.billsapp.data.ResultRepository
 
 public class ResultViewModel : ViewModel() {
 
-    private var incomeRepository : IncomeRepository = IncomeRepository()
-    private var expenseRepository : ExpenseRepository = ExpenseRepository()
+    private var resultRepository : ResultRepository = ResultRepository()
 
     init{
-        incomeRepository.getIncomeValueSum()
-        expenseRepository.getExpenseValueSum()
+        resultRepository.getValueSum()
     }
 
-    fun updateSumResultOfIncomeOnLiveData() : LiveData<Int?> = incomeRepository.incomeQueryResult
-    fun updateSumResultOfExpenseOnLiveData() : LiveData<Int?> = expenseRepository.expenseQueryResult
+    fun getValuesOnRefresh() {
+        resultRepository.getValueSum()
+    }
+
+    fun updateSumResultOfIncomeOnLiveData() : LiveData<Int?> = resultRepository.incomeQueryResult
+    fun updateSumResultOfExpenseOnLiveData() : LiveData<Int?> = resultRepository.expenseQueryResult
 }
