@@ -9,9 +9,6 @@
         android:title="Filtrar"
         app:showAsAction="always|withText"/>
 
-    <item android:id="@+id/about_icon_menu"
-        android:title="Sobre" />
-
     <item android:id="@+id/exit_icon_menu"
         android:title="Sair" />
 

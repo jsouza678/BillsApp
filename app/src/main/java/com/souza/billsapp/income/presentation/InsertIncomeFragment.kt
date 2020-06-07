@@ -24,6 +24,9 @@ import com.google.firebase.Timestamp
 import com.souza.billsapp.R
 import com.souza.billsapp.data.Income
 import com.souza.billsapp.databinding.FragmentInsertIncomesBinding
+import com.souza.billsapp.extensions.gone
+import com.souza.billsapp.extensions.invisible
+import com.souza.billsapp.extensions.visible
 import com.squareup.picasso.Picasso
 import java.text.Format
 import java.text.SimpleDateFormat
@@ -39,6 +42,7 @@ class InsertIncomeFragment : Fragment() {
     private lateinit var wasPaidCheckBox: CheckBox
     private lateinit var insertIncomeButton: Button
     private lateinit var openDatePickerButton: Button
+    private lateinit var progressBarImageUpdate: ProgressBar
     private lateinit var dateSelectedOnDatePickerTextView: TextView
     private val calendar = Calendar.getInstance()
     private lateinit var dateSetListener: DatePickerDialog.OnDateSetListener
@@ -51,7 +55,7 @@ class InsertIncomeFragment : Fragment() {
     private var isUpdate = false
     private lateinit var safeArgs: InsertIncomeFragmentArgs
     private lateinit var insertedImage: ImageView
-    private lateinit var insertImageButton: Button
+    private lateinit var insertImageButton: ImageButton
     private lateinit var imageUri: Uri
     private var imageUrl = ""
 
@@ -75,6 +79,7 @@ class InsertIncomeFragment : Fragment() {
         navController = findNavController()
         (activity as AppCompatActivity).supportActionBar?.show()
 
+        progressBarImageUpdate = binding.progressBarImageProgressUploadIncomeFragment
         insertedImage = binding.imageViewAttachIncomeFragment
         insertImageButton = binding.imageAttachButtonInsertIncomeFragment
         insertIncomeButton = binding.insertIncomeButton
@@ -119,8 +124,9 @@ class InsertIncomeFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
             imageUri = data.data!!
-
             Picasso.get().load(imageUri).into(insertedImage)
+            insertIncomeButton.invisible()
+            progressBarImageUpdate.visible()
             viewModel.insertIncomeImageAttach(imageUri)
             initAttachObserver()
         }
@@ -132,7 +138,8 @@ class InsertIncomeFragment : Fragment() {
                 .observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                     if (it != null) {
                         imageUrl = it
-                        Toast.makeText(requireContext(), "ok", Toast.LENGTH_SHORT).show()
+                        progressBarImageUpdate.invisible()
+                        insertIncomeButton.visible()
                     }
                 })
         }
@@ -158,7 +165,7 @@ class InsertIncomeFragment : Fragment() {
                 descriptionInputEditText.error = "Por favor, preencha a descrição"
             } else {
                 val data = Income(
-                    Integer.parseInt(valueResult),
+                    valueResult.toFloat(),
                     descriptionResult,
                     dateResult,
                     paidResult,

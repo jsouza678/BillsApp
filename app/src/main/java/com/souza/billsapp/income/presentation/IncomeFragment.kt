@@ -35,7 +35,7 @@ class IncomeFragment : Fragment(){
     private var filtered : Boolean = false
     private lateinit var filterMenu : Menu
     private lateinit var dialog : Dialog
-    
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -83,7 +83,7 @@ class IncomeFragment : Fragment(){
         incomesRecyclerView.adapter = recyclerAdapter
 
         val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0,
-        ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
@@ -120,7 +120,7 @@ class IncomeFragment : Fragment(){
                 val expense = documentSnapshot.toObject(Income::class.java)
                 if(expense!= null){
                     val documentId = documentSnapshot.id
-                    val valueToUpdate: Int = expense.value!!
+                    val valueToUpdate: Float = expense.value!!
                     val descriptionToUpdate: String = expense.description!!
                     val wasReceivedToUpdate: Boolean = expense.wasReceived
                     val dateToUpdate: Timestamp = expense.date!!
@@ -166,9 +166,6 @@ class IncomeFragment : Fragment(){
                     viewModel.filteredListOnMLiveData()
                     item.setIcon(R.drawable.ic_filter_list_black)
                 }
-            }
-            R.id.about_icon_menu -> {
-                navController.navigate(R.id.action_incomeFragment_to_aboutFragment)
             }
             R.id.exit_icon_menu -> {
                 AuthUI.getInstance().signOut(requireContext())

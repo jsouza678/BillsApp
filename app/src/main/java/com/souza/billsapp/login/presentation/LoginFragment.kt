@@ -16,8 +16,10 @@ import androidx.navigation.fragment.findNavController
 import com.souza.billsapp.databinding.FragmentLoginBinding
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.IdpResponse
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.souza.billsapp.R
+import com.souza.billsapp.extensions.visible
 
 class LoginFragment : Fragment() {
 
@@ -25,6 +27,8 @@ class LoginFragment : Fragment() {
         const val TAG = "LoginFragment"
         const val SIGN_IN_RESULT_CODE = 1001
     }
+
+    private lateinit var bottomNavigationView: BottomNavigationView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +41,7 @@ class LoginFragment : Fragment() {
             false
         )
 
+        bottomNavigationView = activity?.findViewById(R.id.bottom_nav_menu)!!
         launchSignInFlow()
 
         return binding.root
@@ -72,14 +77,19 @@ class LoginFragment : Fragment() {
                     "Successfully signed in user " +
                             "${FirebaseAuth.getInstance().currentUser?.displayName}!"
                 )
-                val navController = findNavController().navigate(R.id.action_loginFragment_to_billFragment)
+                turnOnBottomNavigation()
+                findNavController().navigate(R.id.action_loginFragment_to_billFragment)
             } else {
                 // Sign in failed. If response is null the user canceled the sign-in flow using
                 // the back button. Otherwise check response.getError().getErrorCode() and handle
                 // the error.
                 Log.i(TAG, "Sign in unsuccessful ${response?.error?.errorCode}")
-                //navController.navigate(R.id.action_loginFragment_to_splashFragment)
+                findNavController().navigate(R.id.action_loginFragment_to_splashFragment)
             }
         }
+    }
+
+    private fun turnOnBottomNavigation() {
+        bottomNavigationView.visible()
     }
 }

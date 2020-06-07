@@ -14,14 +14,14 @@ class ResultRepository {
     private val ano: Int = calendar.get(Calendar.YEAR)
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private val userId = "$auth"
-    private var expenseValueSum = 0
-    private var incomesValueSum = 0
+    private var expenseValueSum: Float = 0F
+    private var incomesValueSum: Float = 0F
     private val collectionNameExpenses: String = "despesas_$mes" + "_" + "$ano"
     private val collectionNameIncomes: String = "receita_$mes" + "_" + "$ano"
-    private val _expenseQueryResult = MutableLiveData<Int?>()
-    val expenseQueryResult: LiveData<Int?> get() = _expenseQueryResult
-    private val _incomeQueryResult = MutableLiveData<Int?>()
-    val incomeQueryResult: LiveData<Int?> get() = _incomeQueryResult
+    private val _expenseQueryResult = MutableLiveData<Float?>()
+    val expenseQueryResult: LiveData<Float?> get() = _expenseQueryResult
+    private val _incomeQueryResult = MutableLiveData<Float?>()
+    val incomeQueryResult: LiveData<Float?> get() = _incomeQueryResult
 
     fun getValueSum() {
         db.collection("users").document(userId).collection(collectionNameExpenses)

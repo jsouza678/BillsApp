@@ -16,6 +16,6 @@ public class ResultViewModel : ViewModel() {
         resultRepository.getValueSum()
     }
 
-    fun updateSumResultOfIncomeOnLiveData() : LiveData<Int?> = resultRepository.incomeQueryResult
-    fun updateSumResultOfExpenseOnLiveData() : LiveData<Int?> = resultRepository.expenseQueryResult
+    fun updateSumResultOfIncomeOnLiveData() : LiveData<Float?> = resultRepository.incomeQueryResult
+    fun updateSumResultOfExpenseOnLiveData() : LiveData<Float?> = resultRepository.expenseQueryResult
 }

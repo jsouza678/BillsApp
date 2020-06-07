@@ -22,8 +22,6 @@ class IncomeRepository {
     private val queryTest = db.document("users/$userId").collection(collectionName)
     private val queryFilteredByReceivedStatus =
         db.document("users/$userId").collection(collectionName).whereEqualTo("wasReceived", true)
-    private val _incomeQueryResult = MutableLiveData<Int?>()
-    val incomeQueryResult: LiveData<Int?> get() = _incomeQueryResult
     private var imageUrl = ""
     private val databaseReference: FirebaseStorage = FirebaseStorage.getInstance()
     private val path: String = "users/$auth/$collectionName/${java.util.UUID.randomUUID()}.png"
@@ -43,21 +41,6 @@ class IncomeRepository {
             .Builder<Income>()
             .setQuery(queryFilteredByReceivedStatus, Income::class.java)
             .build()
-    }
-
-    fun getIncomeValueSum() {
-        val t = db.collection("users").document(userId).collection(collectionName)
-            .get().addOnSuccessListener {
-                val number: MutableList<Income>? = it.toObjects(Income::class.java)
-                if (number != null) {
-                    for (i in 0 until number.size) {
-                        incomesValueSum += number[i].value!!
-                    }
-                    _incomeQueryResult.postValue(incomesValueSum)
-                }
-            }
-            .addOnFailureListener {
-            }
     }
 
     fun insertData(data: Income) {

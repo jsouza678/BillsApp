@@ -9,15 +9,29 @@
         android:background="@color/colorSecondary"
         tools:context=".expense.presentation.ExpensesFragment">
 
+        <TextView
+            android:id="@+id/welcome_text_view_expenses_fragment"
+            android:layout_width="@dimen/match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/material_margin_16dp"
+            android:layout_marginTop="@dimen/material_margin_16dp"
+            android:fontFamily="@font/advent_pro"
+            tools:text="Olá João!"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/insertExpenseButton"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/expenses_recycler_view_expenses_fragment"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
+            android:layout_height="@dimen/match_parent"
+            android:layout_marginStart="@dimen/material_margin_16dp"
+            android:layout_marginEnd="@dimen/material_margin_16dp"
+            android:layout_marginBottom="@dimen/material_margin_16dp"
             android:background="@color/cardview_light_background"
-            android:elevation="4dp"
+            android:elevation="@dimen/elevation_recycler_view_fragment"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -28,17 +42,18 @@
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/insertExpenseButton"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:elevation="4dp"
+            android:layout_height="@dimen/match_parent"
+            android:layout_marginStart="@dimen/material_margin_16dp"
+            android:layout_marginTop="@dimen/material_margin_16dp"
+            android:layout_marginEnd="@dimen/material_margin_16dp"
+            android:elevation="@dimen/elevation_floating_action_button_fragment"
             android:src="@drawable/ic_add"
-            android:translationY="20dp"
+            android:translationY="@dimen/translation_y_floating_action_button_fragment"
             app:backgroundTint="@color/colorPrimary"
-            app:elevation="4dp"
+            app:elevation="@dimen/elevation_floating_action_button_fragment"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="0.26"
+            app:layout_constraintStart_toEndOf="@+id/welcome_text_view_expenses_fragment"
             app:layout_constraintTop_toTopOf="parent" />
 
 

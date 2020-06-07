@@ -8,128 +8,125 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/colorSecondary"
-        tools:context=".result.presentation.ResultFragment">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorSecondary"
+            tools:context=".result.presentation.ResultFragment">
 
-        <TextView
-            android:id="@+id/text_view_resume_result_fragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:fontFamily="@font/advent_pro"
-            android:text="Seu resumo do mês,"
-            android:textColor="#000000"
-            android:textSize="30sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/text_view_resume_result_fragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/material_margin_16dp"
+                android:layout_marginTop="@dimen/material_margin_16dp"
+                android:fontFamily="@font/advent_pro"
+                android:text="Seu resumo do mês,"
+                android:textColor="#000000"
+                android:textSize="30sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/values_pie_chart_result_fragment"
-            android:layout_width="0dp"
-            android:layout_height="250dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_view_resume_result_fragment" />
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/values_pie_chart_result_fragment"
+                android:layout_width="@dimen/match_parent"
+                android:layout_height="@dimen/pie_chart_height_result_fragment"
+                android:layout_marginStart="@dimen/material_margin_16dp"
+                android:layout_marginTop="@dimen/material_margin_16dp"
+                android:layout_marginEnd="@dimen/material_margin_16dp"
+                android:visibility="invisible"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_view_resume_result_fragment" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/values_card_view_result_fragment"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="32dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/values_pie_chart_result_fragment">
+            <androidx.cardview.widget.CardView
+                android:id="@+id/values_card_view_result_fragment"
+                android:layout_width="@dimen/match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/material_margin_32dp"
+                android:layout_marginTop="@dimen/material_margin_8dp"
+                android:layout_marginEnd="@dimen/material_margin_32dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/values_pie_chart_result_fragment">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                <TextView
-                    android:id="@+id/label_incomes_text_view_result_fragment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
-                    android:fontFamily="@font/advent_pro"
-                    android:text="Entradas:"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/label_incomes_text_view_result_fragment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/material_margin_16dp"
+                        android:layout_marginTop="@dimen/material_margin_16dp"
+                        android:fontFamily="@font/advent_pro"
+                        android:text="Entradas:"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                <TextView
-                    android:id="@+id/value_incomes_text_view_result_fragment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="16dp"
-                    android:fontFamily="@font/advent_pro"
-                    android:text="R$ 2400,00"
-                    android:textSize="24sp"
-                    app:layout_constraintBottom_toBottomOf="@id/label_incomes_text_view_result_fragment"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/label_incomes_text_view_result_fragment" />
+                    <TextView
+                        android:id="@+id/value_incomes_text_view_result_fragment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/material_margin_16dp"
+                        android:fontFamily="@font/advent_pro"
+                        android:text="R$ 2400,00"
+                        android:textSize="24sp"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/label_incomes_text_view_result_fragment"
+                        app:layout_constraintEnd_toEndOf="parent" />
 
-                <TextView
-                    android:id="@+id/label_expenses_text_view_result_fragment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="20dp"
-                    android:fontFamily="@font/advent_pro"
-                    android:text="Despesas"
-                    android:textSize="18sp"
-                    app:layout_constraintStart_toStartOf="@id/label_incomes_text_view_result_fragment"
-                    app:layout_constraintTop_toBottomOf="@id/label_incomes_text_view_result_fragment" />
+                    <TextView
+                        android:id="@+id/label_expenses_text_view_result_fragment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/material_margin_16dp"
+                        android:fontFamily="@font/advent_pro"
+                        android:text="Despesas"
+                        android:textSize="18sp"
+                        app:layout_constraintStart_toStartOf="@id/label_incomes_text_view_result_fragment"
+                        app:layout_constraintTop_toBottomOf="@id/label_incomes_text_view_result_fragment" />
 
-                <TextView
-                    android:id="@+id/value_expenses_text_view_result_fragment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/advent_pro"
-                    android:text="R$ 1400,00"
-                    android:textSize="24sp"
-                    app:layout_constraintBottom_toBottomOf="@id/label_expenses_text_view_result_fragment"
-                    app:layout_constraintEnd_toEndOf="@id/value_incomes_text_view_result_fragment"
-                    app:layout_constraintTop_toTopOf="@id/label_expenses_text_view_result_fragment" />
+                    <TextView
+                        android:id="@+id/value_expenses_text_view_result_fragment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/advent_pro"
+                        android:text="R$ 1400,00"
+                        android:textSize="24sp"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/label_expenses_text_view_result_fragment"
+                        app:layout_constraintEnd_toEndOf="@id/value_incomes_text_view_result_fragment" />
 
-                <TextView
-                    android:id="@+id/label_situation_text_view_result_fragment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="24dp"
-                    android:layout_marginBottom="8dp"
-                    android:fontFamily="@font/advent_pro"
-                    android:text="Saldo"
-                    android:textSize="18sp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/label_expenses_text_view_result_fragment"
-                    app:layout_constraintTop_toBottomOf="@id/label_expenses_text_view_result_fragment" />
+                    <TextView
+                        android:id="@+id/label_situation_text_view_result_fragment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/material_margin_16dp"
+                        android:layout_marginBottom="@dimen/material_margin_8dp"
+                        android:fontFamily="@font/advent_pro"
+                        android:text="Saldo"
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/label_expenses_text_view_result_fragment"
+                        app:layout_constraintTop_toBottomOf="@id/label_expenses_text_view_result_fragment" />
 
-                <TextView
-                    android:id="@+id/value_situation_text_view_result_fragment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:fontFamily="@font/advent_pro"
-                    android:text="+ R$1000"
-                    android:textSize="24sp"
-                    app:layout_constraintBottom_toBottomOf="@id/label_situation_text_view_result_fragment"
-                    app:layout_constraintEnd_toEndOf="@id/value_expenses_text_view_result_fragment"
-                    app:layout_constraintTop_toTopOf="@id/label_situation_text_view_result_fragment" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:id="@+id/value_situation_text_view_result_fragment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/advent_pro"
+                        android:text="+ R$1000"
+                        android:textSize="24sp"
+                        app:layout_constraintBaseline_toBaselineOf="@+id/label_situation_text_view_result_fragment"
+                        app:layout_constraintEnd_toEndOf="@id/value_expenses_text_view_result_fragment" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
+            </androidx.cardview.widget.CardView>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
 </layout>

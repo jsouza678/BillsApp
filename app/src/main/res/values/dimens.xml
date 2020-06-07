@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    // GENERIC
+    <dimen name="match_parent">0dp</dimen>
+    <dimen name="material_margin_8dp">8dp</dimen>
+    <dimen name="material_margin_16dp">16dp</dimen>
+    <dimen name="material_margin_32dp">32dp</dimen>
+
+    // DIALOG IMAGE
+    <dimen name="image_width_dialog_insert_fragments">200dp</dimen>
+    <dimen name="image_height_dialog_insert_fragments">200dp</dimen>
+
+    // EXPENSE AND INCOME FRAGMENTS
+    <dimen name="elevation_floating_action_button_fragment">4dp</dimen>
+    <dimen name="translation_y_floating_action_button_fragment">20dp</dimen>
+    <dimen name="elevation_recycler_view_fragment">4dp</dimen>
+    <dimen name="inserted_image_width_view_fragment">120dp</dimen>
+    <dimen name="inserted_image_height_view_fragment">120dp</dimen>
+
+    // RECYCLER ITEM
+    <dimen name="layout_margin_recycler_card_view_item">4dp</dimen>
+    <dimen name="layout_padding_recycler_card_view_item">2dp</dimen>
+    <dimen name="layout_corner_radius_recycler_card_view_item">3dp</dimen>
+    <dimen name="layout_card_elevation_recycler_card_view_item">3dp</dimen>
+    <dimen name="image_button_width_insert_fragment">30dp</dimen>
+
+    // RESULT FRAGMENT
+    <dimen name="pie_chart_height_result_fragment">250dp</dimen>
+
+</resources>

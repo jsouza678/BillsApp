@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -35,8 +36,8 @@ class ResultFragment : Fragment(){
     private lateinit var chart: PieChart
     private val entries = mutableListOf<PieEntry>()
     private lateinit var dataSet: PieDataSet
-    private var expensesResult: Int? = 0
-    private var incomesResult: Int? = 0
+    private var expensesResult: Float? = 0F
+    private var incomesResult: Float? = 0F
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     override fun onCreateView(
@@ -45,6 +46,7 @@ class ResultFragment : Fragment(){
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_result, container, false)
 
+        (activity as AppCompatActivity).supportActionBar?.title = "Acompanhamento"
         swipeRefreshLayout = binding.swipeRefreshLayoutResultFragment
         chart = binding.valuesPieChartResultFragment
         nameTextView = binding.textViewResumeResultFragment
@@ -70,18 +72,18 @@ class ResultFragment : Fragment(){
         viewModel.apply {
             this.updateSumResultOfExpenseOnLiveData().observe(viewLifecycleOwner, Observer {
                     expensesResult = it
-                    expensesTextView.text = "${expensesResult.toString()}"
+                    expensesTextView.text = "R$ " + expensesResult.toString()
                     entries.add(PieEntry(it!!.toFloat(), "Despesas"))
                     chart.visible()
                 }
             )
             this.updateSumResultOfIncomeOnLiveData().observe(viewLifecycleOwner, Observer {
                     incomesResult = it
-                    incomesTextView.text = incomesResult.toString()
+                    incomesTextView.text = "R$ " + incomesResult.toString()
                     entries.add(PieEntry(it!!.toFloat(), "Entradas"))
                     if(viewModel.updateSumResultOfExpenseOnLiveData().value != null) {
                         val situation = expensesResult?.let { it1 -> incomesResult?.minus(it1) }
-                        situationTextView.text = situation.toString()
+                        situationTextView.text = "R$ " + situation.toString()
                         setupPieChart()
                     }
                 }

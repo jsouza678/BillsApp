@@ -17,13 +17,10 @@ class ExpenseRepository {
     private val ano: Int = calendar.get(java.util.Calendar.YEAR)
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private val userId = "$auth"
-    private var expenseValueSum = 0
     private val collectionName: String = "despesas_$mes" + "_" + "$ano"
     private val queryTest = db.document("users/$userId").collection(collectionName)
     private val queryFilteredByPaidStatus =
         db.document("users/$userId").collection(collectionName).whereEqualTo("wasPaid", true)
-    private val _expenseQueryResult = MutableLiveData<Int?>()
-    val expenseQueryResult: LiveData<Int?> get() = _expenseQueryResult
     private var imageUrl = ""
     private val databaseReference: FirebaseStorage = FirebaseStorage.getInstance()
     private val path: String = "users/$auth/$collectionName/${java.util.UUID.randomUUID()}.png"
@@ -43,21 +40,6 @@ class ExpenseRepository {
             .Builder<Expense>()
             .setQuery(queryFilteredByPaidStatus, Expense::class.java)
             .build()
-    }
-
-    fun getExpenseValueSum() {
-        val t = db.collection("users").document(userId).collection(collectionName)
-            .get().addOnSuccessListener {
-                val number: MutableList<Expense>? = it.toObjects(Expense::class.java)
-                if (number != null) {
-                    for (i in 0 until number.size) {
-                        expenseValueSum += number[i].value!!
-                    }
-                    _expenseQueryResult.postValue(expenseValueSum)
-                }
-            }
-            .addOnFailureListener {
-            }
     }
 
     fun insertData(data: Expense) {

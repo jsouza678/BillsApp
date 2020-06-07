@@ -4,6 +4,7 @@ import android.app.Dialog
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -18,6 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.souza.billsapp.R
 import com.souza.billsapp.data.Expense
@@ -30,10 +32,9 @@ class ExpensesFragment : Fragment(){
     private lateinit var insertButton : FloatingActionButton
     private lateinit var recyclerAdapter : ExpenseAdapter
     private lateinit var expensesRecyclerView : RecyclerView
-    private lateinit var imageView: ImageView
+    private lateinit var welcomeTextView: TextView
     private val viewModel by viewModels<ExpenseViewModel>()
     private lateinit var navController: NavController
-    private var filtered : Boolean = false
     private lateinit var filterMenu : Menu
     private lateinit var dialog : Dialog
 
@@ -46,10 +47,13 @@ class ExpensesFragment : Fragment(){
             R.layout.fragment_expenses,
             container,
             false)
+        val authName: String? = FirebaseAuth.getInstance().currentUser?.displayName
 
         (activity as AppCompatActivity).supportActionBar?.show()
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         insertButton = binding.insertExpenseButton
+        welcomeTextView = binding.welcomeTextViewExpensesFragment
+        welcomeTextView.text = "Olá $authName!"
         expensesRecyclerView = binding.expensesRecyclerViewExpensesFragment
 
         setupDialog()
@@ -120,7 +124,7 @@ class ExpensesFragment : Fragment(){
                 val expense = documentSnapshot.toObject(Expense::class.java)
                 if(expense!= null){
                     val documentId = documentSnapshot.id
-                    val valueToUpdate: Int = expense.value!!
+                    val valueToUpdate: Float = expense.value!!
                     val descriptionToUpdate: String = expense.description!!
                     val wasPaidToUpdate: Boolean = expense.wasPaid
                     val dateToUpdate: Timestamp = expense.date!!
@@ -165,9 +169,6 @@ class ExpensesFragment : Fragment(){
                     viewModel.filteredListOnMLiveData()
                     item.setIcon(R.drawable.ic_filter_list_black)
                 }
-            }
-            R.id.about_icon_menu -> {
-                navController.navigate(R.id.action_billFragment_to_aboutFragment)
             }
             R.id.exit_icon_menu -> {
                 AuthUI.getInstance().signOut(requireContext())

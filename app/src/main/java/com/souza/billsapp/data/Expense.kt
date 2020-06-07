@@ -4,7 +4,7 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.ServerTimestamp
 
 data class Expense(
-    val value: Int? = null,
+    val value: Float? = null,
     val description: String? = null,
     @ServerTimestamp
     val date : Timestamp? = null,

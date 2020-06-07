@@ -15,7 +15,7 @@
         android:icon="@drawable/ic_income"/>
 
     <item android:id="@id/resultFragment"
-        android:title="Receita"
+        android:title="Acompanhamento"
         app:showAsAction="always"
         android:orderInCategory="2"
         android:icon="@drawable/ic_result"/>

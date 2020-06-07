@@ -24,6 +24,8 @@ import com.google.firebase.Timestamp
 import com.souza.billsapp.R
 import com.souza.billsapp.data.Expense
 import com.souza.billsapp.databinding.FragmentInsertExpenseBinding
+import com.souza.billsapp.extensions.invisible
+import com.souza.billsapp.extensions.visible
 import com.squareup.picasso.Picasso
 import java.text.Format
 import java.text.SimpleDateFormat
@@ -40,7 +42,8 @@ class InsertExpenseFragment : Fragment() {
     private lateinit var insertExpenseButton: Button
     private lateinit var insertedImage: ImageView
     private lateinit var openDatePickerButton: Button
-    private lateinit var insertImageButton: Button
+    private lateinit var insertImageButton: ImageButton
+    private lateinit var progressBarImageUpdate: ProgressBar
     private lateinit var dateSelectedOnDatePickerTextView: TextView
     private val calendar = Calendar.getInstance()
     private lateinit var dateSetListener: DatePickerDialog.OnDateSetListener
@@ -76,6 +79,7 @@ class InsertExpenseFragment : Fragment() {
         navController = findNavController()
         (activity as AppCompatActivity).supportActionBar?.show()
 
+        progressBarImageUpdate = binding.progressBarImageProgressUploadExpenseFragment
         insertedImage = binding.imageViewAttachExpenseFragment
         insertExpenseButton = binding.insertExpenseButton
         insertImageButton = binding.imageAttachButtonInsertExpenseFragment
@@ -130,7 +134,7 @@ class InsertExpenseFragment : Fragment() {
                 descriptionInputEditText.error = "Por favor, preencha a descrição"
             } else {
                 val data = Expense(
-                    Integer.parseInt(valueResult),
+                    valueResult.toFloat(),
                     descriptionResult,
                     dateResult,
                     paidResult,
@@ -156,7 +160,8 @@ class InsertExpenseFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.data != null) {
             imageUri = data.data!!
-
+            insertExpenseButton.invisible()
+            progressBarImageUpdate.visible()
             Picasso.get().load(imageUri).into(insertedImage)
             viewModel.insertExpenseImageAttach(imageUri)
             initAttachObserver()
@@ -168,7 +173,8 @@ class InsertExpenseFragment : Fragment() {
             this.updateExpenseImageURLOnLiveData().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 if (it != null) {
                     imageUrl = it
-                    Toast.makeText(requireContext(), "ok", Toast.LENGTH_SHORT).show()
+                    progressBarImageUpdate.invisible()
+                    insertExpenseButton.visible()
                 }
             })
         }
