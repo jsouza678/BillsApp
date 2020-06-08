@@ -81,22 +81,22 @@ class HomeActivity : AppCompatActivity() {
         connectivitySnackbar =
             Snackbar.make(
                 findViewById(R.id.fragment_container_main_activity),
-                "internet voltou",//getString(R.string.snackbar_message_internet_back),
+                getString(R.string.snackbar_message_internet_back),
                 Snackbar.LENGTH_INDEFINITE
             )
     }
 
     private fun showConnectivityOnSnackbar() {
         connectivitySnackbar.duration = BaseTransientBottomBar.LENGTH_SHORT
-        connectivitySnackbar.view.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
-        connectivitySnackbar.setText("internet voltou")//(getString(R.string.snackbar_message_internet_back))
+        connectivitySnackbar.view.setBackgroundColor(ContextCompat.getColor(this, R.color.greeLight))
+        connectivitySnackbar.setText(getString(R.string.snackbar_message_internet_back))
         connectivitySnackbar.show()
     }
 
     private fun showConnectivityOffSnackbar() {
         connectivitySnackbar.duration = BaseTransientBottomBar.LENGTH_SHORT
-        connectivitySnackbar.view.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimaryDark))
-        connectivitySnackbar.setText("internet off")//(getString(R.string.snackbar_internet_off))
+        connectivitySnackbar.view.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+        connectivitySnackbar.setText(getString(R.string.snackbar_message_internet_off))
         connectivitySnackbar.show()
     }
 }

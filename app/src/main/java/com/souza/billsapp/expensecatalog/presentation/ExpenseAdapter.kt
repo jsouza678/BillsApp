@@ -1,4 +1,4 @@
-package com.souza.billsapp.expense.presentation
+package com.souza.billsapp.expensecatalog.presentation
 
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +11,8 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.DocumentSnapshot
 import com.souza.billsapp.R
-import com.souza.billsapp.data.Expense
+import com.souza.billsapp.expensecatalog.domain.Expense
+import com.souza.billsapp.extensions.formatValueToCoin
 import com.souza.billsapp.extensions.invisible
 import com.souza.billsapp.extensions.visible
 import java.text.Format
@@ -43,14 +44,14 @@ class ExpenseAdapter(options: FirestoreRecyclerOptions<Expense>) : FirestoreRecy
     }
 
     inner class ExpenseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val valor : TextView = itemView.findViewById(R.id.valor_valor)
-        private val descricao : TextView = itemView.findViewById(R.id.desc_valor)
-        private val data : TextView = itemView.findViewById(R.id.data_valor)
-        private val pago : Switch = itemView.findViewById(R.id.pago_switch)
-        private val attach : ImageView = itemView.findViewById(R.id.icon_image_view)
+        private val valor : TextView = itemView.findViewById(R.id.value_text_view_expense_item)
+        private val descricao : TextView = itemView.findViewById(R.id.description_value_text_view_expense_item)
+        private val data : TextView = itemView.findViewById(R.id.date_value_text_view_income_item)
+        private val pago : Switch = itemView.findViewById(R.id.was_paid_switch_expense_item)
+        private val attach : ImageView = itemView.findViewById(R.id.attach_icon_image_view_expense_item)
 
         fun itemBind(expense: Expense) {
-            valor.text = expense.value.toString()
+            valor.text = expense.value?.let { formatValueToCoin(it) }
             descricao.text = expense.description
             val timeStampAsDateResult = expense.date?.toDate()
             data.text = formatDate(timeStampAsDateResult)

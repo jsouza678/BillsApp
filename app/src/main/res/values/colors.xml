@@ -5,4 +5,6 @@
     <color name="colorAccent">#ff5131</color>
     <color name="colorSecondary">#E1E2E1</color>
     <color name="colorSecondaryLight">#FFF</color>
+    <color name="greeLight">#558b2f</color>
+    <color name="orangeLight">#ef6c00</color>
 </resources>

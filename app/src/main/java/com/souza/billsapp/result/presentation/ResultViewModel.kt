@@ -2,11 +2,12 @@ package com.souza.billsapp.result.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.souza.billsapp.data.ResultRepository
+import com.souza.billsapp.result.data.ResultRepositoryImpl
 
-public class ResultViewModel : ViewModel() {
+class ResultViewModel : ViewModel() {
 
-    private var resultRepository : ResultRepository = ResultRepository()
+    private var resultRepository : ResultRepositoryImpl =
+        ResultRepositoryImpl()
 
     init{
         resultRepository.getValueSum()

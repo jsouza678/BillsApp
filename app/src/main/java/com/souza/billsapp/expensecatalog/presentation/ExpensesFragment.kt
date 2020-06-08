@@ -1,9 +1,10 @@
-package com.souza.billsapp.income.presentation
+package com.souza.billsapp.expensecatalog.presentation
 
 import android.app.Dialog
 import android.os.Bundle
 import android.view.*
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -18,21 +19,23 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.souza.billsapp.R
-import com.souza.billsapp.data.Income
-import com.souza.billsapp.databinding.FragmentIncomesBinding
+import com.souza.billsapp.expensecatalog.domain.Expense
+import com.souza.billsapp.databinding.FragmentExpensesBinding
 import com.squareup.picasso.Picasso
+import org.koin.android.viewmodel.ext.android.viewModel
 
-class IncomeFragment : Fragment(){
+class ExpensesFragment : Fragment(){
 
-    private lateinit var binding : FragmentIncomesBinding
+    private lateinit var binding : FragmentExpensesBinding
     private lateinit var insertButton : FloatingActionButton
-    private lateinit var recyclerAdapter : IncomeAdapter
-    private lateinit var incomesRecyclerView : RecyclerView
-    private val viewModel by viewModels<IncomeViewModel>()
+    private lateinit var recyclerAdapter : ExpenseAdapter
+    private lateinit var expensesRecyclerView : RecyclerView
+    private lateinit var welcomeTextView: TextView
+    private val viewModel by viewModel<ExpenseCatalogViewModel>()
     private lateinit var navController: NavController
-    private var filtered : Boolean = false
     private lateinit var filterMenu : Menu
     private lateinit var dialog : Dialog
 
@@ -40,21 +43,23 @@ class IncomeFragment : Fragment(){
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        (activity as AppCompatActivity).supportActionBar?.title = "Entradas"
-        binding = DataBindingUtil.inflate<FragmentIncomesBinding>(inflater,
-            R.layout.fragment_incomes,
+        (activity as AppCompatActivity).supportActionBar?.title = "Gastos"
+        binding = DataBindingUtil.inflate<FragmentExpensesBinding>(inflater,
+            R.layout.fragment_expenses,
             container,
             false)
+        val authName: String? = FirebaseAuth.getInstance().currentUser?.displayName
 
         (activity as AppCompatActivity).supportActionBar?.show()
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
-        insertButton = binding.insertIncomeButton
-        incomesRecyclerView = binding.incomesRecyclerViewIncomesFragment
+        insertButton = binding.insertExpenseFloatingActionButtonExpensesFragment
+        welcomeTextView = binding.welcomeTextViewExpensesFragment
+        welcomeTextView.text = "Olá $authName!"
+        expensesRecyclerView = binding.expensesRecyclerViewExpensesFragment
 
         setupDialog()
         initObserver()
         setHasOptionsMenu(true)
-
         return binding.root
     }
 
@@ -63,14 +68,14 @@ class IncomeFragment : Fragment(){
         navController = findNavController()
         //INSERT
         insertButton.setOnClickListener {
-            navController.navigate(R.id.action_incomeFragment_to_insertIncomeFragment)
+            navController.navigate(R.id.action_billFragment_to_insertExpenseFragment)
         }
     }
 
     private fun initObserver() {
         viewModel.apply {
             this.dataList.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-                recyclerAdapter= IncomeAdapter(it)
+                recyclerAdapter= ExpenseAdapter(it)
                 initRecyclerView()
                 recyclerAdapter.startListening()
             })
@@ -78,9 +83,9 @@ class IncomeFragment : Fragment(){
     }
 
     private fun initRecyclerView() {
-        incomesRecyclerView.setHasFixedSize(true)
-        incomesRecyclerView.layoutManager = LinearLayoutManager(context)
-        incomesRecyclerView.adapter = recyclerAdapter
+        expensesRecyclerView.setHasFixedSize(true)
+        expensesRecyclerView.layoutManager = LinearLayoutManager(context)
+        expensesRecyclerView.adapter = recyclerAdapter
 
         val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0,
             ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
@@ -96,40 +101,40 @@ class IncomeFragment : Fragment(){
             }
         }
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
-        itemTouchHelper.attachToRecyclerView(incomesRecyclerView)
+        itemTouchHelper.attachToRecyclerView(expensesRecyclerView)
 
-        recyclerAdapter.setOnItemClickListener(object: IncomeAdapter.OnItemClickListener{
+        recyclerAdapter.setOnItemClickListener(object: ExpenseAdapter.OnItemClickListener{
             override fun onItemClick(documentSnapshot: DocumentSnapshot, position: Int) {
 
-                val income = documentSnapshot.toObject(Income::class.java)
-                if(income!= null){
-                    if(!income.imageUri.isNullOrBlank()){
-                        val ff = dialog.findViewById(R.id.image_attached_image_view_dialog) as ImageView
-                        Picasso.get().load(income.imageUri).into(ff)
-                        dialog.show()
-                    }else{
-                        Snackbar.make(requireView(), "No attachs", BaseTransientBottomBar.LENGTH_SHORT).show()
-                    }
+                val expense = documentSnapshot.toObject(Expense::class.java)
+                if(expense!= null){
+                if(!expense.imageUri.isNullOrBlank()){
+                    val ff = dialog.findViewById(R.id.image_attached_image_view_dialog) as ImageView
+                    Picasso.get().load(expense.imageUri).into(ff)
+                    dialog.show()
+                }else{
+                    Snackbar.make(requireView(), "No attachs", BaseTransientBottomBar.LENGTH_SHORT).show()
+                }
                 }
             }
         }
         )
 
-        recyclerAdapter.setOnItemLongClickListener(object: IncomeAdapter.OnItemLongClickListener{
+        recyclerAdapter.setOnItemLongClickListener(object: ExpenseAdapter.OnItemLongClickListener{
             override fun onItemClick(documentSnapshot: DocumentSnapshot, position: Int) {
-                val expense = documentSnapshot.toObject(Income::class.java)
+                val expense = documentSnapshot.toObject(Expense::class.java)
                 if(expense!= null){
                     val documentId = documentSnapshot.id
                     val valueToUpdate: Float = expense.value!!
                     val descriptionToUpdate: String = expense.description!!
-                    val wasReceivedToUpdate: Boolean = expense.wasReceived
+                    val wasPaidToUpdate: Boolean = expense.wasPaid
                     val dateToUpdate: Timestamp = expense.date!!
-                    val actionDetail = IncomeFragmentDirections
-                        .actionIncomeFragmentToUpdateIncomeFragment(
+                    val actionDetail = ExpensesFragmentDirections
+                        .actionBillFragmentToUpdateExpenseFragment(
                             documentId,
                             valueToUpdate,
                             descriptionToUpdate,
-                            wasReceivedToUpdate,
+                            wasPaidToUpdate,
                             dateToUpdate
                         )
                     navController.navigate(actionDetail)
@@ -141,10 +146,9 @@ class IncomeFragment : Fragment(){
 
     private fun setupDialog() {
         dialog = Dialog(requireContext())
-        dialog.setContentView(R.layout.dialog)
+        dialog.setContentView(R.layout.attached_image_preview_dialog)
         dialog.setCancelable(true)
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.filter_menu, menu)
@@ -169,7 +173,7 @@ class IncomeFragment : Fragment(){
             }
             R.id.exit_icon_menu -> {
                 AuthUI.getInstance().signOut(requireContext())
-                navController.navigate(R.id.action_incomeFragment_to_loginFragment)
+                navController.navigate(R.id.action_billFragment_to_loginFragment)
             }
         }
         return super.onOptionsItemSelected(item)

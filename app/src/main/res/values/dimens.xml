@@ -24,6 +24,7 @@
     <dimen name="layout_corner_radius_recycler_card_view_item">3dp</dimen>
     <dimen name="layout_card_elevation_recycler_card_view_item">3dp</dimen>
     <dimen name="image_button_width_insert_fragment">30dp</dimen>
+    <dimen name="image_button_height_insert_fragment">30dp</dimen>
 
     // RESULT FRAGMENT
     <dimen name="pie_chart_height_result_fragment">250dp</dimen>

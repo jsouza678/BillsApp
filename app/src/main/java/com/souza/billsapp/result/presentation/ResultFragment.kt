@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -21,9 +22,8 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.souza.billsapp.R
 import com.souza.billsapp.databinding.FragmentResultBinding
-import com.souza.billsapp.extensions.observeOnce
+import com.souza.billsapp.extensions.formatValueToCoin
 import com.souza.billsapp.extensions.visible
-
 
 class ResultFragment : Fragment(){
 
@@ -63,6 +63,8 @@ class ResultFragment : Fragment(){
     private fun setupRefreshLayout(){
         swipeRefreshLayout.setOnRefreshListener {
             entries.clear()
+            expensesResult = 0F
+            incomesResult  = 0F
             viewModel.getValuesOnRefresh()
             swipeRefreshLayout.isRefreshing = false
         }
@@ -72,19 +74,19 @@ class ResultFragment : Fragment(){
         viewModel.apply {
             this.updateSumResultOfExpenseOnLiveData().observe(viewLifecycleOwner, Observer {
                     expensesResult = it
-                    expensesTextView.text = "R$ " + expensesResult.toString()
+                    expensesTextView.text = expensesResult?.let { formatValueToCoin(it) }
                     entries.add(PieEntry(it!!.toFloat(), "Despesas"))
-                    chart.visible()
                 }
             )
             this.updateSumResultOfIncomeOnLiveData().observe(viewLifecycleOwner, Observer {
                     incomesResult = it
-                    incomesTextView.text = "R$ " + incomesResult.toString()
+                    incomesTextView.text = incomesResult?.let { formatValueToCoin(it) }
                     entries.add(PieEntry(it!!.toFloat(), "Entradas"))
                     if(viewModel.updateSumResultOfExpenseOnLiveData().value != null) {
                         val situation = expensesResult?.let { it1 -> incomesResult?.minus(it1) }
-                        situationTextView.text = "R$ " + situation.toString()
+                        situationTextView.text = situation?.let { formatValueToCoin(it) }
                         setupPieChart()
+                        chart.visible()
                     }
                 }
             )
@@ -107,39 +109,39 @@ class ResultFragment : Fragment(){
             isHighlightPerTapEnabled = true
             animateY(1400, Easing.EaseInOutQuad)
         }
-
         setPieChartLegendAlignment()
         setPieChartDataSet()
     }
 
     private fun setPieChartLegendAlignment() {
-        val l = chart.legend
-        l.verticalAlignment = Legend.LegendVerticalAlignment.TOP
-        l.horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
-        l.orientation = Legend.LegendOrientation.VERTICAL
-        l.setDrawInside(false)
-        l.xEntrySpace = 7f
-        l.textSize = 12F
-        l.yEntrySpace = 0f
-        l.yOffset = 0f
+        val chartLegend = chart.legend
+        chartLegend.apply {
+            verticalAlignment = Legend.LegendVerticalAlignment.TOP
+            horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
+            orientation = Legend.LegendOrientation.VERTICAL
+            setDrawInside(false)
+            xEntrySpace = 7f
+            textSize = 12F
+            yEntrySpace = 0f
+            yOffset = 0f
+        }
     }
 
     private fun setPieChartDataSet(){
-        dataSet = PieDataSet(entries, "Balanço do mês")
+        dataSet = PieDataSet(entries, "")
         dataSet.valueFormatter = PercentFormatter(chart)
-        val data = PieData(dataSet)
-        data.setValueTextSize(11f)
         dataSet.sliceSpace = 3f
         dataSet.selectionShift = 5f
-        chart.data = data
-
+        val data = PieData(dataSet)
+        data.setValueTextSize(11f)
         setPieChartDataSetColors()
+        chart.data = data
     }
 
     private fun setPieChartDataSetColors(){
         val colors: ArrayList<Int> = ArrayList()
-        colors.add(ContextCompat.getColor(requireContext(), R.color.colorPrimaryDark))
-        colors.add(ContextCompat.getColor(requireContext(), R.color.colorPrimary))
+        colors.add(ContextCompat.getColor(requireContext(), R.color.orangeLight))
+        colors.add(ContextCompat.getColor(requireContext(), R.color.greeLight))
         dataSet.colors = colors
     }
 }

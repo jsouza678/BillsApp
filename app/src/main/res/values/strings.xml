@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">BillsApp</string>
 
-    // DIALOG
+    // IMAGE ATTACH DIALOG
     <string name="attached_image_dialog_content_description">Imagem anexada ao item</string>
 
     // RECYCLER VIEW ITEM
@@ -9,7 +9,7 @@
     <string name="description_label_text_view_item">Descrição</string>
     <string name="date_label_text_view_item">Data</string>
     <string name="was_paid_label_text_view_expense_item">Pago</string>
-    <string name="was_received_label_text_view_expense_item">Recebido</string>
+    <string name="was_received_label_text_view_income_item">Recebido</string>
     <string name="mock_value_text_view_item">R$ 230,00</string>
     <string name="mock_description_text_view_item">Lorem ipsum sit dolor amet</string>
     <string name="mock_date_text_view_item">23/11/2019</string>
@@ -37,5 +37,9 @@
     <string name="expense_label_text_view_result_fragment">Despesas</string>
     <string name="income_label_text_view_result_fragment">Entradas:</string>
     <string name="month_resume_greeting_message_result_fragment">Seu resumo do mês,</string>
+
+    // SNACKBAR CONNECTIVITY
+    <string name="snackbar_message_internet_back">Sua internet voltou :)</string>
+    <string name="snackbar_message_internet_off">Sem conexão! Trabalhando off-line</string>
 
 </resources>

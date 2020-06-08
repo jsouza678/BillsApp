@@ -14,7 +14,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/value_text_view_label_expense_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/material_margin_16dp"
@@ -24,29 +24,29 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/description_label_text_view_expense_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/material_margin_16dp"
             android:layout_marginTop="@dimen/material_margin_8dp"
             android:text="@string/description_label_text_view_item"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView" />
+            app:layout_constraintTop_toBottomOf="@id/value_text_view_label_expense_item" />
 
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/date_label_text_view_expense_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/material_margin_16dp"
             android:layout_marginTop="@dimen/material_margin_8dp"
-            android:layout_marginBottom="@dimen/material_margin_8dp"
+            android:layout_marginBottom="@dimen/material_margin_16dp"
             android:text="@string/date_label_text_view_item"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            app:layout_constraintTop_toBottomOf="@id/description_value_text_view_expense_item" />
 
         <Switch
-            android:id="@+id/pago_switch"
+            android:id="@+id/was_paid_switch_expense_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/material_margin_16dp"
@@ -55,41 +55,43 @@
             android:clickable="false"
             android:text="@string/was_paid_label_text_view_expense_item"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/icon_image_view" />
+            app:layout_constraintTop_toBottomOf="@id/attach_icon_image_view_expense_item" />
 
         <TextView
-            android:id="@+id/valor_valor"
+            android:id="@+id/value_text_view_expense_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/material_margin_16dp"
             tools:text="@string/mock_value_text_view_item"
-            app:layout_constraintBottom_toBottomOf="@+id/textView"
-            app:layout_constraintStart_toEndOf="@+id/textView"
-            app:layout_constraintTop_toTopOf="@+id/textView" />
+            app:layout_constraintBottom_toBottomOf="@id/value_text_view_label_expense_item"
+            app:layout_constraintStart_toEndOf="@id/value_text_view_label_expense_item"
+            app:layout_constraintTop_toTopOf="@id/value_text_view_label_expense_item" />
 
         <TextView
-            android:id="@+id/desc_valor"
-            android:layout_width="wrap_content"
+            android:id="@+id/description_value_text_view_expense_item"
+            android:layout_width="@dimen/match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/material_margin_16dp"
+            android:layout_marginEnd="@dimen/material_margin_16dp"
+            android:maxLength="120"
             android:text="@string/mock_description_text_view_item"
-            android:maxLines="2"
-            app:layout_constraintBottom_toBottomOf="@+id/textView2"
-            app:layout_constraintStart_toEndOf="@+id/textView2"
-            app:layout_constraintTop_toTopOf="@+id/textView2" />
+            app:layout_constraintBottom_toBottomOf="@id/description_label_text_view_expense_item"
+            app:layout_constraintEnd_toStartOf="@+id/was_paid_switch_expense_item"
+            app:layout_constraintStart_toEndOf="@id/description_label_text_view_expense_item"
+            app:layout_constraintTop_toTopOf="@id/description_label_text_view_expense_item" />
 
         <TextView
-            android:id="@+id/data_valor"
+            android:id="@+id/date_value_text_view_income_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/material_margin_16dp"
             android:text="@string/mock_date_text_view_item"
-            app:layout_constraintBottom_toBottomOf="@+id/textView3"
-            app:layout_constraintStart_toEndOf="@+id/textView3"
-            app:layout_constraintTop_toTopOf="@+id/textView3" />
+            android:layout_marginStart="@dimen/material_margin_16dp"
+            app:layout_constraintBottom_toBottomOf="@id/date_label_text_view_expense_item"
+            app:layout_constraintStart_toEndOf="@id/date_label_text_view_expense_item"
+            app:layout_constraintTop_toTopOf="@id/date_label_text_view_expense_item"/>
 
         <ImageView
-            android:id="@+id/icon_image_view"
+            android:id="@+id/attach_icon_image_view_expense_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/material_margin_16dp"
@@ -98,7 +100,7 @@
             android:src="@drawable/ic_attach"
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/pago_switch"
+            app:layout_constraintStart_toStartOf="@id/was_paid_switch_expense_item"
             app:layout_constraintTop_toTopOf="parent"
             android:contentDescription="@string/attached_image_indicator_icon_content_description" />
 

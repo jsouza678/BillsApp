@@ -9,24 +9,28 @@
         android:id="@+id/splashFragment"
         android:name="com.souza.billsapp.SplashFragment"
         android:label="fragment_splash"
-        tools:layout="@layout/fragment_splash" >
+        tools:layout="@layout/fragment_splash">
         <action
             android:id="@+id/action_splashFragment_to_loginFragment"
             app:destination="@id/loginFragment"
             app:popUpTo="@id/splashFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"/>
         <action
             android:id="@+id/action_splashFragment_to_billFragment"
             app:popUpTo="@id/splashFragment"
             app:destination="@id/billFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"/>
     </fragment>
 
     <fragment
         android:id="@+id/billFragment"
-        android:name="com.souza.billsapp.expense.presentation.ExpensesFragment"
+        android:name="com.souza.billsapp.expensecatalog.presentation.ExpensesFragment"
         android:label="fragment_bill"
-        tools:layout="@layout/fragment_expenses" >
+        tools:layout="@layout/fragment_expenses">
         <action
             android:id="@+id/action_billFragment_to_insertExpenseFragment"
             app:destination="@id/insertExpenseFragment"
@@ -44,22 +48,28 @@
             android:id="@+id/action_billFragment_to_loginFragment"
             app:popUpTo="@id/loginFragment"
             app:popUpToInclusive="true"
-            app:destination="@id/loginFragment" />
+            app:destination="@id/loginFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"/>
         <action
             android:id="@+id/action_billFragment_to_incomeFragment"
             app:destination="@id/incomeFragment"
             app:popUpTo="@id/billFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"/>
         <action
             android:id="@+id/action_billFragment_to_resultFragment"
             app:popUpToInclusive="true"
             app:popUpTo="@id/billFragment"
-            app:destination="@id/resultFragment" />
+            app:destination="@id/resultFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"/>
     </fragment>
 
     <fragment
         android:id="@+id/insertExpenseFragment"
-        android:name="com.souza.billsapp.expense.presentation.InsertExpenseFragment"
+        android:name="com.souza.billsapp.expensecatalog.presentation.InsertExpenseFragment"
         android:label="InsertExpenseFragment">
         <argument
             android:name="documentId"
@@ -86,7 +96,9 @@
             android:id="@+id/action_insertExpenseFragment_to_billFragment"
             app:destination="@id/billFragment"
             app:popUpToInclusive="true"
-            app:popUpTo="@id/insertExpenseFragment"/>
+            app:popUpTo="@id/insertExpenseFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"/>
     </fragment>
 
     <fragment
@@ -95,45 +107,66 @@
         android:label="LoginFragment" >
         <action
             android:id="@+id/action_loginFragment_to_billFragment"
-            app:destination="@id/billFragment" />
+            app:destination="@id/billFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"/>
         <action
             android:id="@+id/action_loginFragment_to_splashFragment"
-            app:destination="@id/splashFragment" />
+            app:destination="@id/splashFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"/>
         <action
             android:id="@+id/action_loginFragment_to_incomeFragment"
-            app:destination="@id/incomeFragment" />
+            app:destination="@id/incomeFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"/>
     </fragment>
     <fragment
         android:id="@+id/incomeFragment"
-        android:name="com.souza.billsapp.income.presentation.IncomeFragment"
-        android:label="IncomeFragment" >
+        android:name="com.souza.billsapp.incomecatalog.presentation.IncomeFragment"
+        android:label="IncomeFragment"
+        app:enterAnim="@anim/fade_in"
+        app:exitAnim="@anim/fade_out">
         <action
             android:id="@+id/action_incomeFragment_to_updateIncomeFragment"
             app:destination="@id/insertIncomeFragment"
             app:popUpTo="@id/incomeFragment"
+            app:popUpToInclusive="true"
             app:enterAnim="@anim/fade_in"
             app:exitAnim="@anim/fade_out">
         </action>
         <action
             android:id="@+id/action_incomeFragment_to_insertIncomeFragment"
-            app:destination="@id/insertIncomeFragment" />
+            app:destination="@id/insertIncomeFragment"
+            app:enterAnim="@anim/fade_in"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/incomeFragment"
+            app:exitAnim="@anim/fade_out"/>
         <action
             android:id="@+id/action_incomeFragment_to_billFragment"
-            app:destination="@id/billFragment" />
+            app:destination="@id/billFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/incomeFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"/>
         <action
             android:id="@+id/action_incomeFragment_to_loginFragment"
             app:destination="@id/loginFragment"
             app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="true"/>
+            app:popUpToInclusive="true"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"/>
         <action
             android:id="@+id/action_incomeFragment_to_resultFragment"
             app:popUpTo="@id/incomeFragment"
             app:popUpToInclusive="true"
-            app:destination="@id/resultFragment" />
+            app:destination="@id/resultFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"/>
     </fragment>
     <fragment
         android:id="@+id/insertIncomeFragment"
-        android:name="com.souza.billsapp.income.presentation.InsertIncomeFragment"
+        android:name="com.souza.billsapp.incomecatalog.presentation.InsertIncomeFragment"
         android:label="InsertIncomeFragment" >
         <argument
             android:name="documentId"
@@ -158,7 +191,9 @@
             android:defaultValue="@null"/>
         <action
             android:id="@+id/action_insertIncomeFragment_to_incomeFragment"
-            app:destination="@id/incomeFragment" />
+            app:destination="@id/incomeFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"/>
     </fragment>
     <fragment
         android:id="@+id/resultFragment"
@@ -167,11 +202,17 @@
         <action
             android:id="@+id/action_resultFragment_to_billFragment"
             app:popUpToInclusive="true"
-            app:destination="@id/billFragment" />
+            app:popUpTo="@id/resultFragment"
+            app:destination="@id/billFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"/>
         <action
             android:id="@+id/action_resultFragment_to_incomeFragment"
             app:popUpToInclusive="true"
-            app:destination="@id/incomeFragment" />
+            app:popUpTo="@id/resultFragment"
+            app:destination="@id/incomeFragment"
+            app:enterAnim="@anim/fade_in"
+            app:exitAnim="@anim/fade_out"/>
     </fragment>
 
 </navigation>

@@ -1,13 +1,13 @@
-package com.souza.billsapp.data
+package com.souza.billsapp.expensecatalog.domain
 
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.ServerTimestamp
 
-data class Income(
+data class Expense(
     val value: Float? = null,
     val description: String? = null,
     @ServerTimestamp
     val date : Timestamp? = null,
-    val wasReceived: Boolean = false,
+    val wasPaid: Boolean = false,
     val imageUri: String = ""
 )

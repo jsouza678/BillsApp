@@ -1,6 +1,6 @@
-package com.souza.billsapp.expense.presentation
+package com.souza.billsapp.incomecatalog.presentation
 
-import android.app.Activity.RESULT_OK
+import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.net.Uri
@@ -22,27 +22,26 @@ import androidx.navigation.ui.NavigationUI
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.Timestamp
 import com.souza.billsapp.R
-import com.souza.billsapp.data.Expense
-import com.souza.billsapp.databinding.FragmentInsertExpenseBinding
+import com.souza.billsapp.incomecatalog.domain.Income
+import com.souza.billsapp.databinding.FragmentInsertIncomesBinding
 import com.souza.billsapp.extensions.invisible
 import com.souza.billsapp.extensions.visible
 import com.squareup.picasso.Picasso
+import org.koin.android.viewmodel.ext.android.viewModel
 import java.text.Format
 import java.text.SimpleDateFormat
 import java.util.*
 
-class InsertExpenseFragment : Fragment() {
+class InsertIncomeFragment : Fragment() {
 
     private lateinit var navController: NavController
-    private lateinit var binding: FragmentInsertExpenseBinding
-    private val viewModel by viewModels<ExpenseViewModel>()
+    private lateinit var binding: FragmentInsertIncomesBinding
+    private val viewModel by viewModel<IncomeCatalogViewModel>()
     private lateinit var valueInputEditText: TextInputEditText
     private lateinit var descriptionInputEditText: TextInputEditText
     private lateinit var wasPaidCheckBox: CheckBox
-    private lateinit var insertExpenseButton: Button
-    private lateinit var insertedImage: ImageView
+    private lateinit var insertIncomeButton: Button
     private lateinit var openDatePickerButton: Button
-    private lateinit var insertImageButton: ImageButton
     private lateinit var progressBarImageUpdate: ProgressBar
     private lateinit var dateSelectedOnDatePickerTextView: TextView
     private val calendar = Calendar.getInstance()
@@ -54,7 +53,9 @@ class InsertExpenseFragment : Fragment() {
     private lateinit var choosenDate: Date
     private var documentId = ""
     private var isUpdate = false
-    private lateinit var safeArgs: InsertExpenseFragmentArgs
+    private lateinit var safeArgs: InsertIncomeFragmentArgs
+    private lateinit var insertedImage: ImageView
+    private lateinit var insertImageButton: ImageButton
     private lateinit var imageUri: Uri
     private var imageUrl = ""
 
@@ -62,9 +63,9 @@ class InsertExpenseFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate<FragmentInsertExpenseBinding>(
+        binding = DataBindingUtil.inflate<FragmentInsertIncomesBinding>(
             inflater,
-            R.layout.fragment_insert_expense,
+            R.layout.fragment_insert_incomes,
             container,
             false
         )
@@ -75,22 +76,21 @@ class InsertExpenseFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         navController = findNavController()
         (activity as AppCompatActivity).supportActionBar?.show()
 
-        progressBarImageUpdate = binding.progressBarImageProgressUploadExpenseFragment
-        insertedImage = binding.imageViewAttachExpenseFragment
-        insertExpenseButton = binding.insertExpenseButton
-        insertImageButton = binding.imageAttachButtonInsertExpenseFragment
-        valueInputEditText = binding.valueTextInputEditTextExpenseFragment
-        descriptionInputEditText = binding.descriptionTextInputEditTextExpenseFragment
-        wasPaidCheckBox = binding.wasPaidCheckboxExpenseFragment
-        openDatePickerButton = binding.datePickerButtonExpenseFragment
-        dateSelectedOnDatePickerTextView = binding.dateSelectedTextViewExpenseFragment
+        progressBarImageUpdate = binding.progressBarImageProgressUploadInsertIncomeFragment
+        insertedImage = binding.imageViewAttachInsertIncomeFragment
+        insertImageButton = binding.imageAttachButtonInsertIncomeFragment
+        insertIncomeButton = binding.insertIncomeButtonInsertIncomeFragment
+        valueInputEditText = binding.valueTextInputEditTextIncomeFragment
+        descriptionInputEditText = binding.descriptionTextInputEditTextIncomeFragment
+        wasPaidCheckBox = binding.wasPaidCheckboxInsertIncomeFragment
+        openDatePickerButton = binding.datePickerButtonInsertIncomeFragment
+        dateSelectedOnDatePickerTextView = binding.dateSelectedTextViewIncomeFragment
 
         arguments?.let {
-            safeArgs = InsertExpenseFragmentArgs.fromBundle(it)
+            safeArgs = InsertIncomeFragmentArgs.fromBundle(it)
             documentId = safeArgs.documentId
             if (safeArgs.documentId != "-1") {
                 isUpdate = true
@@ -98,56 +98,19 @@ class InsertExpenseFragment : Fragment() {
         }
 
         if (isUpdate) {
-            (activity as AppCompatActivity).supportActionBar?.title = "Editar gasto"
-            setupUpdateExpense(safeArgs)
+            (activity as AppCompatActivity).supportActionBar?.title = "Editar entrada"
+            setupUpdateIncome(safeArgs)
         } else {
-            (activity as AppCompatActivity).supportActionBar?.title = "Inserir gasto"
+            (activity as AppCompatActivity).supportActionBar?.title = "Inserir entrada"
         }
 
-        setupDatePickerDialogListener()
-
-        choosenDate = calendar.time
         insertImageButton.setOnClickListener {
             openFileChooser()
         }
 
-        setupInsertExpenseButton()
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return NavigationUI.onNavDestinationSelected(
-            item,
-            requireView().findNavController()
-        )
-                || super.onOptionsItemSelected(item)
-    }
-
-    private fun setupInsertExpenseButton() {
-        insertExpenseButton.setOnClickListener {
-            val valueResult = valueInputEditText.text.toString()
-            val descriptionResult: String = descriptionInputEditText.text.toString()
-            val paidResult = wasPaidCheckBox.isChecked
-            val dateResult = Timestamp(choosenDate)
-
-            if (valueResult.trim().isEmpty() || descriptionResult.trim().isEmpty()) {
-                valueInputEditText.error = "Por favor, preencha o valor"
-                descriptionInputEditText.error = "Por favor, preencha a descrição"
-            } else {
-                val data = Expense(
-                    valueResult.toFloat(),
-                    descriptionResult,
-                    dateResult,
-                    paidResult,
-                    imageUrl.toString()
-                )
-                if (isUpdate) {
-                    viewModel.updateExpense(data, documentId)
-                } else {
-                    viewModel.insertExpense(data)
-                }
-                navController.navigate(R.id.action_insertExpenseFragment_to_billFragment)
-            }
-        }
+        setupDatePickerDialogListener()
+        choosenDate = calendar.time
+        setupInsertIncomeButton()
     }
 
     private fun openFileChooser() {
@@ -158,25 +121,61 @@ class InsertExpenseFragment : Fragment() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.data != null) {
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
             imageUri = data.data!!
-            insertExpenseButton.invisible()
-            progressBarImageUpdate.visible()
             Picasso.get().load(imageUri).into(insertedImage)
-            viewModel.insertExpenseImageAttach(imageUri)
+            insertIncomeButton.invisible()
+            progressBarImageUpdate.visible()
+            viewModel.insertIncomeImageAttach(imageUri)
             initAttachObserver()
         }
     }
 
-    private fun initAttachObserver () {
+    private fun initAttachObserver() {
         viewModel.apply {
-            this.updateExpenseImageURLOnLiveData().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-                if (it != null) {
-                    imageUrl = it
-                    progressBarImageUpdate.invisible()
-                    insertExpenseButton.visible()
+            this.updateIncomeImageURLOnLiveData().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
+                    if (it != null) {
+                        imageUrl = it
+                        progressBarImageUpdate.invisible()
+                        insertIncomeButton.visible()
+                    }
+                })
+        }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return NavigationUI.onNavDestinationSelected(
+            item,
+            requireView().findNavController()
+        )
+                || super.onOptionsItemSelected(item)
+    }
+
+    private fun setupInsertIncomeButton() {
+        insertIncomeButton.setOnClickListener {
+            val valueResult = valueInputEditText.text.toString()
+            val descriptionResult: String = descriptionInputEditText.text.toString()
+            val paidResult = wasPaidCheckBox.isChecked
+            val dateResult = Timestamp(choosenDate)
+
+            if (valueResult.trim().isEmpty() || descriptionResult.trim().isEmpty()) {
+                valueInputEditText.error = "Por favor, preencha o valor"
+                descriptionInputEditText.error = "Por favor, preencha a descrição"
+            } else {
+                val data = Income(
+                    valueResult.toFloat(),
+                    descriptionResult,
+                    dateResult,
+                    paidResult,
+                    imageUrl.toString()
+                )
+                if (isUpdate) {
+                    viewModel.updateIncome(data, documentId)
+                } else {
+                    viewModel.insertIncome(data)
                 }
-            })
+                navController.navigate(R.id.action_insertIncomeFragment_to_incomeFragment)
+            }
         }
     }
 
@@ -208,10 +207,10 @@ class InsertExpenseFragment : Fragment() {
         }
     }
 
-    private fun setupUpdateExpense(safeArgs: InsertExpenseFragmentArgs) {
+    private fun setupUpdateIncome(safeArgs: InsertIncomeFragmentArgs) {
         valueInputEditText.text = safeArgs.value.toString().toEditable()
         descriptionInputEditText.text = safeArgs.description.toString().toEditable()
-        wasPaidCheckBox.isChecked = safeArgs.wasPaid
+        wasPaidCheckBox.isChecked = safeArgs.wasReceived
         val date = safeArgs.date?.toDate()
         dateSelectedOnDatePickerTextView.text = formatDateWithSeconds(date)
     }

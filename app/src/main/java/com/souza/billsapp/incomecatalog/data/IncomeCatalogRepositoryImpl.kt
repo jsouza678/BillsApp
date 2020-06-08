@@ -1,4 +1,4 @@
-package com.souza.billsapp.data
+package com.souza.billsapp.incomecatalog.data
 
 import android.net.Uri
 import androidx.lifecycle.LiveData
@@ -7,9 +7,12 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.souza.billsapp.incomecatalog.domain.Income
+import com.souza.billsapp.expensecatalog.domain.repository.ExpenseCatalogRepository
+import com.souza.billsapp.incomecatalog.domain.repository.IncomeCatalogRepository
 import java.util.Calendar
 
-class IncomeRepository {
+class IncomeCatalogRepositoryImpl : IncomeCatalogRepository {
 
     private val auth: String? = FirebaseAuth.getInstance().currentUser?.uid
     private val calendar: Calendar = Calendar.getInstance()
@@ -27,60 +30,56 @@ class IncomeRepository {
     private val path: String = "users/$auth/$collectionName/${java.util.UUID.randomUUID()}.png"
     private val reference = databaseReference.getReference(path)
     private val _attachURLResult = MutableLiveData<String?>()
-    val attachURLResult: LiveData<String?> get() = _attachURLResult
 
-    fun getData(): FirestoreRecyclerOptions<Income> {
+    override fun attachURLResult(): LiveData<String?> = _attachURLResult
+
+    override fun getData(): FirestoreRecyclerOptions<Income> {
         return FirestoreRecyclerOptions
             .Builder<Income>()
             .setQuery(queryTest, Income::class.java)
             .build()
     }
 
-    fun getMonthlyData(): FirestoreRecyclerOptions<Income> {
+    override fun getMonthlyData(): FirestoreRecyclerOptions<Income> {
         return FirestoreRecyclerOptions
             .Builder<Income>()
             .setQuery(queryFilteredByReceivedStatus, Income::class.java)
             .build()
     }
 
-    fun insertData(data: Income) {
+    override fun insertData(data: Income) {
         db.collection("users").document(userId).collection(collectionName)
             .document()
             .set(data)
             .addOnSuccessListener {
-                //TODO
+                // Success. Data inserted.
             }
             .addOnFailureListener {
-                //TODO
+                // Failed. Data not inserted.
             }
     }
 
-    fun updateData(data: Income, document: String) {
+    override fun updateData(data: Income, document: String) {
         db.collection("users").document(userId).collection(collectionName)
             .document(document)
             .set(data)
             .addOnSuccessListener {
-                //TODO
+                // Success. Data updated.
             }
             .addOnFailureListener {
-                //TODO
+                // Failed. Data not updated.
             }
     }
 
-    fun insertIncomeImageAttachOnStorage(imageUri: Uri) {
+    override fun insertIncomeImageAttachOnStorage(imageUri: Uri) {
         val uploadTask = reference
             .putFile(imageUri)
             .addOnSuccessListener {
-                //Toast.makeText(requireContext(), "ok", Toast.LENGTH_SHORT).show()
                 reference.downloadUrl
                     .addOnSuccessListener {
                         imageUrl = it.toString()
                         _attachURLResult.postValue(it.toString())
-                        //Toast.makeText(requireContext(), "$download_url", Toast.LENGTH_SHORT)
-                        //.show()
                     }
-            }.addOnFailureListener {
-
-            }
+            }.addOnFailureListener { }
     }
 }

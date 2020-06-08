@@ -1,12 +1,15 @@
-package com.souza.billsapp.data
+package com.souza.billsapp.result.data
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.souza.billsapp.expensecatalog.domain.Expense
+import com.souza.billsapp.incomecatalog.domain.Income
+import com.souza.billsapp.result.domain.repository.ResultRepository
 import java.util.*
 
-class ResultRepository {
+class ResultRepositoryImpl : ResultRepository {
 
     private val auth: String? = FirebaseAuth.getInstance().currentUser?.uid
     private val calendar: Calendar = Calendar.getInstance()
@@ -23,10 +26,13 @@ class ResultRepository {
     private val _incomeQueryResult = MutableLiveData<Float?>()
     val incomeQueryResult: LiveData<Float?> get() = _incomeQueryResult
 
-    fun getValueSum() {
+    override fun getValueSum() {
+        expenseValueSum = 0F
+        incomesValueSum = 0F
         db.collection("users").document(userId).collection(collectionNameExpenses)
             .get().addOnSuccessListener {
-                val number: MutableList<Expense>? = it.toObjects(Expense::class.java)
+                val number: MutableList<Expense>? = it.toObjects(
+                    Expense::class.java)
                 if (number != null) {
                     for (i in 0 until number.size) {
                         expenseValueSum += number[i].value!!
@@ -38,7 +44,8 @@ class ResultRepository {
             }
         db.collection("users").document(userId).collection(collectionNameIncomes)
             .get().addOnSuccessListener {
-                val number: MutableList<Income>? = it.toObjects(Income::class.java)
+                val number: MutableList<Income>? = it.toObjects(
+                    Income::class.java)
                 if (number != null) {
                     for (i in 0 until number.size) {
                         incomesValueSum += number[i].value!!
@@ -46,7 +53,6 @@ class ResultRepository {
                     _incomeQueryResult.postValue(incomesValueSum)
                 }
             }
-            .addOnFailureListener {
-            }
+            .addOnFailureListener { }
     }
 }

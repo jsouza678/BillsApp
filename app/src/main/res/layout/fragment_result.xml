@@ -73,9 +73,9 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/material_margin_16dp"
                         android:fontFamily="@font/advent_pro"
-                        android:text="@string/mock_income_value_result_fragment"
+                        tools:text="@string/mock_income_value_result_fragment"
                         android:textSize="24sp"
-                        app:layout_constraintBaseline_toBaselineOf="@+id/label_incomes_text_view_result_fragment"
+                        app:layout_constraintBaseline_toBaselineOf="@id/label_incomes_text_view_result_fragment"
                         app:layout_constraintEnd_toEndOf="parent" />
 
                     <TextView
@@ -94,9 +94,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/advent_pro"
-                        android:text="@string/mock_expense_value_result_fragment"
+                        tools:text="@string/mock_expense_value_result_fragment"
                         android:textSize="24sp"
-                        app:layout_constraintBaseline_toBaselineOf="@+id/label_expenses_text_view_result_fragment"
+                        app:layout_constraintBaseline_toBaselineOf="@id/label_expenses_text_view_result_fragment"
                         app:layout_constraintEnd_toEndOf="@id/value_incomes_text_view_result_fragment" />
 
                     <TextView
@@ -117,9 +117,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/advent_pro"
-                        android:text="@string/mock_situation_value_result_fragment"
+                        tools:text="@string/mock_situation_value_result_fragment"
                         android:textSize="24sp"
-                        app:layout_constraintBaseline_toBaselineOf="@+id/label_situation_text_view_result_fragment"
+                        app:layout_constraintBaseline_toBaselineOf="@id/label_situation_text_view_result_fragment"
                         app:layout_constraintEnd_toEndOf="@id/value_expenses_text_view_result_fragment" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
