@@ -4,11 +4,11 @@ O aplicativo é um assistente pessoal onde o usuário pode colocar suas despesas
 
 Ao abrir o aplicativo o usuário pode inserir uma nova despesa ou entrada, verificar as existentes, editá-las, exclui-las e verificar o balanço mensal que dispõe de um gráfico que pode ser atualizado apenas puxando a tela para baixo (Swipe Layout).
 
-A tela de Despesas da aplicação disponibiliza uma lista com todas as despesas existentes com seu valor, descrição, data, se possui anexo ou não, e o statos (pago ou não) simbolizado por um switch).
+A tela de Despesas da aplicação disponibiliza uma lista com todas as despesas existentes com seu valor, descrição, data, se possui anexo ou não, e o status (pago ou não) simbolizado por um switch).
 
-A tela de Receita da aplicação disponibiliza uma lista com todas as entradas existentes com seu valor, descrição, data, se possui anexo ou não, e o statos (recebido ou não) simbolizado por um switch).
+A tela de Receita da aplicação disponibiliza uma lista com todas as entradas existentes com seu valor, descrição, data, se possui anexo ou não, e o status (recebido ou não) simbolizado por um switch).
 
-As duas telas acima podem ser filtradas pelo statos (pago ou não / recebido ou não) por meio do menu superior.
+As duas telas acima podem ser filtradas pelo status (pago ou não / recebido ou não) por meio do menu superior.
 
 Para realizar deslogar da aplicação, basta selecionar os três pontinhos no menu superior e clicar em "Sair".
 
