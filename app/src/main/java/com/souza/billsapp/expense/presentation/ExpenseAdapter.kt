@@ -1,11 +1,8 @@
 package com.souza.billsapp.expense.presentation
 
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import android.widget.ImageView
 import android.widget.Switch
 import android.widget.TextView
@@ -50,7 +47,7 @@ class ExpenseAdapter(options: FirestoreRecyclerOptions<Expense>) : FirestoreRecy
         private val descricao : TextView = itemView.findViewById(R.id.desc_valor)
         private val data : TextView = itemView.findViewById(R.id.data_valor)
         private val pago : Switch = itemView.findViewById(R.id.pago_switch)
-        private val attach : ImageView = itemView.findViewById(R.id.icone_image_view)
+        private val attach : ImageView = itemView.findViewById(R.id.icon_image_view)
 
         fun itemBind(expense: Expense) {
             valor.text = expense.value.toString()

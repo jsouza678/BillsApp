@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="@dimen/layout_margin_recycler_card_view_item"
     android:padding="@dimen/layout_padding_recycler_card_view_item"
     app:cardCornerRadius="@dimen/layout_corner_radius_recycler_card_view_item"
@@ -18,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/material_margin_16dp"
             android:layout_marginTop="@dimen/material_margin_16dp"
-            android:text="Valor"
+            android:text="@string/value_label_text_view_item"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/material_margin_16dp"
             android:layout_marginTop="@dimen/material_margin_8dp"
-            android:text="Descrição"
+            android:text="@string/description_label_text_view_item"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -39,7 +40,7 @@
             android:layout_marginStart="@dimen/material_margin_16dp"
             android:layout_marginTop="@dimen/material_margin_8dp"
             android:layout_marginBottom="@dimen/material_margin_8dp"
-            android:text="Data"
+            android:text="@string/date_label_text_view_item"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -52,16 +53,16 @@
             android:layout_marginEnd="@dimen/material_margin_16dp"
             android:checked="false"
             android:clickable="false"
-            android:text="Pago"
+            android:text="@string/was_paid_label_text_view_expense_item"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/icone_image_view" />
+            app:layout_constraintTop_toBottomOf="@+id/icon_image_view" />
 
         <TextView
             android:id="@+id/valor_valor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/material_margin_16dp"
-            android:text="xxx"
+            tools:text="@string/mock_value_text_view_item"
             app:layout_constraintBottom_toBottomOf="@+id/textView"
             app:layout_constraintStart_toEndOf="@+id/textView"
             app:layout_constraintTop_toTopOf="@+id/textView" />
@@ -71,7 +72,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/material_margin_16dp"
-            android:text="xxx"
+            android:text="@string/mock_description_text_view_item"
+            android:maxLines="2"
             app:layout_constraintBottom_toBottomOf="@+id/textView2"
             app:layout_constraintStart_toEndOf="@+id/textView2"
             app:layout_constraintTop_toTopOf="@+id/textView2" />
@@ -81,13 +83,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/material_margin_16dp"
-            android:text="xxx"
+            android:text="@string/mock_date_text_view_item"
             app:layout_constraintBottom_toBottomOf="@+id/textView3"
             app:layout_constraintStart_toEndOf="@+id/textView3"
             app:layout_constraintTop_toTopOf="@+id/textView3" />
 
         <ImageView
-            android:id="@+id/icone_image_view"
+            android:id="@+id/icon_image_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/material_margin_16dp"
@@ -97,7 +99,8 @@
             android:visibility="invisible"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/pago_switch"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/attached_image_indicator_icon_content_description" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

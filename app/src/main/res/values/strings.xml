@@ -1,6 +1,41 @@
 <resources>
     <string name="app_name">BillsApp</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    // DIALOG
+    <string name="attached_image_dialog_content_description">Imagem anexada ao item</string>
+
+    // RECYCLER VIEW ITEM
+    <string name="value_label_text_view_item">Valor</string>
+    <string name="description_label_text_view_item">Descrição</string>
+    <string name="date_label_text_view_item">Data</string>
+    <string name="was_paid_label_text_view_expense_item">Pago</string>
+    <string name="was_received_label_text_view_expense_item">Recebido</string>
+    <string name="mock_value_text_view_item">R$ 230,00</string>
+    <string name="mock_description_text_view_item">Lorem ipsum sit dolor amet</string>
+    <string name="mock_date_text_view_item">23/11/2019</string>
+    <string name="attached_image_indicator_icon_content_description">Indicador de que este item possui um anexo</string>
+    <string name="mock_hello_text_expense_fragment">Olá João!</string>
+
+    // INSERT FRAGMENT
+    <string name="insert_expense_label_text_view_item">Inserir Gasto</string>
+    <string name="insert_income_label_text_view_item">Inserir Despesa</string>
+    <string name="value_hint_text_view_item">Valor</string>
+    <string name="description_hint_text_view_item">Descrição</string>
+    <string name="insert_item_button">Inserir</string>
+    <string name="was_paid_checkbox_text_insert_expense">Pago</string>
+    <string name="was_received_checkbox_text_insert_expense">Recebido</string>
+    <string name="mock_date_insert_fragment">06/03/2020</string>
+    <string name="date_label_insert_fragment">Data</string>
+    <string name="attached_image_button_content_description">Ícone de uma camera para adicionar uma imagem como anexo.</string>
+    <string name="attached_image_item">Imagem anexada ao item</string>
+
+    // RESULT FRAGMENT
+    <string name="mock_situation_value_result_fragment">+ R$1000,00</string>
+    <string name="mock_income_value_result_fragment">R$2800,00</string>
+    <string name="mock_expense_value_result_fragment">R$1400,00</string>
+    <string name="situation_label_text_view_result_fragment">Saldo</string>
+    <string name="expense_label_text_view_result_fragment">Despesas</string>
+    <string name="income_label_text_view_result_fragment">Entradas:</string>
+    <string name="month_resume_greeting_message_result_fragment">Seu resumo do mês,</string>
+
 </resources>

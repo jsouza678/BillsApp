@@ -16,7 +16,7 @@
             android:layout_marginStart="@dimen/material_margin_16dp"
             android:layout_marginTop="@dimen/material_margin_16dp"
             android:fontFamily="@font/advent_pro"
-            tools:text="Olá João!"
+            tools:text="@string/mock_hello_text_expense_fragment"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/insertExpenseButton"
@@ -55,7 +55,6 @@
             app:layout_constraintHorizontal_bias="0.26"
             app:layout_constraintStart_toEndOf="@+id/welcome_text_view_expenses_fragment"
             app:layout_constraintTop_toTopOf="parent" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

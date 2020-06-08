@@ -21,7 +21,7 @@
                 android:layout_marginStart="@dimen/material_margin_16dp"
                 android:layout_marginTop="@dimen/material_margin_16dp"
                 android:fontFamily="@font/advent_pro"
-                android:text="Seu resumo do mês,"
+                android:text="@string/month_resume_greeting_message_result_fragment"
                 android:textColor="#000000"
                 android:textSize="30sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -62,7 +62,7 @@
                         android:layout_marginStart="@dimen/material_margin_16dp"
                         android:layout_marginTop="@dimen/material_margin_16dp"
                         android:fontFamily="@font/advent_pro"
-                        android:text="Entradas:"
+                        android:text="@string/income_label_text_view_result_fragment"
                         android:textSize="18sp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -73,7 +73,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/material_margin_16dp"
                         android:fontFamily="@font/advent_pro"
-                        android:text="R$ 2400,00"
+                        android:text="@string/mock_income_value_result_fragment"
                         android:textSize="24sp"
                         app:layout_constraintBaseline_toBaselineOf="@+id/label_incomes_text_view_result_fragment"
                         app:layout_constraintEnd_toEndOf="parent" />
@@ -84,7 +84,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/material_margin_16dp"
                         android:fontFamily="@font/advent_pro"
-                        android:text="Despesas"
+                        android:text="@string/expense_label_text_view_result_fragment"
                         android:textSize="18sp"
                         app:layout_constraintStart_toStartOf="@id/label_incomes_text_view_result_fragment"
                         app:layout_constraintTop_toBottomOf="@id/label_incomes_text_view_result_fragment" />
@@ -94,7 +94,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/advent_pro"
-                        android:text="R$ 1400,00"
+                        android:text="@string/mock_expense_value_result_fragment"
                         android:textSize="24sp"
                         app:layout_constraintBaseline_toBaselineOf="@+id/label_expenses_text_view_result_fragment"
                         app:layout_constraintEnd_toEndOf="@id/value_incomes_text_view_result_fragment" />
@@ -106,7 +106,7 @@
                         android:layout_marginTop="@dimen/material_margin_16dp"
                         android:layout_marginBottom="@dimen/material_margin_8dp"
                         android:fontFamily="@font/advent_pro"
-                        android:text="Saldo"
+                        android:text="@string/situation_label_text_view_result_fragment"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="@id/label_expenses_text_view_result_fragment"
@@ -117,7 +117,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/advent_pro"
-                        android:text="+ R$1000"
+                        android:text="@string/mock_situation_value_result_fragment"
                         android:textSize="24sp"
                         app:layout_constraintBaseline_toBaselineOf="@+id/label_situation_text_view_result_fragment"
                         app:layout_constraintEnd_toEndOf="@id/value_expenses_text_view_result_fragment" />

@@ -12,7 +12,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/material_margin_16dp"
-            android:text="Inserir Gasto"
+            android:text="@string/insert_expense_label_text_view_item"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLines="2"
-                android:hint="Valor"
+                android:hint="@string/value_hint_text_view_item"
                 android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:maxLength="120"
                 android:inputType="textMultiLine"
-                android:hint="Descrição" />
+                android:hint="@string/description_hint_text_view_item" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -64,7 +64,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/material_margin_8dp"
-            android:text="Inserir"
+            android:text="@string/insert_item_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
@@ -77,7 +77,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/material_margin_8dp"
             android:layout_marginEnd="@dimen/material_margin_16dp"
-            android:text="Pago"
+            android:text="@string/was_paid_checkbox_text_insert_expense"
             app:layout_constraintBottom_toBottomOf="@+id/date_picker_button_expense_fragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/date_selected_text_view_expense_fragment"
@@ -90,7 +90,7 @@
             android:layout_marginStart="@dimen/material_margin_16dp"
             android:layout_marginTop="@dimen/material_margin_8dp"
             android:layout_marginBottom="@dimen/material_margin_8dp"
-            android:text="06/03/2020"
+            tools:text="@string/mock_date_insert_fragment"
             app:layout_constraintBottom_toBottomOf="@+id/date_picker_button_expense_fragment"
             app:layout_constraintStart_toEndOf="@+id/date_picker_button_expense_fragment"
             app:layout_constraintTop_toTopOf="@+id/date_picker_button_expense_fragment" />
@@ -102,7 +102,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/material_margin_16dp"
             android:layout_marginTop="@dimen/material_margin_8dp"
-            android:text="Data"
+            android:text="@string/date_label_insert_fragment"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/description_text_input_layout_expense_fragment" />
@@ -116,7 +116,8 @@
             android:src="@drawable/ic_add_image"
             app:layout_constraintEnd_toEndOf="@+id/date_picker_button_expense_fragment"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/date_picker_button_expense_fragment" />
+            app:layout_constraintTop_toBottomOf="@+id/date_picker_button_expense_fragment"
+            android:contentDescription="@string/attached_image_button_content_description" />
 
         <ProgressBar
             android:id="@+id/progress_bar_image_progress_upload_expense_fragment"
@@ -127,7 +128,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_view_attach_expense_fragment" />
-
 
         <ImageView
             android:id="@+id/image_view_attach_expense_fragment"
@@ -142,7 +142,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_attach_button_insert_expense_fragment"
-            app:srcCompat="@drawable/ic_broken_image" />
+            app:srcCompat="@drawable/ic_broken_image"
+            android:contentDescription="@string/attached_image_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

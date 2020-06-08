@@ -12,8 +12,8 @@
             android:id="@+id/insert_income_text_view_income_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Inserir Entrada"
+            android:layout_marginTop="@dimen/material_margin_16dp"
+            android:text="@string/insert_income_label_text_view_item"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -22,9 +22,9 @@
             android:id="@+id/value_text_input_layout_income_fragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="@dimen/material_margin_16dp"
+            android:layout_marginTop="@dimen/material_margin_8dp"
+            android:layout_marginEnd="@dimen/material_margin_16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/insert_income_text_view_income_fragment">
@@ -33,18 +33,18 @@
                 android:id="@+id/value_text_input_edit_text_income_fragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Valor"
+                android:hint="@string/value_hint_text_view_item"
                 android:maxLines="2"
                 android:inputType="numberDecimal" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/description_text_input_layout_income_fragment"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginStart="@dimen/material_margin_16dp"
+            android:layout_marginTop="@dimen/material_margin_8dp"
+            android:layout_marginEnd="@dimen/material_margin_16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/value_text_input_layout_income_fragment">
@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:maxLength="120"
                 android:inputType="textMultiLine"
-                android:hint="Descrição" />
+                android:hint="@string/description_hint_text_view_item" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -63,8 +63,8 @@
             android:id="@+id/insert_income_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Inserir"
+            android:layout_marginTop="@dimen/material_margin_16dp"
+            android:text="@string/insert_item_button"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.495"
             app:layout_constraintStart_toStartOf="parent"
@@ -75,9 +75,9 @@
             style="@android:style/Widget.Material.Light.CompoundButton.CheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:text="Recebido"
+            android:layout_marginTop="@dimen/material_margin_8dp"
+            android:layout_marginEnd="@dimen/material_margin_16dp"
+            android:text="@string/was_received_checkbox_text_insert_expense"
             app:layout_constraintBottom_toBottomOf="@+id/date_picker_button_income_fragment"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/date_selected_text_view_income_fragment"
@@ -87,10 +87,10 @@
             android:id="@+id/date_selected_text_view_income_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:text="06/03/2020"
+            android:layout_marginStart="@dimen/material_margin_16dp"
+            android:layout_marginTop="@dimen/material_margin_8dp"
+            android:layout_marginBottom="@dimen/material_margin_8dp"
+            android:text="@string/mock_date_insert_fragment"
             app:layout_constraintBottom_toBottomOf="@+id/date_picker_button_income_fragment"
             app:layout_constraintStart_toEndOf="@+id/date_picker_button_income_fragment"
             app:layout_constraintTop_toTopOf="@+id/date_picker_button_income_fragment" />
@@ -100,9 +100,9 @@
             style="@android:style/Widget.Material.Light.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:text="Data"
+            android:layout_marginStart="@dimen/material_margin_16dp"
+            android:layout_marginTop="@dimen/material_margin_8dp"
+            android:text="@string/date_label_insert_fragment"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/description_text_input_layout_income_fragment" />
@@ -116,7 +116,8 @@
             android:src="@drawable/ic_add_image"
             app:layout_constraintEnd_toEndOf="@+id/date_picker_button_income_fragment"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/date_picker_button_income_fragment" />
+            app:layout_constraintTop_toBottomOf="@+id/date_picker_button_income_fragment"
+            android:contentDescription="@string/attached_image_button_content_description" />
 
         <ProgressBar
             android:id="@+id/progress_bar_image_progress_upload_income_fragment"
@@ -141,7 +142,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_attach_button_insert_income_fragment"
-            app:srcCompat="@drawable/ic_broken_image" />
+            app:srcCompat="@drawable/ic_broken_image"
+            android:contentDescription="@string/attached_image_item" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
