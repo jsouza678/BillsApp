@@ -42,7 +42,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/description_text_input_layout_expense_fragment"
-                android:layout_width="@dimen/match_parent"
+                android:layout_width="@dimen/match_constraint"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/material_margin_16dp"
                 android:layout_marginTop="@dimen/material_margin_8dp"
@@ -84,20 +84,20 @@
                 android:text="@string/was_paid_checkbox_text_insert_expense"
                 app:layout_constraintBottom_toBottomOf="@id/date_picker_button_expense_fragment"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/date_selected_text_view_expense_fragment"
-                app:layout_constraintTop_toBottomOf="@id/description_text_input_layout_expense_fragment" />
+                app:layout_constraintTop_toBottomOf="@id/description_text_input_layout_expense_fragment"
+                app:layout_constraintVertical_bias="1.0" />
 
             <TextView
                 android:id="@+id/date_selected_text_view_expense_fragment"
-                android:layout_width="wrap_content"
+                android:layout_width="@dimen/match_constraint"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/material_margin_16dp"
-                android:layout_marginTop="@dimen/material_margin_8dp"
-                android:layout_marginBottom="@dimen/material_margin_8dp"
-                tools:text="@string/mock_date_insert_fragment"
-                app:layout_constraintBottom_toBottomOf="@id/date_picker_button_expense_fragment"
-                app:layout_constraintStart_toEndOf="@id/date_picker_button_expense_fragment"
-                app:layout_constraintTop_toTopOf="@id/date_picker_button_expense_fragment" />
+                android:layout_marginTop="@dimen/material_margin_16dp"
+                android:layout_marginEnd="@dimen/material_margin_16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/date_picker_button_expense_fragment"
+                tools:text="@string/mock_date_insert_fragment" />
 
             <Button
                 android:id="@+id/date_picker_button_expense_fragment"
@@ -117,11 +117,13 @@
                 android:layout_height="@dimen/image_button_height_insert_fragment"
                 android:layout_marginStart="@dimen/material_margin_16dp"
                 android:layout_marginTop="@dimen/material_margin_16dp"
+                android:layout_marginEnd="@dimen/material_margin_16dp"
+                android:contentDescription="@string/attached_image_button_content_description"
                 android:src="@drawable/ic_add_image"
-                app:layout_constraintEnd_toEndOf="@id/date_picker_button_expense_fragment"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/date_picker_button_expense_fragment"
-                android:contentDescription="@string/attached_image_button_content_description" />
+                app:layout_constraintTop_toBottomOf="@id/date_selected_text_view_expense_fragment" />
 
             <ProgressBar
                 android:id="@+id/progress_bar_image_progress_upload_expense_fragment"

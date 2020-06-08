@@ -11,12 +11,12 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/incomes_recycler_view_incomes_fragment"
-            android:layout_width="@dimen/match_parent"
-            android:layout_height="@dimen/match_parent"
+            android:layout_width="@dimen/match_constraint"
+            android:layout_height="@dimen/match_constraint"
             android:layout_marginStart="@dimen/material_margin_16dp"
             android:layout_marginEnd="@dimen/material_margin_16dp"
             android:layout_marginBottom="@dimen/material_margin_16dp"
-            android:background="@color/cardview_light_background"
+            android:background="@color/light_background"
             android:elevation="@dimen/elevation_recycler_view_fragment"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

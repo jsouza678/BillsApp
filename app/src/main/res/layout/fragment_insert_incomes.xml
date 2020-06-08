@@ -42,7 +42,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/description_text_input_layout_income_fragment"
-            android:layout_width="@dimen/match_parent"
+            android:layout_width="@dimen/match_constraint"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/material_margin_16dp"
             android:layout_marginTop="@dimen/material_margin_8dp"
@@ -83,20 +83,17 @@
             android:text="@string/was_received_checkbox_text_insert_expense"
             app:layout_constraintBottom_toBottomOf="@id/date_picker_button_insert_income_fragment"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/date_selected_text_view_income_fragment"
             app:layout_constraintTop_toBottomOf="@id/description_text_input_layout_income_fragment" />
 
         <TextView
             android:id="@+id/date_selected_text_view_income_fragment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/material_margin_16dp"
-            android:layout_marginTop="@dimen/material_margin_8dp"
-            android:layout_marginBottom="@dimen/material_margin_8dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:text="@string/mock_date_insert_fragment"
-            app:layout_constraintBottom_toBottomOf="@id/date_picker_button_insert_income_fragment"
-            app:layout_constraintStart_toEndOf="@id/date_picker_button_insert_income_fragment"
-            app:layout_constraintTop_toTopOf="@id/date_picker_button_insert_income_fragment" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/date_picker_button_insert_income_fragment" />
 
         <Button
             android:id="@+id/date_picker_button_insert_income_fragment"
@@ -104,7 +101,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/material_margin_16dp"
-            android:layout_marginTop="@dimen/material_margin_8dp"
+            android:layout_marginTop="16dp"
             android:text="@string/date_label_insert_fragment"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -114,13 +111,12 @@
             android:id="@+id/image_attach_button_insert_income_fragment"
             android:layout_width="@dimen/image_button_width_insert_fragment"
             android:layout_height="@dimen/image_button_height_insert_fragment"
-            android:layout_marginStart="@dimen/material_margin_16dp"
-            android:layout_marginTop="@dimen/material_margin_16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:contentDescription="@string/attached_image_button_content_description"
             android:src="@drawable/ic_add_image"
-            app:layout_constraintEnd_toEndOf="@id/date_picker_button_insert_income_fragment"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/date_picker_button_insert_income_fragment"
-            android:contentDescription="@string/attached_image_button_content_description" />
+            app:layout_constraintTop_toBottomOf="@id/date_selected_text_view_income_fragment" />
 
         <ProgressBar
             android:id="@+id/progress_bar_image_progress_upload_insert_income_fragment"
@@ -141,7 +137,6 @@
             android:layout_marginStart="@dimen/material_margin_16dp"
             android:layout_marginTop="@dimen/material_margin_16dp"
             android:layout_marginEnd="@dimen/material_margin_16dp"
-            android:layout_marginBottom="@dimen/material_margin_16dp"
             android:contentDescription="@string/attached_image_item"
             android:visibility="visible"
             app:layout_constraintBottom_toTopOf="@id/insert_income_button_insert_income_fragment"

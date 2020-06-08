@@ -2,7 +2,7 @@
 <resources>
 
     // GENERIC
-    <dimen name="match_parent">0dp</dimen>
+    <dimen name="match_constraint">0dp</dimen>
     <dimen name="material_margin_8dp">8dp</dimen>
     <dimen name="material_margin_16dp">16dp</dimen>
     <dimen name="material_margin_32dp">32dp</dimen>

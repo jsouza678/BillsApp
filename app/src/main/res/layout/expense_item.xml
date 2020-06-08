@@ -75,7 +75,7 @@
         <TextView
             android:id="@+id/description_value_text_view_expense_item"
             style="@style/recycler_item_value"
-            android:layout_width="@dimen/match_parent"
+            android:layout_width="@dimen/match_constraint"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/material_margin_16dp"
             android:layout_marginEnd="@dimen/material_margin_16dp"

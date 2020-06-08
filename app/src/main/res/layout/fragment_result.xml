@@ -27,7 +27,7 @@
 
             <com.github.mikephil.charting.charts.PieChart
                 android:id="@+id/values_pie_chart_result_fragment"
-                android:layout_width="@dimen/match_parent"
+                android:layout_width="@dimen/match_constraint"
                 android:layout_height="@dimen/pie_chart_height_result_fragment"
                 android:layout_marginStart="@dimen/material_margin_16dp"
                 android:layout_marginTop="@dimen/material_margin_16dp"
@@ -39,7 +39,7 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/values_card_view_result_fragment"
-                android:layout_width="@dimen/match_parent"
+                android:layout_width="@dimen/match_constraint"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/material_margin_32dp"
                 android:layout_marginTop="@dimen/material_margin_8dp"
