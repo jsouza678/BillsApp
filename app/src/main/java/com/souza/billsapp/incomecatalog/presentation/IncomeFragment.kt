@@ -2,12 +2,16 @@ package com.souza.billsapp.incomecatalog.presentation
 
 import android.app.Dialog
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -20,28 +24,30 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
 import com.souza.billsapp.R
-import com.souza.billsapp.incomecatalog.domain.Income
 import com.souza.billsapp.databinding.FragmentIncomesBinding
-import com.squareup.picasso.Picasso
+import com.souza.billsapp.incomecatalog.domain.Income
+import com.souza.billsapp.incomecatalog.utils.Constants.Companion.ABSOLUTE_ZERO
+import com.souza.billsapp.sharedextensions.isValidUrl
+import com.souza.billsapp.sharedextensions.loadImageUrl
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class IncomeFragment : Fragment(){
+class IncomeFragment : Fragment() {
 
-    private lateinit var binding : FragmentIncomesBinding
-    private lateinit var insertButton : FloatingActionButton
-    private lateinit var recyclerAdapter : IncomeAdapter
-    private lateinit var incomesRecyclerView : RecyclerView
+    private lateinit var binding: FragmentIncomesBinding
+    private lateinit var insertButton: FloatingActionButton
+    private lateinit var recyclerAdapter: IncomeAdapter
+    private lateinit var incomesRecyclerView: RecyclerView
     private val viewModel by viewModel<IncomeCatalogViewModel>()
     private lateinit var navController: NavController
-    private var filtered : Boolean = false
-    private lateinit var filterMenu : Menu
-    private lateinit var dialog : Dialog
+    private lateinit var filterMenu: Menu
+    private lateinit var dialog: Dialog
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        (activity as AppCompatActivity).supportActionBar?.title = "Entradas"
+        (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.income_fragment_title)
         binding = DataBindingUtil.inflate<FragmentIncomesBinding>(inflater,
             R.layout.fragment_incomes,
             container,
@@ -62,7 +68,7 @@ class IncomeFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = findNavController()
-        //INSERT
+        // INSERT
         insertButton.setOnClickListener {
             navController.navigate(R.id.action_incomeFragment_to_insertIncomeFragment)
         }
@@ -71,7 +77,7 @@ class IncomeFragment : Fragment(){
     private fun initObserver() {
         viewModel.apply {
             this.dataList.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-                recyclerAdapter= IncomeAdapter(it)
+                recyclerAdapter = IncomeAdapter(it)
                 initRecyclerView()
                 recyclerAdapter.startListening()
             })
@@ -83,7 +89,7 @@ class IncomeFragment : Fragment(){
         incomesRecyclerView.layoutManager = LinearLayoutManager(context)
         incomesRecyclerView.adapter = recyclerAdapter
 
-        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0,
+        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(ABSOLUTE_ZERO,
             ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -99,39 +105,45 @@ class IncomeFragment : Fragment(){
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
         itemTouchHelper.attachToRecyclerView(incomesRecyclerView)
 
-        recyclerAdapter.setOnItemClickListener(object: IncomeAdapter.OnItemClickListener{
+        recyclerAdapter.setOnItemClickListener(object : IncomeAdapter.OnItemClickListener {
             override fun onItemClick(documentSnapshot: DocumentSnapshot, position: Int) {
 
                 val income = documentSnapshot.toObject(Income::class.java)
-                if(income!= null){
-                    if(!income.imageUri.isNullOrBlank()){
-                        val ff = dialog.findViewById(R.id.image_attached_image_view_dialog) as ImageView
-                        Picasso.get().load(income.imageUri).into(ff)
-                        dialog.show()
-                    }else{
-                        Snackbar.make(requireView(), "No attachs", BaseTransientBottomBar.LENGTH_SHORT).show()
+                if (income != null) {
+                    if (!income.imageUri.isBlank()) {
+                        val imageViewAttach = dialog.findViewById(R.id.image_attached_image_view_dialog) as ImageView
+                        if (isValidUrl(income.imageUri)) {
+                            imageViewAttach.loadImageUrl(income.imageUri)
+                            dialog.show()
+                        } else {
+                            Snackbar.make(requireView(), getString(R.string.could_not_display_attached_image_snackbar_message), BaseTransientBottomBar.LENGTH_SHORT).show()
+                        }
+                    } else {
+                        Snackbar.make(requireView(), getString(R.string.no_attachs_snackbar_message_fragment), BaseTransientBottomBar.LENGTH_SHORT).show()
                     }
                 }
             }
         }
         )
 
-        recyclerAdapter.setOnItemLongClickListener(object: IncomeAdapter.OnItemLongClickListener{
+        recyclerAdapter.setOnItemLongClickListener(object : IncomeAdapter.OnItemLongClickListener {
             override fun onItemClick(documentSnapshot: DocumentSnapshot, position: Int) {
-                val expense = documentSnapshot.toObject(Income::class.java)
-                if(expense!= null){
+                val income = documentSnapshot.toObject(Income::class.java)
+                if (income != null) {
                     val documentId = documentSnapshot.id
-                    val valueToUpdate: Float = expense.value!!
-                    val descriptionToUpdate: String = expense.description!!
-                    val wasReceivedToUpdate: Boolean = expense.wasReceived
-                    val dateToUpdate: Timestamp = expense.date!!
+                    val valueToUpdate: Float = income.value!!
+                    val descriptionToUpdate: String = income.description!!
+                    val wasReceivedToUpdate: Boolean = income.wasReceived
+                    val dateToUpdate: Timestamp = income.date!!
+                    val imageUri: String = income.imageUri
                     val actionDetail = IncomeFragmentDirections
                         .actionIncomeFragmentToUpdateIncomeFragment(
-                            documentId,
-                            valueToUpdate,
-                            descriptionToUpdate,
-                            wasReceivedToUpdate,
-                            dateToUpdate
+                            documentId = documentId,
+                            value = valueToUpdate,
+                            description = descriptionToUpdate,
+                            wasReceived = wasReceivedToUpdate,
+                            date = dateToUpdate,
+                            imageUri = imageUri
                         )
                     navController.navigate(actionDetail)
                 }
@@ -146,7 +158,6 @@ class IncomeFragment : Fragment(){
         dialog.setCancelable(true)
     }
 
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.filter_menu, menu)
         filterMenu = menu
@@ -154,15 +165,13 @@ class IncomeFragment : Fragment(){
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val itemId = item.itemId
-
-        when(itemId) {
+        when (item.itemId) {
             R.id.filter_icon_menu -> {
-                if(item.isChecked){
+                if (item.isChecked) {
                     viewModel.unfilteredListOnMLiveData()
                     item.setIcon(R.drawable.ic_filter_list)
                     item.isChecked = false
-                }else{
+                } else {
                     item.isChecked = true
                     viewModel.filteredListOnMLiveData()
                     item.setIcon(R.drawable.ic_filter_list_black)

@@ -1,4 +1,4 @@
-package com.souza.billsapp
+package com.souza.billsapp.home.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

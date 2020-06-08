@@ -6,10 +6,10 @@ import com.souza.billsapp.result.data.ResultRepositoryImpl
 
 class ResultViewModel : ViewModel() {
 
-    private var resultRepository : ResultRepositoryImpl =
+    private var resultRepository: ResultRepositoryImpl =
         ResultRepositoryImpl()
 
-    init{
+    init {
         resultRepository.getValueSum()
     }
 
@@ -17,6 +17,6 @@ class ResultViewModel : ViewModel() {
         resultRepository.getValueSum()
     }
 
-    fun updateSumResultOfIncomeOnLiveData() : LiveData<Float?> = resultRepository.incomeQueryResult
-    fun updateSumResultOfExpenseOnLiveData() : LiveData<Float?> = resultRepository.expenseQueryResult
+    fun updateSumResultOfIncomeOnLiveData(): LiveData<Float?> = resultRepository.incomeQueryResult
+    fun updateSumResultOfExpenseOnLiveData(): LiveData<Float?> = resultRepository.expenseQueryResult
 }

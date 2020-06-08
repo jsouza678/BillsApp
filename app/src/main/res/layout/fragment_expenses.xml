@@ -14,14 +14,14 @@
             android:layout_width="@dimen/match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/material_margin_16dp"
-            android:layout_marginTop="@dimen/material_margin_16dp"
-            android:fontFamily="@font/advent_pro"
-            tools:text="@string/mock_hello_text_expense_fragment"
+            android:layout_marginTop="@dimen/material_margin_8dp"
+            android:fontFamily="@font/work_sans"
             android:textSize="24sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@id/insert_expense_floating_action_button_expenses_fragment"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/mock_hello_text_expense_fragment" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/expenses_recycler_view_expenses_fragment"
@@ -30,7 +30,7 @@
             android:layout_marginStart="@dimen/material_margin_16dp"
             android:layout_marginEnd="@dimen/material_margin_16dp"
             android:layout_marginBottom="@dimen/material_margin_16dp"
-            android:background="@color/cardview_light_background"
+            android:background="@color/light_background"
             android:elevation="@dimen/elevation_recycler_view_fragment"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -50,11 +50,12 @@
             android:src="@drawable/ic_add"
             android:translationY="@dimen/translation_y_floating_action_button_fragment"
             app:backgroundTint="@color/colorPrimary"
+            app:borderWidth="0dp"
             app:elevation="@dimen/elevation_floating_action_button_fragment"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.26"
             app:layout_constraintStart_toEndOf="@id/welcome_text_view_expenses_fragment"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/colorSecondaryLight" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

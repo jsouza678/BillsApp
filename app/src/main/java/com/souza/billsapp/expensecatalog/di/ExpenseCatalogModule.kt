@@ -1,12 +1,12 @@
 package com.souza.billsapp.expensecatalog.di
 
 import com.souza.billsapp.expensecatalog.data.ExpenseCatalogRepositoryImpl
-import com.souza.billsapp.expensecatalog.presentation.ExpenseCatalogViewModel
 import com.souza.billsapp.expensecatalog.domain.repository.ExpenseCatalogRepository
 import com.souza.billsapp.expensecatalog.domain.usecase.GetExpensesFromDatabase
 import com.souza.billsapp.expensecatalog.domain.usecase.GetExpensesWithPaidStatusFromDatabase
 import com.souza.billsapp.expensecatalog.domain.usecase.InsertExpenseOnDatabase
 import com.souza.billsapp.expensecatalog.domain.usecase.UpdateExpenseOnDatabase
+import com.souza.billsapp.expensecatalog.presentation.ExpenseCatalogViewModel
 import org.koin.android.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -49,7 +49,6 @@ val expenseCatalogModule = module {
     }
 
     factory {
-        ExpenseCatalogRepositoryImpl(
-        ) as ExpenseCatalogRepository
+        ExpenseCatalogRepositoryImpl() as ExpenseCatalogRepository
     }
 }

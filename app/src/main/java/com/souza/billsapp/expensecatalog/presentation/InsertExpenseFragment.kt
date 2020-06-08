@@ -10,27 +10,37 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.ProgressBar
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.NavigationUI
+import com.google.android.material.snackbar.BaseTransientBottomBar
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.Timestamp
 import com.souza.billsapp.R
-import com.souza.billsapp.expensecatalog.domain.Expense
 import com.souza.billsapp.databinding.FragmentInsertExpenseBinding
-import com.souza.billsapp.extensions.invisible
-import com.souza.billsapp.extensions.visible
-import com.squareup.picasso.Picasso
+import com.souza.billsapp.expensecatalog.domain.Expense
+import com.souza.billsapp.expensecatalog.utils.Constants.Companion.EMPTY_STRING
+import com.souza.billsapp.expensecatalog.utils.Constants.Companion.STARTING_VALUE_DOCUMENT_ID
+import com.souza.billsapp.sharedextensions.formatDate
+import com.souza.billsapp.sharedextensions.formatDateWithSeconds
+import com.souza.billsapp.sharedextensions.invisible
+import com.souza.billsapp.sharedextensions.isValidUrl
+import com.souza.billsapp.sharedextensions.loadImageUrl
+import com.souza.billsapp.sharedextensions.visible
+import java.util.Calendar
+import java.util.Date
 import org.koin.android.viewmodel.ext.android.viewModel
-import java.text.Format
-import java.text.SimpleDateFormat
-import java.util.*
 
 class InsertExpenseFragment : Fragment() {
 
@@ -51,16 +61,16 @@ class InsertExpenseFragment : Fragment() {
     private val year = calendar.get(Calendar.YEAR)
     private val month = calendar.get(Calendar.MONTH)
     private val day = calendar.get(Calendar.DAY_OF_MONTH)
-    private var date: Date = calendar.time
     private lateinit var choosenDate: Date
-    private var documentId = ""
+    private var documentId = EMPTY_STRING
     private var isUpdate = false
     private lateinit var safeArgs: InsertExpenseFragmentArgs
     private lateinit var imageUri: Uri
-    private var imageUrl = ""
+    private var imageUrl = EMPTY_STRING
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate<FragmentInsertExpenseBinding>(
@@ -69,7 +79,7 @@ class InsertExpenseFragment : Fragment() {
             container,
             false
         )
-        (activity as AppCompatActivity).supportActionBar?.title = ""
+        (activity as AppCompatActivity).supportActionBar?.title = EMPTY_STRING
         setHasOptionsMenu(true)
         return binding.root
     }
@@ -93,16 +103,16 @@ class InsertExpenseFragment : Fragment() {
         arguments?.let {
             safeArgs = InsertExpenseFragmentArgs.fromBundle(it)
             documentId = safeArgs.documentId
-            if (safeArgs.documentId != "-1") {
+            if (safeArgs.documentId != STARTING_VALUE_DOCUMENT_ID) {
                 isUpdate = true
             }
         }
 
         if (isUpdate) {
-            (activity as AppCompatActivity).supportActionBar?.title = "Editar gasto"
+            (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.edit_expense_fragment_title)
             setupUpdateExpense(safeArgs)
         } else {
-            (activity as AppCompatActivity).supportActionBar?.title = "Inserir gasto"
+            (activity as AppCompatActivity).supportActionBar?.title = getString(R.string.inser_expense_fragment_title)
         }
 
         setupDatePickerDialogListener()
@@ -119,8 +129,8 @@ class InsertExpenseFragment : Fragment() {
         return NavigationUI.onNavDestinationSelected(
             item,
             requireView().findNavController()
-        )
-                || super.onOptionsItemSelected(item)
+        ) ||
+                super.onOptionsItemSelected(item)
     }
 
     private fun setupInsertExpenseButton() {
@@ -131,15 +141,15 @@ class InsertExpenseFragment : Fragment() {
             val dateResult = Timestamp(choosenDate)
 
             if (valueResult.trim().isEmpty() || descriptionResult.trim().isEmpty()) {
-                valueInputEditText.error = "Por favor, preencha o valor"
-                descriptionInputEditText.error = "Por favor, preencha a descrição"
+                valueInputEditText.error = getString(R.string.error_message_input_layout_value_insert_fragment)
+                descriptionInputEditText.error = getString(R.string.error_message_input_layout_description_insert_fragment)
             } else {
                 val data = Expense(
                     valueResult.toFloat(),
                     descriptionResult,
                     dateResult,
                     paidResult,
-                    imageUrl.toString()
+                    imageUrl
                 )
                 if (isUpdate) {
                     viewModel.updateExpense(data, documentId)
@@ -153,7 +163,7 @@ class InsertExpenseFragment : Fragment() {
 
     private fun openFileChooser() {
         val intent = Intent()
-        intent.type = "image/*"
+        intent.type = getString(R.string.file_chooser_image_path_intent)
         intent.action = Intent.ACTION_GET_CONTENT
         startActivityForResult(intent, 1)
     }
@@ -161,19 +171,22 @@ class InsertExpenseFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == 1 && resultCode == RESULT_OK && data != null && data.data != null) {
             imageUri = data.data!!
+            insertedImage.loadImageUrl(imageUri.toString())
             insertExpenseButton.invisible()
             progressBarImageUpdate.visible()
-            Picasso.get().load(imageUri).into(insertedImage)
             viewModel.insertExpenseImageAttach(imageUri)
             initAttachObserver()
         }
     }
 
-    private fun initAttachObserver () {
+    private fun initAttachObserver() {
         viewModel.apply {
             this.updateExpenseImageURLOnLiveData().observe(viewLifecycleOwner, androidx.lifecycle.Observer {
                 if (it != null) {
                     imageUrl = it
+                    if (!isValidUrl(imageUrl)) {
+                        Snackbar.make(requireView(), getString(R.string.image_upload_fail_snackbar_message), BaseTransientBottomBar.LENGTH_SHORT).show()
+                    }
                     progressBarImageUpdate.invisible()
                     insertExpenseButton.visible()
                 }
@@ -183,7 +196,7 @@ class InsertExpenseFragment : Fragment() {
 
     private fun setupDatePickerDialogListener() {
         dateSetListener =
-            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+            DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
                 calendar.set(Calendar.YEAR, year)
                 calendar.set(Calendar.MONTH, monthOfYear)
                 calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
@@ -195,7 +208,7 @@ class InsertExpenseFragment : Fragment() {
         openDatePickerButton.setOnClickListener {
             DatePickerDialog(
                 requireContext(),
-                DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
                     calendar.set(Calendar.YEAR, year)
                     calendar.set(Calendar.MONTH, monthOfYear)
                     calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth)
@@ -211,20 +224,13 @@ class InsertExpenseFragment : Fragment() {
 
     private fun setupUpdateExpense(safeArgs: InsertExpenseFragmentArgs) {
         valueInputEditText.text = safeArgs.value.toString().toEditable()
-        descriptionInputEditText.text = safeArgs.description.toString().toEditable()
+        descriptionInputEditText.text = safeArgs.description.toEditable()
         wasPaidCheckBox.isChecked = safeArgs.wasPaid
         val date = safeArgs.date?.toDate()
         dateSelectedOnDatePickerTextView.text = formatDateWithSeconds(date)
-    }
-
-    private fun formatDateWithSeconds(date: Date?): String {
-        val formatter: Format = SimpleDateFormat("dd/MM/yyyy - HH:mm:ss", Locale.getDefault())
-        return formatter.format(date)
-    }
-
-    private fun formatDate(date: Date?): String {
-        val formatter: Format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        return formatter.format(date)
+        if (isValidUrl(safeArgs.imageUri)) {
+            insertedImage.loadImageUrl(safeArgs.imageUri)
+        }
     }
 
     private fun String.toEditable(): Editable = Editable.Factory.getInstance().newEditable(this)

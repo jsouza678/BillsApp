@@ -1,4 +1,4 @@
-package com.souza.billsapp
+package com.souza.billsapp.base
 
 import android.app.Application
 import com.souza.billsapp.expensecatalog.di.expenseCatalogModule

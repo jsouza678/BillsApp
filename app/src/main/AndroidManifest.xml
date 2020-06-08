@@ -12,9 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
-        android:name="com.souza.billsapp.Application"
+        android:name="com.souza.billsapp.base.Application"
         tools:ignore="AllowBackup">
-        <activity android:name=".HomeActivity">
+        <activity android:name=".home.presentation.HomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />

@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        tools:context=".SplashFragment"
-        android:background="@color/cardview_dark_background">
+        android:background="@color/colorSecondaryLight"
+        tools:context=".splashscreen.presentation.SplashFragment">
 
         <TextView
             android:id="@+id/title_splash_fragment"
@@ -16,7 +16,7 @@
             android:fontFamily="@font/advent_pro"
             android:text="@string/app_name"
             android:textAllCaps="false"
-            android:textColor="@color/colorAccent"
+            android:textColor="@color/colorPrimary"
             android:textSize="60sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -42,10 +42,11 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/material_margin_8dp"
             android:fontFamily="@font/work_sans"
+            android:text="@string/loading_text_splash_screen"
+            android:textColor="@color/deepBlack"
             app:layout_constraintBottom_toTopOf="@id/progress_splash_fragment"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="Loading" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

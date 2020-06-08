@@ -1,14 +1,19 @@
 package com.souza.billsapp.expensecatalog.presentation
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -22,25 +27,29 @@ import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.souza.billsapp.R
-import com.souza.billsapp.expensecatalog.domain.Expense
 import com.souza.billsapp.databinding.FragmentExpensesBinding
-import com.squareup.picasso.Picasso
+import com.souza.billsapp.expensecatalog.domain.Expense
+import com.souza.billsapp.expensecatalog.utils.Constants.Companion.ABSOLUTE_ZERO
+import com.souza.billsapp.sharedextensions.isValidUrl
+import com.souza.billsapp.sharedextensions.loadImageUrl
 import org.koin.android.viewmodel.ext.android.viewModel
 
-class ExpensesFragment : Fragment(){
+class ExpensesFragment : Fragment() {
 
-    private lateinit var binding : FragmentExpensesBinding
-    private lateinit var insertButton : FloatingActionButton
-    private lateinit var recyclerAdapter : ExpenseAdapter
-    private lateinit var expensesRecyclerView : RecyclerView
+    private lateinit var binding: FragmentExpensesBinding
+    private lateinit var insertButton: FloatingActionButton
+    private lateinit var recyclerAdapter: ExpenseAdapter
+    private lateinit var expensesRecyclerView: RecyclerView
     private lateinit var welcomeTextView: TextView
     private val viewModel by viewModel<ExpenseCatalogViewModel>()
     private lateinit var navController: NavController
-    private lateinit var filterMenu : Menu
-    private lateinit var dialog : Dialog
+    private lateinit var filterMenu: Menu
+    private lateinit var dialog: Dialog
 
+    @SuppressLint("SetTextI18n")
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         (activity as AppCompatActivity).supportActionBar?.title = "Gastos"
@@ -66,7 +75,6 @@ class ExpensesFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         navController = findNavController()
-        //INSERT
         insertButton.setOnClickListener {
             navController.navigate(R.id.action_billFragment_to_insertExpenseFragment)
         }
@@ -75,7 +83,7 @@ class ExpensesFragment : Fragment(){
     private fun initObserver() {
         viewModel.apply {
             this.dataList.observe(viewLifecycleOwner, androidx.lifecycle.Observer {
-                recyclerAdapter= ExpenseAdapter(it)
+                recyclerAdapter = ExpenseAdapter(it)
                 initRecyclerView()
                 recyclerAdapter.startListening()
             })
@@ -87,7 +95,7 @@ class ExpensesFragment : Fragment(){
         expensesRecyclerView.layoutManager = LinearLayoutManager(context)
         expensesRecyclerView.adapter = recyclerAdapter
 
-        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0,
+        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(ABSOLUTE_ZERO,
             ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -103,39 +111,45 @@ class ExpensesFragment : Fragment(){
         val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
         itemTouchHelper.attachToRecyclerView(expensesRecyclerView)
 
-        recyclerAdapter.setOnItemClickListener(object: ExpenseAdapter.OnItemClickListener{
+        recyclerAdapter.setOnItemClickListener(object : ExpenseAdapter.OnItemClickListener {
             override fun onItemClick(documentSnapshot: DocumentSnapshot, position: Int) {
 
                 val expense = documentSnapshot.toObject(Expense::class.java)
-                if(expense!= null){
-                if(!expense.imageUri.isNullOrBlank()){
-                    val ff = dialog.findViewById(R.id.image_attached_image_view_dialog) as ImageView
-                    Picasso.get().load(expense.imageUri).into(ff)
-                    dialog.show()
-                }else{
-                    Snackbar.make(requireView(), "No attachs", BaseTransientBottomBar.LENGTH_SHORT).show()
+                if (expense != null) {
+                if (!expense.imageUri.isBlank()) {
+                    val imageViewAttach = dialog.findViewById(R.id.image_attached_image_view_dialog) as ImageView
+                    if (isValidUrl(expense.imageUri)) {
+                        imageViewAttach.loadImageUrl(expense.imageUri)
+                        dialog.show()
+                    } else {
+                        Snackbar.make(requireView(), getString(R.string.could_not_display_attached_image_snackbar_message), BaseTransientBottomBar.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Snackbar.make(requireView(), getString(R.string.no_attachs_snackbar_message_fragment), BaseTransientBottomBar.LENGTH_SHORT).show()
                 }
                 }
             }
         }
         )
 
-        recyclerAdapter.setOnItemLongClickListener(object: ExpenseAdapter.OnItemLongClickListener{
+        recyclerAdapter.setOnItemLongClickListener(object : ExpenseAdapter.OnItemLongClickListener {
             override fun onItemClick(documentSnapshot: DocumentSnapshot, position: Int) {
                 val expense = documentSnapshot.toObject(Expense::class.java)
-                if(expense!= null){
+                if (expense != null) {
                     val documentId = documentSnapshot.id
                     val valueToUpdate: Float = expense.value!!
                     val descriptionToUpdate: String = expense.description!!
                     val wasPaidToUpdate: Boolean = expense.wasPaid
                     val dateToUpdate: Timestamp = expense.date!!
+                    val imageUri: String = expense.imageUri
                     val actionDetail = ExpensesFragmentDirections
                         .actionBillFragmentToUpdateExpenseFragment(
-                            documentId,
-                            valueToUpdate,
-                            descriptionToUpdate,
-                            wasPaidToUpdate,
-                            dateToUpdate
+                            documentId = documentId,
+                            value = valueToUpdate,
+                            description = descriptionToUpdate,
+                            wasPaid = wasPaidToUpdate,
+                            date = dateToUpdate,
+                            imageUri = imageUri
                         )
                     navController.navigate(actionDetail)
                 }
@@ -157,15 +171,13 @@ class ExpensesFragment : Fragment(){
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val itemId = item.itemId
-
-        when(itemId) {
+        when (item.itemId) {
             R.id.filter_icon_menu -> {
-                if(item.isChecked){
+                if (item.isChecked) {
                     viewModel.unfilteredListOnMLiveData()
                     item.setIcon(R.drawable.ic_filter_list)
                     item.isChecked = false
-                }else{
+                } else {
                     item.isChecked = true
                     viewModel.filteredListOnMLiveData()
                     item.setIcon(R.drawable.ic_filter_list_black)

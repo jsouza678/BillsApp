@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.souza.billsapp.SplashFragment"
+        android:name="com.souza.billsapp.splashscreen.presentation.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash">
         <action
@@ -92,6 +92,10 @@
             app:argType="com.google.firebase.Timestamp"
             app:nullable="true"
             android:defaultValue="@null"/>
+        <argument
+            android:name="imageUri"
+            app:argType="string"
+            android:defaultValue="0"/>
         <action
             android:id="@+id/action_insertExpenseFragment_to_billFragment"
             app:destination="@id/billFragment"
@@ -189,6 +193,10 @@
             app:argType="com.google.firebase.Timestamp"
             app:nullable="true"
             android:defaultValue="@null"/>
+        <argument
+            android:name="imageUri"
+            app:argType="string"
+            android:defaultValue="0"/>
         <action
             android:id="@+id/action_insertIncomeFragment_to_incomeFragment"
             app:destination="@id/incomeFragment"

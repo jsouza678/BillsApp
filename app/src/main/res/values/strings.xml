@@ -1,13 +1,14 @@
 <resources>
-    <string name="app_name">BillsApp</string>
+
+    <string name="app_name">Bills App</string>
 
     // IMAGE ATTACH DIALOG
     <string name="attached_image_dialog_content_description">Imagem anexada ao item</string>
 
     // RECYCLER VIEW ITEM
-    <string name="value_label_text_view_item">Valor</string>
-    <string name="description_label_text_view_item">Descrição</string>
-    <string name="date_label_text_view_item">Data</string>
+    <string name="value_label_text_view_item">Valor:</string>
+    <string name="description_label_text_view_item">Descrição:</string>
+    <string name="date_label_text_view_item">Data:</string>
     <string name="was_paid_label_text_view_expense_item">Pago</string>
     <string name="was_received_label_text_view_income_item">Recebido</string>
     <string name="mock_value_text_view_item">R$ 230,00</string>
@@ -18,7 +19,7 @@
 
     // INSERT FRAGMENT
     <string name="insert_expense_label_text_view_item">Inserir Gasto</string>
-    <string name="insert_income_label_text_view_item">Inserir Despesa</string>
+    <string name="insert_income_label_text_view_item">Inserir Entrada</string>
     <string name="value_hint_text_view_item">Valor</string>
     <string name="description_hint_text_view_item">Descrição</string>
     <string name="insert_item_button">Inserir</string>
@@ -41,5 +42,19 @@
     // SNACKBAR CONNECTIVITY
     <string name="snackbar_message_internet_back">Sua internet voltou :)</string>
     <string name="snackbar_message_internet_off">Sem conexão! Trabalhando off-line</string>
+    <string name="no_attachs_snackbar_message_fragment">Esse item não possui anexos</string>
+    <string name="income_fragment_title">Entradas</string>
+    <string name="insert_income_fragment_title">Inserir entrada</string>
+    <string name="edit_income_fragment_title">Editar entrada</string>
+    <string name="edit_expense_fragment_title">Editar gasto</string>
+    <string name="inser_expense_fragment_title">Inserir gasto</string>
+    <string name="error_message_input_layout_value_insert_fragment">Por favor, preencha o valor</string>
+    <string name="error_message_input_layout_description_insert_fragment">Por favor, preencha a descrição</string>
+    <string name="file_chooser_image_path_intent">image/*</string>
+
+    // SPLASH SCREEN
+    <string name="loading_text_splash_screen">Carregando</string>
+    <string name="image_upload_fail_snackbar_message">Falha no upload da imagem. Tente novamente.</string>
+    <string name="could_not_display_attached_image_snackbar_message">Não foi possível exibir esse anexo.</string>
 
 </resources>

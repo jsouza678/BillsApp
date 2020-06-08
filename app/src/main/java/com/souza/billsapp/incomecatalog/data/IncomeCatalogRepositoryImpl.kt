@@ -8,23 +8,23 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.souza.billsapp.incomecatalog.domain.Income
-import com.souza.billsapp.expensecatalog.domain.repository.ExpenseCatalogRepository
 import com.souza.billsapp.incomecatalog.domain.repository.IncomeCatalogRepository
+import com.souza.billsapp.incomecatalog.utils.Constants.Companion.USERS_TABLE_NAME
+import com.souza.billsapp.incomecatalog.utils.Constants.Companion.WAS_RECEIVED_FILTER_STATUS
 import java.util.Calendar
 
 class IncomeCatalogRepositoryImpl : IncomeCatalogRepository {
 
     private val auth: String? = FirebaseAuth.getInstance().currentUser?.uid
     private val calendar: Calendar = Calendar.getInstance()
-    private val mes: Int = calendar.get(java.util.Calendar.MONTH)
-    private val ano: Int = calendar.get(java.util.Calendar.YEAR)
+    private val mes: Int = calendar.get(Calendar.MONTH)
+    private val ano: Int = calendar.get(Calendar.YEAR)
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private val userId = "$auth"
-    private var incomesValueSum = 0
     private val collectionName: String = "receita_$mes" + "_" + "$ano"
     private val queryTest = db.document("users/$userId").collection(collectionName)
     private val queryFilteredByReceivedStatus =
-        db.document("users/$userId").collection(collectionName).whereEqualTo("wasReceived", true)
+        db.document("users/$userId").collection(collectionName).whereEqualTo(WAS_RECEIVED_FILTER_STATUS, true)
     private var imageUrl = ""
     private val databaseReference: FirebaseStorage = FirebaseStorage.getInstance()
     private val path: String = "users/$auth/$collectionName/${java.util.UUID.randomUUID()}.png"
@@ -48,7 +48,7 @@ class IncomeCatalogRepositoryImpl : IncomeCatalogRepository {
     }
 
     override fun insertData(data: Income) {
-        db.collection("users").document(userId).collection(collectionName)
+        db.collection(USERS_TABLE_NAME).document(userId).collection(collectionName)
             .document()
             .set(data)
             .addOnSuccessListener {
@@ -60,7 +60,7 @@ class IncomeCatalogRepositoryImpl : IncomeCatalogRepository {
     }
 
     override fun updateData(data: Income, document: String) {
-        db.collection("users").document(userId).collection(collectionName)
+        db.collection(USERS_TABLE_NAME).document(userId).collection(collectionName)
             .document(document)
             .set(data)
             .addOnSuccessListener {
@@ -72,7 +72,7 @@ class IncomeCatalogRepositoryImpl : IncomeCatalogRepository {
     }
 
     override fun insertIncomeImageAttachOnStorage(imageUri: Uri) {
-        val uploadTask = reference
+        reference
             .putFile(imageUri)
             .addOnSuccessListener {
                 reference.downloadUrl

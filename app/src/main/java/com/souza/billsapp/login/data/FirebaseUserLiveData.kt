@@ -1,4 +1,4 @@
-package com.souza.billsapp.login
+package com.souza.billsapp.login.data
 
 import androidx.lifecycle.LiveData
 import com.google.firebase.auth.FirebaseAuth

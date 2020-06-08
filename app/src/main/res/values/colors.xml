@@ -7,4 +7,7 @@
     <color name="colorSecondaryLight">#FFF</color>
     <color name="greeLight">#558b2f</color>
     <color name="orangeLight">#ef6c00</color>
+    <color name="deepBlack">#000</color>
+    <color name="carbonBlack">#2B2B2B</color>
+    <color name="light_background">#FFFFFFFF</color>
 </resources>

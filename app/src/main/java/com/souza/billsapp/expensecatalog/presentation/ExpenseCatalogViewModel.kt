@@ -15,37 +15,37 @@ import com.souza.billsapp.expensecatalog.domain.usecase.UpdateExpenseOnDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-public class ExpenseCatalogViewModel(
+class ExpenseCatalogViewModel(
     private val getExpensesFromDatabase: GetExpensesFromDatabase,
     private val getExpensesWithPaidStatusFromDatabase: GetExpensesWithPaidStatusFromDatabase,
     private val insertExpenseOnDatabase: InsertExpenseOnDatabase,
     private val updateExpenseOnDatabase: UpdateExpenseOnDatabase
 ) : ViewModel() {
 
-    private val expenseCatalogRepositoryImpl =  ExpenseCatalogRepositoryImpl()
+    private val expenseCatalogRepositoryImpl = ExpenseCatalogRepositoryImpl()
     private val _dataList = MutableLiveData<FirestoreRecyclerOptions<Expense>>()
     private val coroutineScope = Dispatchers.IO
-    val dataList : LiveData<FirestoreRecyclerOptions<Expense>>
+    val dataList: LiveData<FirestoreRecyclerOptions<Expense>>
         get() = _dataList
 
-    init{
+    init {
         noFilterExpense()
     }
 
     fun insertExpense(data: Expense) {
-        viewModelScope.launch (context = coroutineScope){
+        viewModelScope.launch(context = coroutineScope) {
             insertExpenseOnDatabase(data)
         }
     }
 
     fun updateExpense(data: Expense, document: String) {
-        viewModelScope.launch (context = coroutineScope){
+        viewModelScope.launch(context = coroutineScope) {
             updateExpenseOnDatabase(data, document)
         }
     }
 
     fun filteredListOnMLiveData() {
-        viewModelScope.launch (context = coroutineScope){
+        viewModelScope.launch(context = coroutineScope) {
             _dataList.postValue(getExpensesWithPaidStatusFromDatabase.invoke())
         }
     }
@@ -54,13 +54,13 @@ public class ExpenseCatalogViewModel(
         _dataList.postValue(getExpensesFromDatabase.invoke())
     }
 
-    private fun noFilterExpense(){
+    private fun noFilterExpense() {
         viewModelScope.launch(context = coroutineScope) {
             _dataList.postValue(getExpensesFromDatabase.invoke())
         }
     }
 
-    fun insertExpenseImageAttach (imageUri : Uri) = expenseCatalogRepositoryImpl.insertExpenseImageAttachOnStorage(imageUri)
+    fun insertExpenseImageAttach(imageUri: Uri) = expenseCatalogRepositoryImpl.insertExpenseImageAttachOnStorage(imageUri)
 
-    fun updateExpenseImageURLOnLiveData() : LiveData<String?> = expenseCatalogRepositoryImpl.attachURLResult()
+    fun updateExpenseImageURLOnLiveData(): LiveData<String?> = expenseCatalogRepositoryImpl.attachURLResult()
 }

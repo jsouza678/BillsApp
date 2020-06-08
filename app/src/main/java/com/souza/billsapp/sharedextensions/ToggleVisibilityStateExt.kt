@@ -1,4 +1,4 @@
-package com.souza.billsapp.extensions
+package com.souza.billsapp.sharedextensions
 
 import android.view.View
 

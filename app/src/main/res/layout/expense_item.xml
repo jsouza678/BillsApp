@@ -21,7 +21,8 @@
             android:layout_marginTop="@dimen/material_margin_16dp"
             android:text="@string/value_label_text_view_item"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            style="@style/recycler_item_label" />
 
         <TextView
             android:id="@+id/description_label_text_view_expense_item"
@@ -30,6 +31,7 @@
             android:layout_marginStart="@dimen/material_margin_16dp"
             android:layout_marginTop="@dimen/material_margin_8dp"
             android:text="@string/description_label_text_view_item"
+            style="@style/recycler_item_label"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/value_text_view_label_expense_item" />
 
@@ -41,6 +43,7 @@
             android:layout_marginTop="@dimen/material_margin_8dp"
             android:layout_marginBottom="@dimen/material_margin_16dp"
             android:text="@string/date_label_text_view_item"
+            style="@style/recycler_item_label"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/description_value_text_view_expense_item" />
@@ -53,42 +56,47 @@
             android:layout_marginEnd="@dimen/material_margin_16dp"
             android:checked="false"
             android:clickable="false"
-            android:text="@string/was_paid_label_text_view_expense_item"
+            android:focusable="false"
+            android:elegantTextHeight="false"
+            android:textAlignment="inherit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/attach_icon_image_view_expense_item" />
 
         <TextView
             android:id="@+id/value_text_view_expense_item"
+            style="@style/recycler_item_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/material_margin_16dp"
-            tools:text="@string/mock_value_text_view_item"
-            app:layout_constraintBottom_toBottomOf="@id/value_text_view_label_expense_item"
+            app:layout_constraintBaseline_toBaselineOf="@id/value_text_view_label_expense_item"
             app:layout_constraintStart_toEndOf="@id/value_text_view_label_expense_item"
-            app:layout_constraintTop_toTopOf="@id/value_text_view_label_expense_item" />
+            tools:text="@string/mock_value_text_view_item" />
 
         <TextView
             android:id="@+id/description_value_text_view_expense_item"
+            style="@style/recycler_item_value"
             android:layout_width="@dimen/match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/material_margin_16dp"
             android:layout_marginEnd="@dimen/material_margin_16dp"
-            android:maxLength="120"
+            android:maxLength="70"
             android:text="@string/mock_description_text_view_item"
-            app:layout_constraintBottom_toBottomOf="@id/description_label_text_view_expense_item"
-            app:layout_constraintEnd_toStartOf="@+id/was_paid_switch_expense_item"
-            app:layout_constraintStart_toEndOf="@id/description_label_text_view_expense_item"
-            app:layout_constraintTop_toTopOf="@id/description_label_text_view_expense_item" />
+            app:layout_constraintBaseline_toBaselineOf="@id/description_label_text_view_expense_item"
+            app:layout_constraintEnd_toStartOf="@id/was_paid_switch_expense_item"
+            app:layout_constraintStart_toEndOf="@id/description_label_text_view_expense_item" />
 
         <TextView
             android:id="@+id/date_value_text_view_income_item"
+            style="@style/recycler_item_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/mock_date_text_view_item"
             android:layout_marginStart="@dimen/material_margin_16dp"
-            app:layout_constraintBottom_toBottomOf="@id/date_label_text_view_expense_item"
-            app:layout_constraintStart_toEndOf="@id/date_label_text_view_expense_item"
-            app:layout_constraintTop_toTopOf="@id/date_label_text_view_expense_item"/>
+            android:layout_marginEnd="@dimen/material_margin_8dp"
+            android:text="@string/mock_date_text_view_item"
+            app:layout_constraintBaseline_toBaselineOf="@id/date_label_text_view_expense_item"
+            app:layout_constraintEnd_toStartOf="@id/was_paid_switch_expense_item"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/date_label_text_view_expense_item" />
 
         <ImageView
             android:id="@+id/attach_icon_image_view_expense_item"

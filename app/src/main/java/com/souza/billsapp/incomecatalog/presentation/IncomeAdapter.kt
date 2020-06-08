@@ -11,20 +11,17 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.firestore.DocumentSnapshot
 import com.souza.billsapp.R
-import com.souza.billsapp.extensions.formatValueToCoin
 import com.souza.billsapp.incomecatalog.domain.Income
-import com.souza.billsapp.extensions.invisible
-import com.souza.billsapp.extensions.visible
-import java.text.Format
-import java.text.SimpleDateFormat
-import java.util.*
-
+import com.souza.billsapp.sharedextensions.formatDateWithSeconds
+import com.souza.billsapp.sharedextensions.formatValueToCoin
+import com.souza.billsapp.sharedextensions.invisible
+import com.souza.billsapp.sharedextensions.visible
 
 class IncomeAdapter(options: FirestoreRecyclerOptions<Income>) : FirestoreRecyclerAdapter<Income,
         IncomeAdapter.IncomeViewHolder>(options) {
 
-    private var listener : OnItemClickListener? = null
-    private var listenerLong : OnItemLongClickListener? = null
+    private var listener: OnItemClickListener? = null
+    private var listenerLong: OnItemLongClickListener? = null
 
     override fun onBindViewHolder(holder: IncomeViewHolder, position: Int, model: Income) {
         holder.itemBind(model)
@@ -44,42 +41,37 @@ class IncomeAdapter(options: FirestoreRecyclerOptions<Income>) : FirestoreRecycl
     }
 
     inner class IncomeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private val valor : TextView = itemView.findViewById(R.id.value_text_view_income_item)
-        private val descricao : TextView = itemView.findViewById(R.id.description_value_text_view_income_item)
-        private val data : TextView = itemView.findViewById(R.id.date_value_text_view_income_item)
-        private val pago : Switch = itemView.findViewById(R.id.was_paid_switch_income_item)
-        private val attach : ImageView = itemView.findViewById(R.id.attach_icon_image_view_income_item)
+        private val valueTextView: TextView = itemView.findViewById(R.id.value_text_view_income_item)
+        private val descriptionTextView: TextView = itemView.findViewById(R.id.description_value_text_view_income_item)
+        private val dateTextView: TextView = itemView.findViewById(R.id.date_value_text_view_income_item)
+        private val wasPaidSwitch: Switch = itemView.findViewById(R.id.was_paid_switch_income_item)
+        private val attachImageView: ImageView = itemView.findViewById(R.id.attach_icon_image_view_income_item)
 
         fun itemBind(income: Income) {
-            valor.text = income.value?.let { formatValueToCoin(it) }
-            descricao.text = income.description
+            valueTextView.text = income.value?.let { formatValueToCoin(it) }
+            descriptionTextView.text = income.description
             val timeStampAsDateResult = income.date?.toDate()
-            data.text = formatDate(timeStampAsDateResult)
-            pago.isChecked = income.wasReceived
-            if(income.imageUri.isEmpty()) {
-                attach.invisible()
-            }else{
-                attach.visible()
+            dateTextView.text = formatDateWithSeconds(timeStampAsDateResult)
+            wasPaidSwitch.isChecked = income.wasReceived
+            if (income.imageUri.isEmpty()) {
+                attachImageView.invisible()
+            } else {
+                attachImageView.visible()
             }
         }
 
-        private fun formatDate(date : Date?) : String{
-            val formatter: Format = SimpleDateFormat("dd/MM/yyyy - HH:mm:ss", Locale.getDefault())
-            return formatter.format(date)
-        }
-
-        val onClickListener = itemView.setOnClickListener { _ ->
-            val position : Int = adapterPosition
+        val onClickListener = itemView.setOnClickListener {
+            val position: Int = adapterPosition
             // Avoid a crash while touching a item while it is being removed
-            if(position != RecyclerView.NO_POSITION && listener != null) {
+            if (position != RecyclerView.NO_POSITION && listener != null) {
                 listener!!.onItemClick(snapshots.getSnapshot(position), position)
             }
         }
 
-        val onLongClickListener = itemView.setOnLongClickListener { _ ->
-            val position : Int = adapterPosition
+        val onLongClickListener = itemView.setOnLongClickListener {
+            val position: Int = adapterPosition
             // Avoid a crash while touching a item while it is being removed
-            if(position != RecyclerView.NO_POSITION && listenerLong != null) {
+            if (position != RecyclerView.NO_POSITION && listenerLong != null) {
                 listenerLong!!.onItemClick(snapshots.getSnapshot(position), position)
             }
             false

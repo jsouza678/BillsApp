@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 package com.souza.billsapp.connectivity
 
 import android.app.Application

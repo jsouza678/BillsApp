@@ -2,7 +2,7 @@ package com.souza.billsapp.login.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
-import com.souza.billsapp.login.FirebaseUserLiveData
+import com.souza.billsapp.login.data.FirebaseUserLiveData
 
 class LoginViewModel : ViewModel() {
 

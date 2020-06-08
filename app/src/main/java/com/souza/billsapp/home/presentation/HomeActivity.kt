@@ -1,12 +1,8 @@
-package com.souza.billsapp
+package com.souza.billsapp.home.presentation
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
-import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.navigation.NavController
@@ -16,10 +12,8 @@ import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
+import com.souza.billsapp.R
 import com.souza.billsapp.connectivity.Connectivity
-import com.souza.billsapp.extensions.gone
-import com.souza.billsapp.extensions.visible
-import com.souza.billsapp.login.presentation.LoginViewModel
 
 class HomeActivity : AppCompatActivity() {
 
@@ -28,7 +22,7 @@ class HomeActivity : AppCompatActivity() {
     private var hasNetworkConnectivity = true
     private val viewModel by viewModels<HomeViewModel>()
     private lateinit var bottomNavigationView: BottomNavigationView
-    private lateinit var navController : NavController
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,16 +82,19 @@ class HomeActivity : AppCompatActivity() {
 
     private fun showConnectivityOnSnackbar() {
         connectivitySnackbar.duration = BaseTransientBottomBar.LENGTH_SHORT
-        connectivitySnackbar.view.setBackgroundColor(ContextCompat.getColor(this, R.color.greeLight))
+        connectivitySnackbar.view.setBackgroundColor(ContextCompat.getColor(this,
+            R.color.greeLight
+        ))
         connectivitySnackbar.setText(getString(R.string.snackbar_message_internet_back))
         connectivitySnackbar.show()
     }
 
     private fun showConnectivityOffSnackbar() {
         connectivitySnackbar.duration = BaseTransientBottomBar.LENGTH_SHORT
-        connectivitySnackbar.view.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary))
+        connectivitySnackbar.view.setBackgroundColor(ContextCompat.getColor(this,
+            R.color.colorPrimary
+        ))
         connectivitySnackbar.setText(getString(R.string.snackbar_message_internet_off))
         connectivitySnackbar.show()
     }
 }
-

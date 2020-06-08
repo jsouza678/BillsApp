@@ -2,148 +2,155 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".expensecatalog.presentation.InsertExpenseFragment">
-
-        <TextView
-            android:id="@+id/insert_expense_text_view_expense_fragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin_16dp"
-            android:text="@string/insert_expense_label_text_view_item"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/value_text_input_layout_expense_fragment"
+        android:layout_height="wrap_content">
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/material_margin_16dp"
-            android:layout_marginTop="@dimen/material_margin_8dp"
-            android:layout_marginEnd="@dimen/material_margin_16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/insert_expense_text_view_expense_fragment">
+            tools:context=".expensecatalog.presentation.InsertExpenseFragment">
+            <TextView
+                android:id="@+id/insert_expense_text_view_expense_fragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/material_margin_16dp"
+                android:text="@string/insert_expense_label_text_view_item"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/value_text_input_edit_text_expense_fragment"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/value_text_input_layout_expense_fragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLines="2"
-                android:hint="@string/value_hint_text_view_item"
-                android:inputType="numberDecimal" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginStart="@dimen/material_margin_16dp"
+                android:layout_marginTop="@dimen/material_margin_8dp"
+                android:layout_marginEnd="@dimen/material_margin_16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/insert_expense_text_view_expense_fragment">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/description_text_input_layout_expense_fragment"
-            android:layout_width="@dimen/match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/material_margin_16dp"
-            android:layout_marginTop="@dimen/material_margin_8dp"
-            android:layout_marginEnd="@dimen/material_margin_16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/value_text_input_layout_expense_fragment">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/value_text_input_edit_text_expense_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:maxLength="12"
+                    android:hint="@string/value_hint_text_view_item"
+                    android:inputType="numberDecimal" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/description_text_input_edit_text_expense_fragment"
-                android:layout_width="match_parent"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/description_text_input_layout_expense_fragment"
+                android:layout_width="@dimen/match_parent"
                 android:layout_height="wrap_content"
-                android:maxLength="120"
-                android:inputType="textMultiLine"
-                android:hint="@string/description_hint_text_view_item" />
+                android:layout_marginStart="@dimen/material_margin_16dp"
+                android:layout_marginTop="@dimen/material_margin_8dp"
+                android:layout_marginEnd="@dimen/material_margin_16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/value_text_input_layout_expense_fragment">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/description_text_input_edit_text_expense_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLength="70"
+                    android:inputType="textMultiLine"
+                    android:hint="@string/description_hint_text_view_item" />
 
-        <Button
-            android:id="@+id/insert_expense_button"
-            style="@android:style/Widget.Material.Light.Button.Borderless.Colored"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin_8dp"
-            android:text="@string/insert_item_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.495"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/image_view_attach_expense_fragment" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <CheckBox
-            android:id="@+id/was_paid_checkbox_expense_fragment"
-            style="@android:style/Widget.Material.Light.CompoundButton.CheckBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin_8dp"
-            android:layout_marginEnd="@dimen/material_margin_16dp"
-            android:text="@string/was_paid_checkbox_text_insert_expense"
-            app:layout_constraintBottom_toBottomOf="@id/date_picker_button_expense_fragment"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/date_selected_text_view_expense_fragment"
-            app:layout_constraintTop_toBottomOf="@id/description_text_input_layout_expense_fragment" />
+            <Button
+                android:id="@+id/insert_expense_button"
+                style="@android:style/Widget.Material.Light.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/material_margin_8dp"
+                android:layout_marginBottom="@dimen/material_margin_16dp"
+                android:text="@string/insert_item_button"
+                app:layout_constraintBottom_toTopOf="@id/progress_bar_image_progress_upload_expense_fragment"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/image_view_attach_expense_fragment" />
 
-        <TextView
-            android:id="@+id/date_selected_text_view_expense_fragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/material_margin_16dp"
-            android:layout_marginTop="@dimen/material_margin_8dp"
-            android:layout_marginBottom="@dimen/material_margin_8dp"
-            tools:text="@string/mock_date_insert_fragment"
-            app:layout_constraintBottom_toBottomOf="@id/date_picker_button_expense_fragment"
-            app:layout_constraintStart_toEndOf="@id/date_picker_button_expense_fragment"
-            app:layout_constraintTop_toTopOf="@id/date_picker_button_expense_fragment" />
+            <CheckBox
+                android:id="@+id/was_paid_checkbox_expense_fragment"
+                style="@android:style/Widget.Material.Light.CompoundButton.CheckBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/material_margin_8dp"
+                android:layout_marginEnd="@dimen/material_margin_16dp"
+                android:text="@string/was_paid_checkbox_text_insert_expense"
+                app:layout_constraintBottom_toBottomOf="@id/date_picker_button_expense_fragment"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/date_selected_text_view_expense_fragment"
+                app:layout_constraintTop_toBottomOf="@id/description_text_input_layout_expense_fragment" />
 
-        <Button
-            android:id="@+id/date_picker_button_expense_fragment"
-            style="@android:style/Widget.Material.Light.Button.Borderless"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/material_margin_16dp"
-            android:layout_marginTop="@dimen/material_margin_8dp"
-            android:text="@string/date_label_insert_fragment"
-            android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/description_text_input_layout_expense_fragment" />
+            <TextView
+                android:id="@+id/date_selected_text_view_expense_fragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/material_margin_16dp"
+                android:layout_marginTop="@dimen/material_margin_8dp"
+                android:layout_marginBottom="@dimen/material_margin_8dp"
+                tools:text="@string/mock_date_insert_fragment"
+                app:layout_constraintBottom_toBottomOf="@id/date_picker_button_expense_fragment"
+                app:layout_constraintStart_toEndOf="@id/date_picker_button_expense_fragment"
+                app:layout_constraintTop_toTopOf="@id/date_picker_button_expense_fragment" />
 
-        <ImageButton
-            android:id="@+id/image_attach_button_insert_expense_fragment"
-            android:layout_width="@dimen/image_button_width_insert_fragment"
-            android:layout_height="@dimen/image_button_height_insert_fragment"
-            android:layout_marginStart="@dimen/material_margin_16dp"
-            android:layout_marginTop="@dimen/material_margin_16dp"
-            android:src="@drawable/ic_add_image"
-            app:layout_constraintEnd_toEndOf="@id/date_picker_button_expense_fragment"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/date_picker_button_expense_fragment"
-            android:contentDescription="@string/attached_image_button_content_description" />
+            <Button
+                android:id="@+id/date_picker_button_expense_fragment"
+                style="@android:style/Widget.Material.Light.Button.Borderless"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/material_margin_16dp"
+                android:layout_marginTop="@dimen/material_margin_8dp"
+                android:text="@string/date_label_insert_fragment"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/description_text_input_layout_expense_fragment" />
 
-        <ProgressBar
-            android:id="@+id/progress_bar_image_progress_upload_expense_fragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/material_margin_16dp"
-            android:visibility="invisible"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/image_view_attach_expense_fragment" />
+            <ImageButton
+                android:id="@+id/image_attach_button_insert_expense_fragment"
+                android:layout_width="@dimen/image_button_width_insert_fragment"
+                android:layout_height="@dimen/image_button_height_insert_fragment"
+                android:layout_marginStart="@dimen/material_margin_16dp"
+                android:layout_marginTop="@dimen/material_margin_16dp"
+                android:src="@drawable/ic_add_image"
+                app:layout_constraintEnd_toEndOf="@id/date_picker_button_expense_fragment"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/date_picker_button_expense_fragment"
+                android:contentDescription="@string/attached_image_button_content_description" />
 
-        <ImageView
-            android:id="@+id/image_view_attach_expense_fragment"
-            android:layout_width="@dimen/inserted_image_width_view_fragment"
-            android:layout_height="@dimen/inserted_image_height_view_fragment"
-            android:layout_marginStart="@dimen/material_margin_16dp"
-            android:layout_marginTop="@dimen/material_margin_16dp"
-            android:layout_marginEnd="@dimen/material_margin_16dp"
-            android:layout_marginBottom="@dimen/material_margin_16dp"
-            android:visibility="visible"
-            app:layout_constraintBottom_toTopOf="@id/insert_expense_button"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/image_attach_button_insert_expense_fragment"
-            app:srcCompat="@drawable/ic_broken_image"
-            android:contentDescription="@string/attached_image_item" />
+            <ProgressBar
+                android:id="@+id/progress_bar_image_progress_upload_expense_fragment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/material_margin_16dp"
+                android:layout_marginBottom="@dimen/material_margin_16dp"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toTopOf="@id/insert_expense_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/image_view_attach_expense_fragment" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                android:id="@+id/image_view_attach_expense_fragment"
+                android:layout_width="@dimen/inserted_image_width_view_fragment"
+                android:layout_height="@dimen/inserted_image_height_view_fragment"
+                android:layout_marginStart="@dimen/material_margin_16dp"
+                android:layout_marginTop="@dimen/material_margin_16dp"
+                android:layout_marginEnd="@dimen/material_margin_16dp"
+                android:layout_marginBottom="@dimen/material_margin_16dp"
+                android:visibility="visible"
+                app:layout_constraintBottom_toTopOf="@id/insert_expense_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/image_attach_button_insert_expense_fragment"
+                app:srcCompat="@drawable/ic_broken_image"
+                android:contentDescription="@string/attached_image_item" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>

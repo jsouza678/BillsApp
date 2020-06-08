@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -22,10 +21,23 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.souza.billsapp.R
 import com.souza.billsapp.databinding.FragmentResultBinding
-import com.souza.billsapp.extensions.formatValueToCoin
-import com.souza.billsapp.extensions.visible
+import com.souza.billsapp.result.utils.Constants.Companion.ANIMATION_DURATION_PIE_CHART
+import com.souza.billsapp.result.utils.Constants.Companion.BOTTOM_PIE_CHART_EXTRA
+import com.souza.billsapp.result.utils.Constants.Companion.DRAG_ACCELERATION_COEF_PIE_CHART
+import com.souza.billsapp.result.utils.Constants.Companion.EMPTY_STRING
+import com.souza.billsapp.result.utils.Constants.Companion.ENTRY_LABEL_TEXT_SIZE_PIE_CHART
+import com.souza.billsapp.result.utils.Constants.Companion.FLOAT_ZERO_ABSOLUTE
+import com.souza.billsapp.result.utils.Constants.Companion.HOLE_RADIUS_PIE_CHART
+import com.souza.billsapp.result.utils.Constants.Companion.LEFT_PIE_CHART_EXTRA
+import com.souza.billsapp.result.utils.Constants.Companion.LEGEND_TEXT_SIZE_PIE_CHART
+import com.souza.billsapp.result.utils.Constants.Companion.RIGHT_PIE_CHART_EXTRA
+import com.souza.billsapp.result.utils.Constants.Companion.TOP_PIE_CHART_EXTRA
+import com.souza.billsapp.result.utils.Constants.Companion.X_ENTRY_SPACE_PIE_CHART
+import com.souza.billsapp.result.utils.Constants.Companion.Y_ENTRY_SPACE_PIE_CHART
+import com.souza.billsapp.sharedextensions.formatValueToCoin
+import com.souza.billsapp.sharedextensions.visible
 
-class ResultFragment : Fragment(){
+class ResultFragment : Fragment() {
 
     private lateinit var binding: FragmentResultBinding
     private val viewModel by viewModels<ResultViewModel>()
@@ -36,12 +48,13 @@ class ResultFragment : Fragment(){
     private lateinit var chart: PieChart
     private val entries = mutableListOf<PieEntry>()
     private lateinit var dataSet: PieDataSet
-    private var expensesResult: Float? = 0F
-    private var incomesResult: Float? = 0F
+    private var expensesResult: Float? = FLOAT_ZERO_ABSOLUTE
+    private var incomesResult: Float? = FLOAT_ZERO_ABSOLUTE
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_result, container, false)
@@ -60,11 +73,11 @@ class ResultFragment : Fragment(){
         return binding.root
     }
 
-    private fun setupRefreshLayout(){
+    private fun setupRefreshLayout() {
         swipeRefreshLayout.setOnRefreshListener {
             entries.clear()
-            expensesResult = 0F
-            incomesResult  = 0F
+            expensesResult = FLOAT_ZERO_ABSOLUTE
+            incomesResult = FLOAT_ZERO_ABSOLUTE
             viewModel.getValuesOnRefresh()
             swipeRefreshLayout.isRefreshing = false
         }
@@ -72,42 +85,49 @@ class ResultFragment : Fragment(){
 
     private fun initObserver() {
         viewModel.apply {
-            this.updateSumResultOfExpenseOnLiveData().observe(viewLifecycleOwner, Observer {
-                    expensesResult = it
-                    expensesTextView.text = expensesResult?.let { formatValueToCoin(it) }
-                    entries.add(PieEntry(it!!.toFloat(), "Despesas"))
-                }
-            )
-            this.updateSumResultOfIncomeOnLiveData().observe(viewLifecycleOwner, Observer {
-                    incomesResult = it
-                    incomesTextView.text = incomesResult?.let { formatValueToCoin(it) }
-                    entries.add(PieEntry(it!!.toFloat(), "Entradas"))
-                    if(viewModel.updateSumResultOfExpenseOnLiveData().value != null) {
-                        val situation = expensesResult?.let { it1 -> incomesResult?.minus(it1) }
-                        situationTextView.text = situation?.let { formatValueToCoin(it) }
-                        setupPieChart()
-                        chart.visible()
+            this.updateSumResultOfExpenseOnLiveData().observe(viewLifecycleOwner, Observer { expenseSumResult ->
+                expensesResult = expenseSumResult
+                expensesTextView.text = expensesResult?.let { formatValueToCoin(it) }
+                expenseSumResult?.let { PieEntry(it, "Despesas") }?.let { entries.add(it) }
+            })
+            this.updateSumResultOfIncomeOnLiveData().observe(viewLifecycleOwner, Observer { incomeSumResult ->
+                incomesResult = incomeSumResult
+                incomesTextView.text = incomesResult?.let { formatValueToCoin(it) }
+                incomeSumResult?.let { PieEntry(it, "Entradas") }?.let { entries.add(it) }
+                if (viewModel.updateSumResultOfExpenseOnLiveData().value != null) {
+                    val situation = expensesResult?.let { it1 -> incomesResult?.minus(it1) }
+                    situationTextView.text = situation?.let { formatValueToCoin(it) }
+                    if (situation != null) {
+                        if (situation > 0.0) {
+                            situationTextView.setTextColor(ContextCompat.getColor(requireContext(),
+                                R.color.greeLight))
+                        } else {
+                            situationTextView.setTextColor(ContextCompat.getColor(requireContext(),
+                                R.color.colorPrimary))
+                        }
                     }
+                    setupPieChart()
+                    chart.visible()
                 }
-            )
+            })
         }
     }
 
-    private fun setupPieChart(){
+    private fun setupPieChart() {
         chart.apply {
             description.isEnabled = false
-            setExtraOffsets(10F ,0F ,5F ,5F )
-            dragDecelerationFrictionCoef = 0.95f
+            setExtraOffsets(LEFT_PIE_CHART_EXTRA, TOP_PIE_CHART_EXTRA, RIGHT_PIE_CHART_EXTRA, BOTTOM_PIE_CHART_EXTRA)
+            dragDecelerationFrictionCoef = DRAG_ACCELERATION_COEF_PIE_CHART
             isDrawHoleEnabled = true
-            holeRadius = 65f
+            holeRadius = HOLE_RADIUS_PIE_CHART
             setDrawCenterText(true)
             setDrawEntryLabels(false)
             setUsePercentValues(true)
-            rotationAngle = 0F
+            rotationAngle = FLOAT_ZERO_ABSOLUTE
             isRotationEnabled = true
-            setEntryLabelTextSize(8F)
+            setEntryLabelTextSize(ENTRY_LABEL_TEXT_SIZE_PIE_CHART)
             isHighlightPerTapEnabled = true
-            animateY(1400, Easing.EaseInOutQuad)
+            animateY(ANIMATION_DURATION_PIE_CHART, Easing.EaseInOutQuad)
         }
         setPieChartLegendAlignment()
         setPieChartDataSet()
@@ -120,15 +140,15 @@ class ResultFragment : Fragment(){
             horizontalAlignment = Legend.LegendHorizontalAlignment.RIGHT
             orientation = Legend.LegendOrientation.VERTICAL
             setDrawInside(false)
-            xEntrySpace = 7f
-            textSize = 12F
-            yEntrySpace = 0f
-            yOffset = 0f
+            xEntrySpace = X_ENTRY_SPACE_PIE_CHART
+            textSize = LEGEND_TEXT_SIZE_PIE_CHART
+            yEntrySpace = Y_ENTRY_SPACE_PIE_CHART
+            yOffset = FLOAT_ZERO_ABSOLUTE
         }
     }
 
-    private fun setPieChartDataSet(){
-        dataSet = PieDataSet(entries, "")
+    private fun setPieChartDataSet() {
+        dataSet = PieDataSet(entries, EMPTY_STRING)
         dataSet.valueFormatter = PercentFormatter(chart)
         dataSet.sliceSpace = 3f
         dataSet.selectionShift = 5f
@@ -138,7 +158,7 @@ class ResultFragment : Fragment(){
         chart.data = data
     }
 
-    private fun setPieChartDataSetColors(){
+    private fun setPieChartDataSetColors() {
         val colors: ArrayList<Int> = ArrayList()
         colors.add(ContextCompat.getColor(requireContext(), R.color.orangeLight))
         colors.add(ContextCompat.getColor(requireContext(), R.color.greeLight))

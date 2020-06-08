@@ -1,4 +1,4 @@
-package com.souza.billsapp.extensions
+package com.souza.billsapp.sharedextensions
 
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData

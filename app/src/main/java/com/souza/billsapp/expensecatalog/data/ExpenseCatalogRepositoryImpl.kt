@@ -9,22 +9,24 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.souza.billsapp.expensecatalog.domain.Expense
 import com.souza.billsapp.expensecatalog.domain.repository.ExpenseCatalogRepository
+import com.souza.billsapp.expensecatalog.utils.Constants.Companion.EMPTY_STRING
+import com.souza.billsapp.expensecatalog.utils.Constants.Companion.USERS_TABLE_NAME
+import com.souza.billsapp.expensecatalog.utils.Constants.Companion.WAS_PAID_FILTER_STATUS
 import java.util.Calendar
 
 class ExpenseCatalogRepositoryImpl : ExpenseCatalogRepository {
 
     private val auth: String? = FirebaseAuth.getInstance().currentUser?.uid
     private val calendar: Calendar = Calendar.getInstance()
-    private val mes: Int = calendar.get(java.util.Calendar.MONTH)
-    private val ano: Int = calendar.get(java.util.Calendar.YEAR)
+    private val mes: Int = calendar.get(Calendar.MONTH)
+    private val ano: Int = calendar.get(Calendar.YEAR)
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private val userId = "$auth"
-    private var incomesValueSum = 0
     private val collectionName: String = "despesas_$mes" + "_" + "$ano"
     private val queryTest = db.document("users/$userId").collection(collectionName)
     private val queryFilteredByReceivedStatus =
-        db.document("users/$userId").collection(collectionName).whereEqualTo("wasPaid", true)
-    private var imageUrl = ""
+        db.document("users/$userId").collection(collectionName).whereEqualTo(WAS_PAID_FILTER_STATUS, true)
+    private var imageUrl = EMPTY_STRING
     private val databaseReference: FirebaseStorage = FirebaseStorage.getInstance()
     private val path: String = "users/$auth/$collectionName/${java.util.UUID.randomUUID()}.png"
     private val reference = databaseReference.getReference(path)
@@ -47,7 +49,7 @@ class ExpenseCatalogRepositoryImpl : ExpenseCatalogRepository {
     }
 
     override fun insertData(data: Expense) {
-        db.collection("users").document(userId).collection(collectionName)
+        db.collection(USERS_TABLE_NAME).document(userId).collection(collectionName)
             .document()
             .set(data)
             .addOnSuccessListener {
@@ -59,7 +61,7 @@ class ExpenseCatalogRepositoryImpl : ExpenseCatalogRepository {
     }
 
     override fun updateData(data: Expense, document: String) {
-        db.collection("users").document(userId).collection(collectionName)
+        db.collection(USERS_TABLE_NAME).document(userId).collection(collectionName)
             .document(document)
             .set(data)
             .addOnSuccessListener {
@@ -71,7 +73,7 @@ class ExpenseCatalogRepositoryImpl : ExpenseCatalogRepository {
     }
 
     override fun insertExpenseImageAttachOnStorage(imageUri: Uri) {
-        val uploadTask = reference
+        reference
             .putFile(imageUri)
             .addOnSuccessListener {
                 reference.downloadUrl
