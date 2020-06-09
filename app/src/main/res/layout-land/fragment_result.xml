@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_layout_result_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorSecondary"
+                tools:context=".result.presentation.ResultFragment">
+
+                <TextView
+                    android:id="@+id/text_view_resume_result_fragment"
+                    style="@style/result_top_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/material_margin_16dp"
+                    android:layout_marginTop="@dimen/material_margin_16dp"
+                    android:text="@string/month_resume_greeting_message_result_fragment"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/values_pie_chart_result_fragment"
+                    android:layout_width="@dimen/match_constraint"
+                    android:layout_height="@dimen/pie_chart_height_result_fragment"
+                    android:layout_marginStart="@dimen/material_margin_16dp"
+                    android:layout_marginTop="@dimen/material_margin_16dp"
+                    android:layout_marginEnd="@dimen/material_margin_16dp"
+                    android:visibility="invisible"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/text_view_resume_result_fragment" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/values_card_view_result_fragment"
+                    android:layout_width="@dimen/match_constraint"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/material_margin_32dp"
+                    android:layout_marginTop="@dimen/material_margin_8dp"
+                    android:layout_marginEnd="@dimen/material_margin_32dp"
+                    android:layout_marginBottom="8dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/values_pie_chart_result_fragment">
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/label_incomes_text_view_result_fragment"
+                            style="@style/result_label_item"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/material_margin_16dp"
+                            android:layout_marginTop="@dimen/material_margin_16dp"
+                            android:text="@string/income_label_text_view_result_fragment"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <TextView
+                            android:id="@+id/value_incomes_text_view_result_fragment"
+                            style="@style/result_value_item"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="@dimen/material_margin_16dp"
+                            app:layout_constraintBaseline_toBaselineOf="@id/label_incomes_text_view_result_fragment"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            tools:text="@string/mock_income_value_result_fragment" />
+
+                        <TextView
+                            android:id="@+id/label_expenses_text_view_result_fragment"
+                            style="@style/result_label_item"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/material_margin_16dp"
+                            android:text="@string/expense_label_text_view_result_fragment"
+                            app:layout_constraintStart_toStartOf="@id/label_incomes_text_view_result_fragment"
+                            app:layout_constraintTop_toBottomOf="@id/label_incomes_text_view_result_fragment" />
+
+                        <TextView
+                            android:id="@+id/value_expenses_text_view_result_fragment"
+                            style="@style/result_value_item"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBaseline_toBaselineOf="@id/label_expenses_text_view_result_fragment"
+                            app:layout_constraintEnd_toEndOf="@id/value_incomes_text_view_result_fragment"
+                            tools:text="@string/mock_expense_value_result_fragment" />
+
+                        <TextView
+                            android:id="@+id/label_situation_text_view_result_fragment"
+                            style="@style/result_label_item"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/material_margin_16dp"
+                            android:layout_marginBottom="@dimen/material_margin_8dp"
+                            android:text="@string/situation_label_text_view_result_fragment"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/label_expenses_text_view_result_fragment"
+                            app:layout_constraintTop_toBottomOf="@id/label_expenses_text_view_result_fragment" />
+
+                        <TextView
+                            android:id="@+id/value_situation_text_view_result_fragment"
+                            style="@style/result_value_item"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintBaseline_toBaselineOf="@id/label_situation_text_view_result_fragment"
+                            app:layout_constraintEnd_toEndOf="@id/value_expenses_text_view_result_fragment"
+                            tools:text="@string/mock_situation_value_result_fragment" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </androidx.cardview.widget.CardView>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+</layout>

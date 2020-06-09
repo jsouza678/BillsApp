@@ -13,7 +13,7 @@
     <string name="was_received_label_text_view_income_item">Recebido</string>
     <string name="mock_value_text_view_item">R$ 230,00</string>
     <string name="mock_description_text_view_item">Lorem ipsum sit dolor amet</string>
-    <string name="mock_date_text_view_item">23/11/2019</string>
+    <string name="mock_date_text_view_item">23/11/2019 15:25</string>
     <string name="attached_image_indicator_icon_content_description">Indicador de que este item possui um anexo</string>
     <string name="mock_hello_text_expense_fragment">Olá João!</string>
 

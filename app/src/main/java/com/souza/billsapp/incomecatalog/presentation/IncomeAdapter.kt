@@ -16,6 +16,7 @@ import com.souza.billsapp.sharedextensions.formatDateWithSeconds
 import com.souza.billsapp.sharedextensions.formatValueToCoin
 import com.souza.billsapp.sharedextensions.invisible
 import com.souza.billsapp.sharedextensions.visible
+import java.util.*
 
 class IncomeAdapter(options: FirestoreRecyclerOptions<Income>) : FirestoreRecyclerAdapter<Income,
         IncomeAdapter.IncomeViewHolder>(options) {
@@ -23,6 +24,7 @@ class IncomeAdapter(options: FirestoreRecyclerOptions<Income>) : FirestoreRecycl
     private var listener: OnItemClickListener? = null
     private var listenerLong: OnItemLongClickListener? = null
 
+    @ExperimentalStdlibApi
     override fun onBindViewHolder(holder: IncomeViewHolder, position: Int, model: Income) {
         holder.itemBind(model)
     }
@@ -47,9 +49,10 @@ class IncomeAdapter(options: FirestoreRecyclerOptions<Income>) : FirestoreRecycl
         private val wasPaidSwitch: Switch = itemView.findViewById(R.id.was_paid_switch_income_item)
         private val attachImageView: ImageView = itemView.findViewById(R.id.attach_icon_image_view_income_item)
 
+        @ExperimentalStdlibApi
         fun itemBind(income: Income) {
             valueTextView.text = income.value?.let { formatValueToCoin(it) }
-            descriptionTextView.text = income.description
+            descriptionTextView.text = income.description?.capitalize(Locale.getDefault())
             val timeStampAsDateResult = income.date?.toDate()
             dateTextView.text = formatDateWithSeconds(timeStampAsDateResult)
             wasPaidSwitch.isChecked = income.wasReceived

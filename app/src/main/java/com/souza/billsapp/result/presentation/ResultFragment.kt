@@ -19,6 +19,7 @@ import com.github.mikephil.charting.data.PieData
 import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.souza.billsapp.R
 import com.souza.billsapp.databinding.FragmentResultBinding
 import com.souza.billsapp.result.utils.Constants.Companion.ANIMATION_DURATION_PIE_CHART
@@ -51,6 +52,7 @@ class ResultFragment : Fragment() {
     private var expensesResult: Float? = FLOAT_ZERO_ABSOLUTE
     private var incomesResult: Float? = FLOAT_ZERO_ABSOLUTE
     private lateinit var swipeRefreshLayout: SwipeRefreshLayout
+    private lateinit var bottomNavigationView: BottomNavigationView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,6 +68,7 @@ class ResultFragment : Fragment() {
         incomesTextView = binding.valueIncomesTextViewResultFragment
         expensesTextView = binding.valueExpensesTextViewResultFragment
         situationTextView = binding.valueSituationTextViewResultFragment
+        bottomNavigationView = activity?.findViewById(R.id.bottom_nav_menu)!!
 
         setupRefreshLayout()
         initObserver()
@@ -163,5 +166,14 @@ class ResultFragment : Fragment() {
         colors.add(ContextCompat.getColor(requireContext(), R.color.orangeLight))
         colors.add(ContextCompat.getColor(requireContext(), R.color.greeLight))
         dataSet.colors = colors
+    }
+
+    override fun onResume() {
+        super.onResume()
+        turnOnBottomNavigation()
+    }
+
+    private fun turnOnBottomNavigation() {
+        bottomNavigationView.visible()
     }
 }

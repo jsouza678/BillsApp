@@ -16,6 +16,7 @@ import com.souza.billsapp.sharedextensions.formatDateWithSeconds
 import com.souza.billsapp.sharedextensions.formatValueToCoin
 import com.souza.billsapp.sharedextensions.invisible
 import com.souza.billsapp.sharedextensions.visible
+import java.util.*
 
 class ExpenseAdapter(options: FirestoreRecyclerOptions<Expense>) : FirestoreRecyclerAdapter<Expense,
         ExpenseAdapter.ExpenseViewHolder>(options) {
@@ -23,6 +24,7 @@ class ExpenseAdapter(options: FirestoreRecyclerOptions<Expense>) : FirestoreRecy
     private var listener: OnItemClickListener? = null
     private var listenerLong: OnItemLongClickListener? = null
 
+    @ExperimentalStdlibApi
     override fun onBindViewHolder(holder: ExpenseViewHolder, position: Int, model: Expense) {
         holder.itemBind(model)
     }
@@ -47,9 +49,10 @@ class ExpenseAdapter(options: FirestoreRecyclerOptions<Expense>) : FirestoreRecy
         private val wasPaidSwitch: Switch = itemView.findViewById(R.id.was_paid_switch_expense_item)
         private val attachImageView: ImageView = itemView.findViewById(R.id.attach_icon_image_view_expense_item)
 
+        @ExperimentalStdlibApi
         fun itemBind(expense: Expense) {
             valueTextView.text = expense.value?.let { formatValueToCoin(it) }
-            descriptionTextView.text = expense.description
+            descriptionTextView.text = expense.description?.capitalize(Locale.getDefault())
             val timeStampAsDateResult = expense.date?.toDate()
             dateTextView.text = formatDateWithSeconds(timeStampAsDateResult)
             wasPaidSwitch.isChecked = expense.wasPaid

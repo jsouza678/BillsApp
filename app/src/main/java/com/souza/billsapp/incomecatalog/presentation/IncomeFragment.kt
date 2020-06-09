@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.auth.AuthUI
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
@@ -29,6 +30,7 @@ import com.souza.billsapp.incomecatalog.domain.Income
 import com.souza.billsapp.incomecatalog.utils.Constants.Companion.ABSOLUTE_ZERO
 import com.souza.billsapp.sharedextensions.isValidUrl
 import com.souza.billsapp.sharedextensions.loadImageUrl
+import com.souza.billsapp.sharedextensions.visible
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class IncomeFragment : Fragment() {
@@ -41,6 +43,7 @@ class IncomeFragment : Fragment() {
     private lateinit var navController: NavController
     private lateinit var filterMenu: Menu
     private lateinit var dialog: Dialog
+    private lateinit var bottomNavigationView: BottomNavigationView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -57,6 +60,7 @@ class IncomeFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
         insertButton = binding.insertIncomeFloatingActionButtonIncomesFragment
         incomesRecyclerView = binding.incomesRecyclerViewIncomesFragment
+        bottomNavigationView = activity?.findViewById(R.id.bottom_nav_menu)!!
 
         setupDialog()
         initObserver()
@@ -183,5 +187,14 @@ class IncomeFragment : Fragment() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        turnOnBottomNavigation()
+    }
+
+    private fun turnOnBottomNavigation() {
+        bottomNavigationView.visible()
     }
 }

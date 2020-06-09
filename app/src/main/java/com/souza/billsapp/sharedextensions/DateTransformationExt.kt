@@ -6,7 +6,7 @@ import java.util.Date
 import java.util.Locale
 
 fun formatDateWithSeconds(date: Date?): String {
-    val formatter: Format = SimpleDateFormat("dd/MM/yyyy - HH:mm:ss", Locale.getDefault())
+    val formatter: Format = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
     return formatter.format(date)
 }
 

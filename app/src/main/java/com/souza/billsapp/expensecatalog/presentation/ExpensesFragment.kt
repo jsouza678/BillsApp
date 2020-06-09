@@ -2,7 +2,9 @@ package com.souza.billsapp.expensecatalog.presentation
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -11,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -20,6 +23,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.firebase.ui.auth.AuthUI
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.BaseTransientBottomBar
 import com.google.android.material.snackbar.Snackbar
@@ -32,6 +36,7 @@ import com.souza.billsapp.expensecatalog.domain.Expense
 import com.souza.billsapp.expensecatalog.utils.Constants.Companion.ABSOLUTE_ZERO
 import com.souza.billsapp.sharedextensions.isValidUrl
 import com.souza.billsapp.sharedextensions.loadImageUrl
+import com.souza.billsapp.sharedextensions.visible
 import org.koin.android.viewmodel.ext.android.viewModel
 
 class ExpensesFragment : Fragment() {
@@ -45,6 +50,7 @@ class ExpensesFragment : Fragment() {
     private lateinit var navController: NavController
     private lateinit var filterMenu: Menu
     private lateinit var dialog: Dialog
+    private lateinit var bottomNavigationView: BottomNavigationView
 
     @SuppressLint("SetTextI18n")
     override fun onCreateView(
@@ -65,6 +71,7 @@ class ExpensesFragment : Fragment() {
         welcomeTextView = binding.welcomeTextViewExpensesFragment
         welcomeTextView.text = "Olá $authName!"
         expensesRecyclerView = binding.expensesRecyclerViewExpensesFragment
+        bottomNavigationView = activity?.findViewById(R.id.bottom_nav_menu)!!
 
         setupDialog()
         initObserver()
@@ -189,5 +196,14 @@ class ExpensesFragment : Fragment() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        turnOnBottomNavigation()
+    }
+
+    private fun turnOnBottomNavigation() {
+        bottomNavigationView.visible()
     }
 }
